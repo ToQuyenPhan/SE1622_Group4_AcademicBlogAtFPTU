@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@900&display=swap');
 *{
     margin: 0;
     padding: 0;
@@ -74,4 +75,90 @@
     0%{opacity: 0;}
     70%{left: 50%; top: 55%;}
     100%{left: 50%; top: 50%; opacity: 1;}
+}
+
+body{
+    background: -webkit-repeating-linear-gradient(-45deg, #71b7e6, #69a6ce, #b98acc, #ee8176, #b98acc, #69a6ce, #9b59b6);
+    height: 100vh;
+    background-size: 400%;
+}
+.error-page{
+    position: absolute;
+    top: 10%;
+    left: 17%;
+    right: 17%;
+    bottom: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    box-shadow: 0rem 1rem 10rem rgba(0,0,0,0.1);
+    animation-name: error;
+    animation-duration: 3s;
+    animation-iteration-count: 1;
+}
+.content-error-page{
+    margin-top: 8rem;
+    height: 100%;
+    text-align: center;
+}
+.content-error-page h1{
+    font-size: 10vw;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+}
+.content-error-page h1::after{
+    position: absolute;
+    content: attr(data-text);
+    top: 0;
+    left: 0;
+    right: 0;
+    background: -webkit-repeating-linear-gradient(-45deg, #71b7e6, #69a6ce, #b98acc, #ee8176, #b98acc, #69a6ce, #9b59b6);
+    background-size: 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    box-shadow: 0.1rem 0.1rem 0.2rem rgba(255,255,255,0.25);
+    animation: color 10s ease-in-out infinite;
+}
+.content-error-page h3{
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 5rem;
+}
+.content-error-page a{
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    border: 0.2rem solid #69a6ce;
+    color: #69a6ce;
+    padding: 1rem 2.5rem;
+    border-radius:  2.5rem;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+.content-error-page a:hover{
+    color: #fff;
+    background: #69a6ce;
+    text-decoration: none;
+}
+@keyframes color{
+    0%{
+        background-position: 0 0;
+    }
+    25%{
+        background-position: 100% 0;
+    }
+    50%{
+        background-position: 100% 100%;
+    }
+    75%{
+        background-position: 0 100%;
+    }
+    100%{
+        background-position: 0 0;
+    }
+}
+@keyframes error{
+    0% {top: 10%; bottom: 10%; left: 0; right: 34%; opacity: 0;}
+    100% {top: 10%; bottom: 10%; left: 17%; right: 17%; opacity: 1;}
 }

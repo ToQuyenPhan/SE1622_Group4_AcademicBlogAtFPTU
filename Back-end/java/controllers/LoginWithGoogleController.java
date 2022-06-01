@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import loginwithgoogle.GooglePojo;
-import users.UserDAO;
-import users.UserDTO;
+import dao.UserDAO;
+import dto.UserDTO;
 import utils.GoogleUtils;
 
 /**
@@ -81,7 +81,7 @@ public class LoginWithGoogleController extends HttpServlet {
                         request.setAttribute("ERROR", "Your account is no longer active!");
                     }
                 } else {//Nhắc nhở nhẹ nhàng
-                    request.setAttribute("ERROR", "You're cannot access to this web! You're need to login with FPT email!");
+                    request.setAttribute("ERROR", "You're need to login with FPT email!");
                 }
             }else{
                 request.setAttribute("ERROR", "Cannot sign in by Google now!");

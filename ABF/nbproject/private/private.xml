@@ -5,6 +5,7 @@
         <group>
             <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/web/error.jsp</file>
             <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/web/CSS/style.css</file>
+            <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/src/java/dao/UserDAO.java</file>
             <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/src/java/controllers/LoginWithGoogleController.java</file>
             <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/src/java/filters/AuthenFilter.java</file>
         </group>

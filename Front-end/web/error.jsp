@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Error page</title>
-        
+        <link rel="stylesheet" href="CSS/style.css">
     </head>
     <body>
         <%
@@ -19,6 +19,12 @@
                 error = "";
             }
         %>
-        <h1><%= error %></h1>
+        <div class="error-page">
+            <div class="content-error-page">
+                <h1 data-text="OOPS!">OOPS!</h1>
+                <h3><%= error %></h3>
+                <a href="index.html">Return to welcome page</a>
+            </div>
+        </div>
     </body>
 </html>
