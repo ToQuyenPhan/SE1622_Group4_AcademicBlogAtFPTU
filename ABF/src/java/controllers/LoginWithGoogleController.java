@@ -30,7 +30,7 @@ public class LoginWithGoogleController extends HttpServlet {
     private static final String STUDENT = "Student";
     private static final String MENTOR = "Mentor";
     private static final String ADMIN_PAGE = "admin.jsp";
-    private static final String USER_PAGE = "homepage.jsp";
+    private static final String USER_CONTROLLER = "GetListController";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -72,7 +72,7 @@ public class LoginWithGoogleController extends HttpServlet {
                             url = ADMIN_PAGE;
                         } else {
                             if (STUDENT.equals(roleName) || MENTOR.equals(roleName)) {
-                                url = USER_PAGE;
+                                url = USER_CONTROLLER;
                             } else {//Nhắc nhở nhẹ nhàng
                                 request.setAttribute("ERROR", "Your role is invalid!");
                             }
