@@ -12,6 +12,7 @@ package dto;
 public class UserDTO {
     private int userID;
     private String fullName;
+    private String password;
     private int roleID;
     private String email;
     private String gender;
@@ -21,6 +22,7 @@ public class UserDTO {
 
     public UserDTO() {
         this.userID = 0;
+        this.password = "";
         this.fullName = "";
         this.roleID = 0;
         this.email = "";
@@ -30,8 +32,9 @@ public class UserDTO {
         this.status = false;
     }
 
-    public UserDTO(int userID, String fullName, int roleID, String email, String gender, String dateOfBirth, String image,  boolean status) {
+    public UserDTO(int userID, String password, String fullName, int roleID, String email, String gender, String dateOfBirth, String image,  boolean status) {
         this.userID = userID;
+        this.password = password;
         this.fullName = fullName;
         this.roleID = roleID;
         this.email = email;
@@ -47,6 +50,14 @@ public class UserDTO {
 
     public void setUserID(int userID) {
         this.userID = userID;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFullName() {

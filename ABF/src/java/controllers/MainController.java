@@ -5,8 +5,10 @@
  */
 package controllers;
 
+import dao.BlogDAO;
+import dto.BlogDTO;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +25,10 @@ import javax.servlet.http.HttpSession;
 public class MainController extends HttpServlet {
     private static final String ERROR = "error.jsp";
     private static final String LOGIN = "Login";
-    private static final String LOGIN_WITH_GOOGLE = "LoginWithGoogleController";
+    private static final String LOGIN_WITH_GOOGLE = "LoginWithGoogle";
+    private static final String GETLIST = "GetList";
+    private static final String LOGIN_WITH_GOOGLE_CONTROLLER = "LoginWithGoogleController";
+    private static final String GET_LIST_CONTROLLER = "GetListController";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,11 +44,12 @@ public class MainController extends HttpServlet {
         String url = ERROR;
         try {
             String action = request.getParameter("action");
-            HttpSession session = request.getSession();
-            if (LOGIN.equals(action)) {
-                url = LOGIN_WITH_GOOGLE;
-            } else {
-                session.setAttribute("ERROR_MESSAGE", "Function is not available!");
+            if (LOGIN_WITH_GOOGLE.equals(action)) {
+                url = LOGIN_WITH_GOOGLE_CONTROLLER;
+            } else if (GETLIST.equals(action)) {
+                url = GET_LIST_CONTROLLER;
+            } else{
+                request.setAttribute("ERROR_MESSAGE", "Function is not available!");
             }
         } catch (Exception e) {
             log("Error at Main Controller: " + e.toString());

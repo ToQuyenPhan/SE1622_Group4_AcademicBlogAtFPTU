@@ -30,7 +30,7 @@ public class LoginWithGoogleController extends HttpServlet {
     private static final String STUDENT = "Student";
     private static final String MENTOR = "Mentor";
     private static final String ADMIN_PAGE = "admin.jsp";
-    private static final String USER_CONTROLLER = "GetListController";
+    private static final String USER_CONTROLLER = "MainController?action=GetList";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -54,14 +54,15 @@ public class LoginWithGoogleController extends HttpServlet {
             if (code != null && !code.isEmpty()) {
                 String accessToken = GoogleUtils.getToken(code);
                 GooglePojo googlePojo = GoogleUtils.getUserInfo(accessToken);//Lấy thông tin user qua email
-                String[] email = googlePojo.getEmail().split("@");
-                if (email[1].equals("fpt.edu.vn")) {//Chỉ nhận mail fpt
+                String email = googlePojo.getEmail();
+                String[] name = email.split("@");
+                if (name[1].equals("fpt.edu.vn")) {//Chỉ nhận mail fpt
                     UserDAO dao = new UserDAO();
-                    UserDTO loginUser = dao.checkLogin(googlePojo.getEmail());
+                    UserDTO loginUser = dao.checkLoginByEmail(email);
                     if (loginUser == null) {//Tạo tài khoản mới cho lần đầu tiên đăng nhập
-                        boolean check = dao.createUser(email[0], googlePojo.getEmail());
+                        boolean check = dao.createUser(name[0], email);
                         if (check == true) {
-                            loginUser = dao.checkLogin(googlePojo.getEmail());
+                            loginUser = dao.checkLoginByEmail(email);
                         }
                     }
                     if (loginUser.isStatus()) {//Kiểm tra xem tài khoản còn hoạt động ko
@@ -83,7 +84,7 @@ public class LoginWithGoogleController extends HttpServlet {
                 } else {//Nhắc nhở nhẹ nhàng
                     request.setAttribute("ERROR", "You're need to login with FPT email!");
                 }
-            }else{
+            } else {
                 request.setAttribute("ERROR", "Cannot sign in by Google now!");
             }
         } catch (Exception e) {

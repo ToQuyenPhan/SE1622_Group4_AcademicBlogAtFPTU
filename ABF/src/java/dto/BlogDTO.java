@@ -5,13 +5,14 @@
  */
 package dto;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
  *
  * @author To Quyen Phan
  */
-public class BlogDTO {
+public class BlogDTO{
     private int blogID;
     private int userID;
     private int userApproveID;

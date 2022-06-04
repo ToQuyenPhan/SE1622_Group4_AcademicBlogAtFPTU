@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@900&display=swap');
+/*Welcome Page*/
 *{
     margin: 0;
     padding: 0;
@@ -22,12 +23,13 @@
     animation-duration: 4s;
     animation-iteration-count: 1;
 }
-.header-welcome-page div a h1{
+.header-welcome-page div input{
     width: 15%;
     float: right;
     text-align: center;
     color: black;
     background-color: orange;
+    border: none;
     font-size: 2rem;
     font-weight: bold; 
     margin-top: 3rem;
@@ -38,12 +40,13 @@
     animation-duration: 2s;
     animation-iteration-count: 1;
 }
-.header-welcome-page div a h1:hover{
+.header-welcome-page div input:hover{
     background-color: white;
     cursor: pointer;
 }
 .content-welcome-page{
     position: absolute;
+    text-align: center;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -56,9 +59,111 @@
 }
 .content-welcome-page h2{
     font-weight: bolder;
-    text-align: center;
 }
-
+.popup-form-welcome-page{
+    position: absolute;
+    display: none;
+    top: 50%;
+    left: 50%;
+    height: 60%;
+    width: 30%;
+    transform: translate(-50%, -50%);
+    padding: 1rem 1rem;
+    background-color: white;
+    border-radius: 1rem;
+    text-align: center;
+    animation: drop 0.5s ease forwards;
+}
+.popup-form-welcome-page div{
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1rem;
+    border-radius: 0.2rem;
+}
+.popup-form-welcome-page .login-google-welcome-page{
+    transition: box-shadow .3s;
+    padding: 0 0.1rem;
+    border-radius:10px;
+    border: 0.01rem solid #ccc;
+    margin: 2rem 0;
+}
+.popup-form-welcome-page .login-google-welcome-page:hover{
+    box-shadow: 0 0 11px rgba(33,33,33,0.2); 
+}
+.popup-form-welcome-page div a{
+    width: 100%;
+}
+.popup-form-welcome-page div a:hover{
+    color: black;
+}
+.popup-form-welcome-page div img{
+    position: absolute;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    top: 0.15rem;
+}
+.popup-form-welcome-page .input-welcome-page{
+    border: 0.1rem solid #d9d9d9;
+}
+.popup-form-welcome-page div i{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    height: 5rem;
+    width: 1rem;
+    margin-left: 1rem;
+}
+.popup-form-welcome-page div input{
+    border: none;
+    width: 100%;
+    padding: 1rem 2.5rem;
+    outline: none;
+}
+.popup-form-welcome-page a{
+    display: block;
+    text-align: center;
+    padding: 1rem 2rem;
+    color: black;
+}
+.popup-form-welcome-page a:hover{
+    text-decoration: none;
+    cursor: pointer;
+}
+.popup-form-welcome-page h3{
+    font-weight: 500;
+}
+.popup-form-welcome-page i:not(i:first-child){
+    position: absolute;
+    font-size: 1rem;
+    color: red;
+    top: 0;
+    right: 0;
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+    background-color: rgb(214, 214, 214);
+    padding: 0.4rem 0.5rem;
+    border-radius: 50%;
+}
+.popup-form-welcome-page i:not(i:first-child){
+    color: rgb(235, 106, 106);
+    cursor: pointer;
+}
+.popup-form-welcome-page .submit-welcome-page{
+    transition: box-shadow .3s;
+    background-color: #377dff;
+    width: 100%;
+    border: none;
+    padding: 1rem 0;
+    color: white;
+    font-size: large;
+    border-radius: 0.2rem;
+}
+.popup-form-welcome-page .submit-welcome-page:hover{
+    box-shadow: 0 0 11px rgba(33,33,33,0.2);  
+}
 @keyframes welcome {
     0%   {left: 50%; top: 100%;}
     100% {left: 50%; top: 50%;}
@@ -77,6 +182,9 @@
     100%{left: 50%; top: 50%; opacity: 1;}
 }
 
+
+
+/*Error Page*/
 body{
     background: -webkit-repeating-linear-gradient(-45deg, #71b7e6, #69a6ce, #b98acc, #ee8176, #b98acc, #69a6ce, #9b59b6);
     height: 100vh;

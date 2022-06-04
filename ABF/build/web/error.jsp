@@ -4,6 +4,7 @@
     Author     : To Quyen Phan
 --%>
 
+<%@page import="dto.UserDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,8 +17,9 @@
         <%
             String error = (String) request.getAttribute("ERROR");
             if(error == null){
-                error = "";
+                error = "Something wrong with website!";
             }
+            UserDTO loginUser = (UserDTO)session.getAttribute("LOGIN_USER");
         %>
         <div class="error-page">
             <div class="content-error-page">

@@ -57,6 +57,6 @@
                 }
             }
         %>
-        
+        <a href="feedback.jsp">Feedback</a>
     </body>
 </html>

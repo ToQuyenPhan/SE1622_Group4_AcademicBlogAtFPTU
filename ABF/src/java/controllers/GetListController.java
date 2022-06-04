@@ -8,7 +8,7 @@ package controllers;
 import dao.BlogDAO;
 import dto.BlogDTO;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
  * @author To Quyen Phan
  */
 @WebServlet(name = "GetListController", urlPatterns = {"/GetListController"})
-public class GetListController extends HttpServlet {
+public class GetListController extends HttpServlet implements Serializable {
     private static final String ERROR = "error.jsp";
     private static final String SUCCESS = "homepage.jsp";
     /**
@@ -46,10 +46,8 @@ public class GetListController extends HttpServlet {
                 Collections.sort(listAllBlogs, BlogDTO.compareDate);
                 HttpSession session = request.getSession();              
                 request.setAttribute("LIST_ALL_BLOGS", listAllBlogs);
-                url = SUCCESS;
-            }else{
-                request.setAttribute("ERROR", "Website is not ready for access!");
             }
+            url = SUCCESS;
         }catch(Exception e){
             log("Error at Get List Controller: " + e.toString());
         }finally{
