@@ -19,8 +19,18 @@ import utils.DBUtils;
  * @author To Quyen Phan
  */
 public class BlogDAO {
+
     private static final String GET_ALL_BLOGS = "SELECT blogID,userID,userApproveID,subjectID,title,content,date,"
-            + "updateDate,image,video,numberOfVotes,numberOfComments,status from Blog";
+            + "image,video,numberOfVotes,numberOfComments,status from Blog";
+    private static final String DELETE = "DELETE Blog WHERE blogID=? ";
+//    private static final String SEARCH = "SELECT blogID,userID,userApproveID,subjectID,title,content,date,"
+//            + "image,video,numberOfVotes,numberOfComments,status from Blog WHERE subjectID like ? and status = 1 ";
+    private static final String SEARCH = "SELECT blogID,userID,userApproveID,Blog.subjectID,title,content,date,image,video,numberOfVotes,numberOfComments,Blog.status\n"
+            + "FROM Blog \n"
+            + "JOIN Subject  ON Blog.subjectID = Subject.subjectID \n"
+            + "JOIN Major ON Subject.majorID = Major.majorID \n"
+            + "WHERE Major.majorName LIKE ?";
+
     public List<BlogDTO> getAllBlogs() throws SQLException {
         List<BlogDTO> listAllBlogs = new ArrayList<>();
         Connection conn = null;
@@ -39,14 +49,13 @@ public class BlogDAO {
                     String title = rs.getString("title");
                     String content = rs.getString("content");
                     String date = rs.getString("date");
-                    String updateDate = rs.getString("updateDate");
                     String image = rs.getString("image");
                     String video = rs.getString("video");
                     int numberOfVotes = rs.getInt("numberOfVotes");
                     int numberOfComments = rs.getInt("numberOfComments");
                     String status = rs.getString("status");
                     listAllBlogs.add(new BlogDTO(blogID, userID, userApproveID, subjectID, title, content,
-                            date , updateDate, image, video, numberOfVotes, numberOfComments, status));
+                            date, image, video, numberOfVotes, numberOfComments, status));
                 }
             }
         } catch (Exception e) {
@@ -64,5 +73,73 @@ public class BlogDAO {
         }
         return listAllBlogs;
     }
-    
+
+    public List<BlogDTO> SearchBySubject(String search) throws SQLException {
+        List<BlogDTO> listAllBlogs = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(SEARCH);
+                ptm.setString(1, "%" + search + "%");
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    int blogID = rs.getInt("blogID");
+                    int userID = rs.getInt("userID");
+                    int userApproveID = rs.getInt("userApproveID");
+                    int subjectID = rs.getInt("subjectID");
+                    String title = rs.getString("title");
+                    String content = rs.getString("content");
+                    String date = rs.getString("date");
+                    String image = rs.getString("image");
+                    String video = rs.getString("video");
+                    int numberOfVotes = rs.getInt("numberOfVotes");
+                    int numberOfComments = rs.getInt("numberOfComments");
+                    String status = rs.getString("status");
+                    listAllBlogs.add(new BlogDTO(blogID, userID, userApproveID, subjectID, title, content,
+                            date, image, video, numberOfVotes, numberOfComments, status));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return listAllBlogs;
+    }
+
+    public boolean delete(String blogID) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(DELETE);
+                ptm.setString(1, blogID);
+                check = ptm.executeUpdate() > 0 ? true : false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+
 }

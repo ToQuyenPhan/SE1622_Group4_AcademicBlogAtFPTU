@@ -6,63 +6,41 @@
 package controllers;
 
 import dao.BlogDAO;
-import dto.BlogDTO;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author To Quyen Phan
+ * @author DELL
  */
-@WebServlet(name = "MainController", urlPatterns = {"/MainController"})
-public class MainController extends HttpServlet {
+@WebServlet(name = "DeleteController", urlPatterns = {"/DeleteController"})
+public class DeleteController extends HttpServlet {
 
-    private static final String ERROR = "error.jsp";
-    private static final String LOGIN = "Login";
-    private static final String LOGIN_WITH_GOOGLE = "LoginWithGoogle";
-    private static final String GETLIST = "GetList";
-    private static final String LOGIN_WITH_GOOGLE_CONTROLLER = "LoginWithGoogleController";
-    private static final String GET_LIST_CONTROLLER = "GetListController";
-    private static final String DELETE_CONTROLLER = "DeleteController";
-    private static final String DELETE = "Delete";
-    private static final String SEARCH_CONTROLLER = "SearchController";
-    private static final String SEARCH = "Search";
+      private static final String ERROR = "homepage.jsp";
+      private static final String SUCCESS = "homepage.jsp";
+      
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            String action = request.getParameter("action");
-            if (LOGIN_WITH_GOOGLE.equals(action)) {
-                url = LOGIN_WITH_GOOGLE_CONTROLLER;
-            }if (GETLIST.equals(action)) {
-                url = GET_LIST_CONTROLLER;
-            }if (DELETE.equals(action)) {
-                url = DELETE_CONTROLLER;
-            }if (SEARCH.equals(action)) {
-                url = SEARCH_CONTROLLER;
-            } else {
-                request.setAttribute("ERROR_MESSAGE", "Function is not available!");
+            String blogID = request.getParameter("blogID");
+            BlogDAO dao = new BlogDAO();
+            
+            boolean check = dao.delete(blogID);
+            if(check){
+                url = SUCCESS;
             }
+            
+
         } catch (Exception e) {
-            log("Error at Main Controller: " + e.toString());
+            log("Error at DeleteController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

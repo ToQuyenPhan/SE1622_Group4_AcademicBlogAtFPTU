@@ -44,7 +44,7 @@ public class AuthenFilter implements Filter {
     private static final String ERROR = "error.jsp";
     private static final String HOME_PAGE = "homepage.jsp";
     private static final String ADMIN_PAGE = "admin.jsp";
-
+    private static final String BLOG_DETAIL = "blogDetail.jsp";
     private static final boolean debug = true;
 
     // The filter configuration object we are associated with.  If
@@ -64,6 +64,14 @@ public class AuthenFilter implements Filter {
         //Khai báo các Resource Mentor được phép truy cập
         MENTOR_RESOURCES = new ArrayList<>();
         MENTOR_RESOURCES.add(HOME_PAGE);
+
+        //Khai báo các Resource Student được phép truy cập
+        STUDENT_RESOURCES = new ArrayList<>();
+        STUDENT_RESOURCES.add(BLOG_DETAIL);
+
+        //Khai báo các Resource Mentor được phép truy cập
+        MENTOR_RESOURCES = new ArrayList<>();
+        MENTOR_RESOURCES.add(BLOG_DETAIL);
 
         //Khai báo các Resource ko cần xác thực, phân quyền 
         NON_AUTHEN_RESOURCES = new ArrayList<>();
@@ -171,7 +179,7 @@ public class AuthenFilter implements Filter {
                     } else {
                         if (MENTOR.equals(dao.checkRole(loginUser.getRoleID())) && MENTOR_RESOURCES.contains(requestResource)) {
                             chain.doFilter(request, response);
-                        }else{
+                        } else {
                             res.sendRedirect(WELCOME);
                         }
                     }
