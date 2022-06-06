@@ -37,14 +37,14 @@
                     <img src="img/img-01.jpg" alt="Image" class="img-fluid">                            
                 </div>
                 <span class="position-absolute tm-new-badge">New</span>
-                <h2 class="tm-pt-30 tm-color-primary tm-post-title"><%= blog.getTitle() %></h2>
+                <h2 class="tm-pt-30 tm-color-primary tm-post-title"><%= blog.getTitle()%></h2>
             </a>                    
             <p class="tm-pt-30">
-                <%= blog.getContent() %>
+                <%= blog.getContent()%>
             </p>
             <div class="d-flex justify-content-between tm-pt-45">
                 <span class="tm-color-primary">Travel . Events</span>
-                <span class="tm-color-primary"><%= blog.getDate() %></span>
+                <span class="tm-color-primary"><%= blog.getDate()%></span>
             </div>
             <hr>
             <div class="d-flex justify-content-between">
@@ -57,6 +57,6 @@
                 }
             }
         %>
-        <a href="feedback.jsp">Feedback</a>
+        <a href="MainController?action=GetFeedbackTypeList">Feedback</a>
     </body>
 </html>

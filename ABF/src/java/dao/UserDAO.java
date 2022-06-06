@@ -33,8 +33,9 @@ public class UserDAO {
         try {
             conn = DBUtils.getConnection();
             if (conn != null) {
-                psm = conn.prepareStatement(FIND_USER);
+                psm = conn.prepareStatement(LOGIN);
                 psm.setString(1, email);
+                psm.setString(2, password);
                 rs = psm.executeQuery();
                 if (rs.next()) {
                     int userID = rs.getInt("userID");

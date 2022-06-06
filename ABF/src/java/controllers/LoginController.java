@@ -47,6 +47,26 @@ public class LoginController extends HttpServlet {
             String password = request.getParameter("password");
             UserDAO dao = new UserDAO();
             UserDTO loginUser = dao.checkLogin(email, password);
+            if (loginUser != null) {
+                if (loginUser.isStatus()) {//Kiểm tra xem tài khoản còn hoạt động ko
+                    HttpSession session = request.getSession();
+                    session.setAttribute("LOGIN_USER", loginUser);
+                    String roleName = dao.checkRole(loginUser.getRoleID());
+                    if (ADMIN.equals(roleName)) {
+                        url = ADMIN_PAGE;
+                    } else {
+                        if (STUDENT.equals(roleName) || MENTOR.equals(roleName)) {
+                            url = USER_CONTROLLER;
+                        } else {//Nhắc nhở nhẹ nhàng
+                            request.setAttribute("ERROR", "Your role is invalid!");
+                        }
+                    }
+                } else {//Nhắc nhở nhẹ nhàng
+                    request.setAttribute("ERROR", "Your account is no longer active!");
+                }
+            } else {
+                request.setAttribute("ERROR", "Invalid email or password!");
+            }
         } catch (Exception e) {
             log("Error at Login Controller: " + e.toString());
         } finally {

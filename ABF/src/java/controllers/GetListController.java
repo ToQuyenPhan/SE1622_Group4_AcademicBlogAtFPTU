@@ -43,8 +43,7 @@ public class GetListController extends HttpServlet implements Serializable {
             BlogDAO dao = new BlogDAO();
             List<BlogDTO> listAllBlogs = dao.getAllBlogs();//Lấy hết các blog
             if(listAllBlogs.size() > 0){
-                Collections.sort(listAllBlogs, BlogDTO.compareDate);
-                HttpSession session = request.getSession();              
+                Collections.sort(listAllBlogs, BlogDTO.compareDate);              
                 request.setAttribute("LIST_ALL_BLOGS", listAllBlogs);
             }
             url = SUCCESS;

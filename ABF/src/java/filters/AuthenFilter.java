@@ -44,6 +44,7 @@ public class AuthenFilter implements Filter {
     private static final String ERROR = "error.jsp";
     private static final String HOME_PAGE = "homepage.jsp";
     private static final String ADMIN_PAGE = "admin.jsp";
+    private static final String FEEDBACK_PAGE = "feedback.jsp";
 
     private static final boolean debug = true;
 
@@ -60,10 +61,12 @@ public class AuthenFilter implements Filter {
         //Khai báo các Resource Student được phép truy cập
         STUDENT_RESOURCES = new ArrayList<>();
         STUDENT_RESOURCES.add(HOME_PAGE);
+        STUDENT_RESOURCES.add(FEEDBACK_PAGE);
 
         //Khai báo các Resource Mentor được phép truy cập
         MENTOR_RESOURCES = new ArrayList<>();
         MENTOR_RESOURCES.add(HOME_PAGE);
+        MENTOR_RESOURCES.add(FEEDBACK_PAGE);
 
         //Khai báo các Resource ko cần xác thực, phân quyền 
         NON_AUTHEN_RESOURCES = new ArrayList<>();

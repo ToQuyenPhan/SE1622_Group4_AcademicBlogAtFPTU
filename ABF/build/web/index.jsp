@@ -18,13 +18,13 @@
                     <img src="image/FPTU__3_-removebg-preview2png.png">
                 </div>
                 <div class="col-12 col-sm-9">
-                    <input onclick="openForm(1)" type="button" id="login" value="Login">
+                    <input class="input-welcome-page" onclick="openForm(1)" type="button" id="login" value="Login">
                 </div>
             </div>
             <div class="content-welcome-page">
-                <h1>Welcome to FPT University<br>Academic Blog</h1>
+                <h1>WELCOME TO FPT UNIVERSITY<br>ACADEMIC BLOG</h1>
             </div>
-            <form class="popup-form-welcome-page" id="popupForm">
+            <form class="popup-form-welcome-page" id="popupForm" action="MainController" method="POST">
                 <h1>Login</h1>
                 <div class="login-google-welcome-page">
                     <img src="image/104d91f71da1b56e29231059d85a1e93.jpg">
@@ -33,11 +33,11 @@
                 </div>
                 <div class="input-welcome-page">
                     <i class="fas fa-user-alt"></i>
-                    <input type="text" placeholder="Email" name="email" required>
+                    <input type="text" placeholder="Email" name="email" required="">
                 </div>
                 <div class="input-welcome-page">
                     <i class="fas fa-lock"></i>
-                    <input type="text" placeholder="Password" name="password" required>
+                    <input type="password" placeholder="Password" name="password" required>
                 </div>
                 <input class="submit-welcome-page" type="submit" name="action" value="Login">
                 <i class="fa fa-close" onclick="openForm(2)"></i>
