@@ -20,6 +20,10 @@
         <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet"> <!-- https://fonts.google.com/ -->
         <link href="CSS/bootstrap.min.css" rel="stylesheet">
         <link href="CSS/templatemo-xtra-blog.css" rel="stylesheet">
+        <link rel="stylesheet" href="CSS/style.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
         <!--
             
         TemplateMo 553 Xtra Blog
@@ -28,7 +32,7 @@
         
         -->
     </head>
-    <body>
+    <body class="body-blog-detail">
         <%
             //Hiển thị Full Name của user
             UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
@@ -39,6 +43,10 @@
             if (search == null) {
                 search = "";
             }
+            String image = loginUser.getImage();
+            if(image == null){
+                image = "image/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png";
+            }
         %>
         <header class="tm-header" id="tm-header">
             <div class="tm-header-wrapper">
@@ -46,8 +54,13 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="tm-site-header">
-                    <div class="mb-3 mx-auto tm-site-logo"><i class="fas fa-times fa-2x"></i></div>            
-                    <h2 class="text-center"><%= loginUser.getFullName()%></h2>
+                    <a href="profile.jsp">
+                        <div class="mb-3 mx-auto tm-site-logo">
+                                <img src="<%= image %>">
+
+                        </div>            
+                        <h2 class="text-center"><%= loginUser.getFullName()%></h2>
+                    </a>
                 </div>
                 <nav class="tm-nav" id="tm-nav">            
                     <ul>
@@ -63,7 +76,7 @@
                                 <i class="fas fa-users"></i>
                                 Subjects
                             </a></li>
-                        <li class="tm-nav-item"><a href="contact.html" class="tm-nav-link">
+                        <li class="tm-nav-item"><a href="MainController?action=GetFeedbackTypeList" class="tm-nav-link">
                                 <i class="far fa-comments"></i>
                                 Feedback
                             </a></li>
@@ -76,44 +89,55 @@
                 <div class="row tm-row">
 
                     <%
-                        List<BlogDTO> listAllBlogs = (List<BlogDTO>) request.getAttribute("LIST_ALL_BLOGS");
-                        if (listAllBlogs != null) { //chỉ hiển thị khi người dùng đã đăng nhập
-                            if (listAllBlogs.size() > 0) {
-                                for (BlogDTO blog : listAllBlogs) {
+                        BlogDTO blogDetail = (BlogDTO) request.getAttribute("BLOG_DETAIL");
+                        if (blogDetail != null) {
                     %>
 
-                    <article class="col-12">
-                        <div class="form-inline">
+                    <article class="col-12 blog-detail justify-content-center">
+                        <%
+                            if (loginUser.getUserID() == blogDetail.getUserID()) {
+                        %>
+                        <div class="form-inline button-blog-detail">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Delete</button>
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Edit</button>
                         </div>
-                        <a class="form-inline">               
-                            <h1 class="tm-pt-60 tm-color-primary tm-post-title" style="font-size: 4rem"><%= blog.getTitle()%></h1>                           
-                        </a>                    
-                        <p class="form-inline tm-mb-80" style="color: black; font-size: 22px">
-                            <%= blog.getContent()%>
-                        </p>
-                        <p class="form-inline tm-mb-80">
-                            <img src="<%= blog.getImage()%>" style="width:40rem;height:20rem;" readonly=""/>
-                        </p>
-                        <div class="form-inline tm-mb-80">
-                            <span class="tm-color-primary col-sm-6"><a>Number of Vote: </a><%= blog.getNumberOfVotes()%></span>
-                            <span class="tm-color-primary col-sm-6" style="font-size: 16px"><a>Number of Comments: </a><%= blog.getNumberOfComments()%></span>               
+                        <%
+                            }
+                        %>
+                        <div class="title-blog-detail">              
+                            <h1 class="tm-pt-60 tm-color-primary tm-post-title" style="font-size: 4rem"><%= blogDetail.getTitle()%></h1>                           
                         </div>
-
-                        <div class="form-inline tm-mb-80">
+                        <div class="blog-detail-image">
+                            <img src="<%= blogDetail.getImage()%>" style="width:40rem;height:20rem;" readonly=""/>
+                        </div>
+                        <div class="justify-content-center">
+                            <p class="form-inline tm-mb-80" style="color: black; font-size: 22px">
+                                <%= blogDetail.getContent()%>
+                            </p>
+                        </div>
+                        <div class="by-blog-detail">
+                            <span>
+                                By <%= blogDetail.getFullName()%>
+                            </span>
+                            <br>
+                            <cite><%= blogDetail.getDate()%></cite>
+                        </div>
+                        <div class="form-inline number-blog-detail">
+                            <span class="tm-color-primary col-sm-6">Number of Vote: <%= blogDetail.getNumberOfVotes()%></span>
+                            <span class="tm-color-primary col-sm-6" style="font-size: 16px">Number of Comments: <%= blogDetail.getNumberOfComments()%></span>               
+                        </div>
+                        <div class="comment-blog-detail">
                             <form action="MainController" method="POST">
-                                <input type="text" name="comment" style="width: 32rem;height: 30px" ></br>
+                                <input type="text" name="comment" style="width: 45rem;height: 40px" ></br>
                                 <input type="hidden" name="userID" value="<%=loginUser.getUserID()%>">                                 
-                                <input type="hidden" name="blogID" value="<%=blog.getBlogID()%>">
-                                <input type="hidden" name="subjectID" value="<%=blog.getSubjectID()%>">
+                                <input type="hidden" name="blogID" value="<%=blogDetail.getBlogID()%>">
+                                <input type="hidden" name="subjectID" value="<%=blogDetail.getSubjectID()%>">
                                 <input type="submit" name="action" value="Comment">
                             </form>
-                        </div>                   
+                        </div> 
+                        <a href="MainController?action=GetList"><i class='far fa-arrow-alt-circle-left'></i></a>
                     </article>
                     <%
-                                }
-                            }
                         }
                     %>      
                 </div>

@@ -39,6 +39,10 @@
             if (search == null) {
                 search = "";
             }
+            String image = loginUser.getImage();
+            if(image == null){
+                image = "image/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png";
+            }
         %>
         <header class="tm-header" id="tm-header">
             <div class="tm-header-wrapper">
@@ -46,8 +50,13 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="tm-site-header">
-                    <div class="mb-3 mx-auto tm-site-logo"><i class="fas fa-times fa-2x"></i></div>            
-                    <h2 class="text-center"><%= loginUser.getFullName()%></h2>
+                    <a href="profile.jsp">
+                        <div class="mb-3 mx-auto tm-site-logo">
+                                <img src="<%= image%>">
+
+                        </div>            
+                        <h2 class="text-center"><%= loginUser.getFullName()%></h2>
+                    </a>
                 </div>
                 <nav class="tm-nav" id="tm-nav">            
                     <ul>
@@ -63,7 +72,7 @@
                                 <i class="fas fa-users"></i>
                                 Subjects
                             </a></li>
-                        <li class="tm-nav-item"><a href="contact.html" class="tm-nav-link">
+                        <li class="tm-nav-item"><a href="MainController?action=GetFeedbackTypeList" class="tm-nav-link">
                                 <i class="far fa-comments"></i>
                                 Feedback
                             </a></li>

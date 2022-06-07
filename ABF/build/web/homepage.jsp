@@ -137,7 +137,7 @@
                     %> 
                     <article class="col-12 col-md-6 tm-post">
                         <hr class="tm-hr-primary">
-                        <a href="MainController?action=ViewBlogDetails&blogID=<%= blog.getBlogID()%>" class="effect-lily tm-post-link tm-pt-60">
+                        <a href="MainController?action=ViewBlogDetails&blogID=<%= blog.getBlogID()%>&userID=<%= blog.getUserID() %>" class="effect-lily tm-post-link tm-pt-60">
                             <%
                                 if (blog.getImage() != null) {
                             %>

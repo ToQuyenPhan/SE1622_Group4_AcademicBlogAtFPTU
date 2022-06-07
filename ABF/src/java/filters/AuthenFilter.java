@@ -47,6 +47,7 @@ public class AuthenFilter implements Filter {
     private static final String FEEDBACK_PAGE = "feedback.jsp";
     private static final String PROFILE_PAGE = "profile.jsp";
     private static final String POST_BLOG_PAGE = "postblog.jsp";
+    private static final String BLOG_DETAIL_PAGE = "blogdetail.jsp";
 
     private static final boolean debug = true;
 
@@ -67,6 +68,7 @@ public class AuthenFilter implements Filter {
         STUDENT_RESOURCES.add(FEEDBACK_PAGE);
         STUDENT_RESOURCES.add(PROFILE_PAGE);
         STUDENT_RESOURCES.add(POST_BLOG_PAGE);
+        STUDENT_RESOURCES.add(BLOG_DETAIL_PAGE);
         STUDENT_RESOURCES.add("SearchController");
 
         //Khai báo các Resource Mentor được phép truy cập
@@ -75,6 +77,7 @@ public class AuthenFilter implements Filter {
         MENTOR_RESOURCES.add(FEEDBACK_PAGE);
         MENTOR_RESOURCES.add(PROFILE_PAGE);
         MENTOR_RESOURCES.add(POST_BLOG_PAGE);
+        MENTOR_RESOURCES.add(BLOG_DETAIL_PAGE);
         MENTOR_RESOURCES.add("SearchController");
 
         //Khai báo các Resource ko cần xác thực, phân quyền 
