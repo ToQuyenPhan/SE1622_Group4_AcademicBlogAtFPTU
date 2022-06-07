@@ -60,7 +60,8 @@ public class LoginWithGoogleController extends HttpServlet {
                     UserDAO dao = new UserDAO();
                     UserDTO loginUser = dao.checkLoginByEmail(email);
                     if (loginUser == null) {//Tạo tài khoản mới cho lần đầu tiên đăng nhập
-                        boolean check = dao.createUser(name[0], email);
+                        String image = googlePojo.getPicture();
+                        boolean check = dao.createUser(name[0], email,image);
                         if (check == true) {
                             loginUser = dao.checkLoginByEmail(email);
                         }

@@ -19,17 +19,29 @@ public class BlogDTO{
     private String title;
     private String content;
     private String date;
-    private String updateDate;
     private String image;
     private String video;
     private int numberOfVotes;
     private int numberOfComments;
     private String status;
+    private String fullName;
 
     public BlogDTO() {
+        this.userID = 0;
+        this.userApproveID = 0;
+        this.subjectID = 0;
+        this.title = "";
+        this.content = "";
+        this.date = "";
+        this.image = "";
+        this.video = "";
+        this.numberOfVotes = 0;
+        this.numberOfComments = 0;
+        this.status = "";
+        this.fullName = "";
     }
 
-    public BlogDTO(int blogID, int userID, int userApproveID, int subjectID, String title, String content, String date, String updateDate, String image, String video, int numberOfVotes, int numberOfComments, String status) {
+    public BlogDTO(int blogID, int userID, int userApproveID, int subjectID, String title, String content, String date, String image, String video, int numberOfVotes, int numberOfComments, String status, String fullName) {
         this.blogID = blogID;
         this.userID = userID;
         this.userApproveID = userApproveID;
@@ -37,12 +49,12 @@ public class BlogDTO{
         this.title = title;
         this.content = content;
         this.date = date;
-        this.updateDate = updateDate;
         this.image = image;
         this.video = video;
         this.numberOfVotes = numberOfVotes;
         this.numberOfComments = numberOfComments;
         this.status = status;
+        this.fullName = fullName;
     }
 
     public int getBlogID() {
@@ -101,14 +113,6 @@ public class BlogDTO{
         this.date = date;
     }
 
-    public String getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(String updateDate) {
-        this.updateDate = updateDate;
-    }
-
     public String getImage() {
         return image;
     }
@@ -147,6 +151,14 @@ public class BlogDTO{
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public static Comparator compareDate = new Comparator(){

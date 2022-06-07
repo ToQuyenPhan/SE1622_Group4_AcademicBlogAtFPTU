@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "GetFeedbackTypeListController", urlPatterns = {"/GetFeedbackTypeListController"})
 public class GetFeedbackTypeListController extends HttpServlet {
-private static final String ERROR = "homepage.jsp";
+private static final String ERROR = "MainController?action=GetList";
 private static final String SUCCESS = "feedback.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

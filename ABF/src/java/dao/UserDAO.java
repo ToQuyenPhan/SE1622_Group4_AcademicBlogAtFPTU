@@ -17,12 +17,12 @@ import utils.DBUtils;
  * @author To Quyen Phan
  */
 public class UserDAO {
-    private static final String FIND_USER = "SELECT userID, password, fullName, roleID, gender, dateOfBirth, image, status"
+    private static final String FIND_USER = "SELECT userID, password, fullName, roleID, image, numberOfBlogs, gender, dateOfBirth, address, contact, aboutme, status"
             + " FROM [User] WHERE email like ?";
-    private static final String LOGIN = "SELECT userID, fullName, roleID, gender, dateOfBirth, image, status"
+    private static final String LOGIN = "SELECT userID, fullName, roleID, image, numberOfBlogs, gender, dateOfBirth, address, contact, aboutme, status"
             + " FROM [User] WHERE email like ? AND password like ?";
-    private static final String CREATE_USER = "INSERT INTO [User](password, fullName, roleID, email, gender, dateOfBirth, image, status)"
-            + " VALUES(?,?,1,?,null,null,null,1)";
+    private static final String CREATE_USER = "INSERT INTO [User](password, fullName, roleID, email, image, numberOfBlogs, gender, dateOfBirth, address, contact, aboutme, status)"
+            + " VALUES(?,?,1,?,?,0,null,null,null,null,null,1)";
     private static final String CHECK_ROLE = "SELECT roleName FROM Role WHERE roleID = ?";
     
     public UserDTO checkLogin(String email, String password) throws SQLException {
@@ -41,11 +41,15 @@ public class UserDAO {
                     int userID = rs.getInt("userID");
                     String fullName = rs.getString("fullName");
                     int roleID = rs.getInt("roleID");
+                    String image = rs.getString("image");
+                    int numberOfBlogs = rs.getInt("numberOfBlogs");
                     String gender = rs.getString("gender");
                     String dateOfBirth = rs.getString("dateOfBirth");
-                    String image = rs.getString("image");
+                    String address = rs.getString("address");
+                    String contact = rs.getString("contact");
+                    String aboutme = rs.getString("aboutme");                   
                     boolean status = rs.getBoolean("status");
-                    user = new UserDTO(userID, password, fullName, roleID, email, gender, dateOfBirth, image, status);
+                    user = new UserDTO(userID, password, fullName, roleID, email, image, numberOfBlogs, gender, dateOfBirth, address, contact, aboutme, status);
                 }
             }
         } catch (Exception e) {
@@ -80,11 +84,15 @@ public class UserDAO {
                     String password = rs.getString("password");
                     String fullName = rs.getString("fullName");
                     int roleID = rs.getInt("roleID");
+                    String image = rs.getString("image");
+                    int numberOfBlogs = rs.getInt("numberOfBlogs");
                     String gender = rs.getString("gender");
                     String dateOfBirth = rs.getString("dateOfBirth");
-                    String image = rs.getString("image");
+                    String address = rs.getString("address");
+                    String contact = rs.getString("contact");
+                    String aboutme = rs.getString("aboutme");      
                     boolean status = rs.getBoolean("status");
-                    user = new UserDTO(userID, password, fullName, roleID, email, gender, dateOfBirth, image, status);
+                    user = new UserDTO(userID, password, fullName, roleID, email, image, numberOfBlogs, gender, dateOfBirth, address, contact, aboutme, status);
                 }
             }
         } catch (Exception e) {
@@ -134,7 +142,7 @@ public class UserDAO {
         return roleName;
     }
     
-    public boolean createUser(String fullName, String email) throws SQLException, ClassNotFoundException {
+    public boolean createUser(String fullName, String email, String image) throws SQLException, ClassNotFoundException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement psm = null;
@@ -145,6 +153,7 @@ public class UserDAO {
                 psm.setString(1, "");
                 psm.setString(2, fullName);
                 psm.setString(3, email);
+                psm.setString(4, image);
                 check = psm.executeUpdate() > 0 ? true : false;
             }
         } catch (Exception e) {

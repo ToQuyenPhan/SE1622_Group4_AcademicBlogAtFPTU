@@ -25,11 +25,15 @@ public class MainController extends HttpServlet {
     private static final String GETLIST = "GetList";
     private static final String GETFEEDBACKTYPELIST = "GetFeedbackTypeList";
     private static final String SEND = "Send";
+    private static final String SEARCH = "Search";
+    private static final String SORT_BY_DATE = "Sort";
     private static final String LOGIN_WITH_GOOGLE_CONTROLLER = "LoginWithGoogleController";
     private static final String LOGIN_CONTROLLER = "LoginController";
     private static final String GET_LIST_CONTROLLER = "GetListController";
     private static final String GET_FEEDBACK_TYPE_LIST_CONTROLLER = "GetFeedbackTypeListController";
     private static final String SEND_FEEDBACK_CONTROLLER = "SendFeedbackController";
+    private static final String SEARCH_CONTROLLER = "SearchController";
+    private static final String SORT_BY_DATE_ASCENDING = "MainController?action=GetList";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -55,6 +59,10 @@ public class MainController extends HttpServlet {
                 url = GET_FEEDBACK_TYPE_LIST_CONTROLLER;
             } else if (SEND.equals(action)) {
                 url = SEND_FEEDBACK_CONTROLLER;
+            } else if (SEARCH.equals(action)) {
+                url = SEARCH_CONTROLLER;
+            } else if (SORT_BY_DATE.equals(action)) {
+                url = SORT_BY_DATE_ASCENDING;
             } else{
                 request.setAttribute("ERROR_MESSAGE", "Function is not available!");
             }

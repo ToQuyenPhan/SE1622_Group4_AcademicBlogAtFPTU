@@ -8,7 +8,6 @@ package controllers;
 import dao.FeedbackDAO;
 import dto.UserDTO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -26,8 +25,10 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "SendFeedbackController", urlPatterns = {"/SendFeedbackController"})
 public class SendFeedbackController extends HttpServlet {
+
     private static final String ERROR = "MainController?action=GetFeedbackTypeList";
     private static final String SUCCESS = "MainController?action=GetFeedbackTypeList";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,31 +42,33 @@ public class SendFeedbackController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-        try{
+        try {
             String description = request.getParameter("description");
-            String[] feedbackTypeIDs = request.getParameterValues("where");
-            int feedbackTypeID = 0;
-            for(String f : feedbackTypeIDs){
-                feedbackTypeID = Integer.parseInt(f);
-            }
-            HttpSession session = request.getSession();
-            UserDTO loginUser = (UserDTO)session.getAttribute("LOGIN_USER");
-            int userID = loginUser.getUserID();
-            //Lấy ngày hiện tại chuyển sang string
-            Date dateNow = Calendar.getInstance().getTime();
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            FeedbackDAO dao = new FeedbackDAO();
-            //Thêm vào database
-            boolean check = dao.giveFeedback(userID, feedbackTypeID, description, dateFormat.format(dateNow));
-            if(check){
-               url = SUCCESS;
-               request.setAttribute("MESSAGE", "Sending feedback successully!");
-            }else{
+            String strFeedbackTypeID = request.getParameter("where");
+            if (strFeedbackTypeID != null) {
+                int feedbackTypeID = Integer.parseInt(strFeedbackTypeID);
+                HttpSession session = request.getSession();
+                UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+                int userID = loginUser.getUserID();
+                //Lấy ngày hiện tại chuyển sang string
+                Date dateNow = Calendar.getInstance().getTime();
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                FeedbackDAO dao = new FeedbackDAO();
+                //Thêm vào database
+                boolean check = dao.giveFeedback(userID, feedbackTypeID, description, dateFormat.format(dateNow));
+                if (check) {
+                    url = SUCCESS;
+                    request.setAttribute("MESSAGE", "Sending feedback successully!");
+                } else {
+                    request.setAttribute("MESSAGE", "Sending feedback failed!");
+                }
+            } else {
                 request.setAttribute("MESSAGE", "Sending feedback failed!");
+                request.setAttribute("MESSAGE_FOR_FEEDBACK_TYPE", "Please choose a type!");
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             log("Error at Send Feedback Controller: " + e.toString());
-        }finally{
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

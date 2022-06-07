@@ -24,8 +24,10 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "GetListController", urlPatterns = {"/GetListController"})
 public class GetListController extends HttpServlet implements Serializable {
+
     private static final String ERROR = "error.jsp";
     private static final String SUCCESS = "homepage.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,17 +41,25 @@ public class GetListController extends HttpServlet implements Serializable {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-        try{
+        try {
             BlogDAO dao = new BlogDAO();
             List<BlogDTO> listAllBlogs = dao.getAllBlogs();//Lấy hết các blog
-            if(listAllBlogs.size() > 0){
-                Collections.sort(listAllBlogs, BlogDTO.compareDate);              
-                request.setAttribute("LIST_ALL_BLOGS", listAllBlogs);
+            if (listAllBlogs.size() > 0) {
+                Collections.sort(listAllBlogs, BlogDTO.compareDate);
+                String value = request.getParameter("sortByDate");
+                if (value == null || "descending".equals(value)) {
+                    Collections.sort(listAllBlogs, BlogDTO.compareDate);
+                    request.setAttribute("OPTION", "Descending");
+                } else {
+                    Collections.reverse(listAllBlogs);
+                    request.setAttribute("OPTION", "Ascending");
+                }
+                request.setAttribute("LIST_ALL_BLOGS", listAllBlogs);   
             }
             url = SUCCESS;
-        }catch(Exception e){
+        } catch (Exception e) {
             log("Error at Get List Controller: " + e.toString());
-        }finally{
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

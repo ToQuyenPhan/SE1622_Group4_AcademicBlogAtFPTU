@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="5"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/src/java/dao/FeedbackDAO.java</file>
             <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/src/java/controllers/SendFeedbackController.java</file>
-            <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/web/error.jsp</file>
+            <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/web/postblog.jsp</file>
             <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/src/java/controllers/MainController.java</file>
             <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/web/CSS/style.css</file>
+            <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/web/profile.jsp</file>
             <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/src/java/dto/BlogDTO.java</file>
             <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/src/java/filters/AuthenFilter.java</file>
+            <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/web/CSS/bootstrap.min.css</file>
             <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/web/index.jsp</file>
+            <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/src/java/controllers/SearchController.java</file>
             <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/src/java/controllers/LoginController.java</file>
             <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/src/java/dao/BlogDAO.java</file>
+            <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/web/fontawesome/css/all.min.css</file>
             <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/src/java/controllers/GetFeedbackTypeListController.java</file>
             <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/web/homepage.jsp</file>
             <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/src/java/controllers/GetListController.java</file>
-            <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/src/java/dto/FeedbackDTO.java</file>
             <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/web/abf.js</file>
             <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/web/feedback.jsp</file>
-            <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/src/java/dto/FeedbackTypeDTO.java</file>
-            <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/src/java/dao/UserDAO.java</file>
-            <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/src/java/controllers/LoginWithGoogleController.java</file>
+            <file>file:/C:/Users/NITRO5/Documents/NetBeansProjects/ABF/src/java/dto/UserDTO.java</file>
         </group>
     </open-files>
 </project-private>

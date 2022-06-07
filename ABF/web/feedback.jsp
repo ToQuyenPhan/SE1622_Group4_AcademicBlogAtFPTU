@@ -34,7 +34,7 @@
                     String message = (String) request.getAttribute("MESSAGE");
                     if (message != null) {
                 %>
-                    <%= message %>
+                <%= message%>
                 <%
                     }
                 %>
@@ -48,7 +48,14 @@
                         <span id="select-label">- please select one -</span>
                         <div id="arrow" class="arrow"></div>
                     </button>
-
+                    <%
+                        String messageFeedback = (String) request.getAttribute("MESSAGE_FOR_FEEDBACK_TYPE");
+                        if (messageFeedback != null) {
+                    %>
+                    <h4 class="h4-feedback-page" id="message"><%= messageFeedback%></h4>
+                    <%
+                        }
+                    %>
                     <div class="dropdown hidden" id="dropdown">
                         <%
                             List<FeedbackTypeDTO> listAllFeedbackTypes = (List<FeedbackTypeDTO>) request.getAttribute("LIST_ALL_FEEDBACK_TYPE");
@@ -88,16 +95,14 @@
                 if (e.target.className.includes('emoji'))
                     return;
                 form.classList.add('form-feedback-page--active');
-            })
+            });
 
-            container.addEventListener('mouseleave', () => {
-                form.classList.remove('form-feedback-page--active')
-            })
 
             const button = document.querySelector('#button');
             const select = document.querySelector("#dropdown");
             const options = document.querySelectorAll(".option");
             const selectLabel = document.querySelector('#select-label');
+            const h4 = document.getElementById("message");
 
             button.addEventListener("click", function (e) {
                 e.preventDefault();
@@ -111,6 +116,7 @@
             options.forEach(function (option) {
                 option.addEventListener("click", function (e) {
                     setSelectTitle(e);
+                    h4.style.display = "none";
                 });
             });
 
@@ -127,6 +133,7 @@
                         selectLabel.innerText = "About Mentor";
                         break;
                 }
+                
                 toggleHidden();
             }
             ;
