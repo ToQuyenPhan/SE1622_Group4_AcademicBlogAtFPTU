@@ -5,26 +5,31 @@ use ABF
 create table Blog(
 blogID int identity(1,1) primary key,
 userID int not null,
-userApproveID int not null,
+userApproveID int,
 subjectID int not null,
 title nvarchar(50) not null,
 content nvarchar(max) not null,
-date nvarchar(50) not null,
-updateDate nvarchar(50),
+date nvarchar(100) not null,
 image nvarchar(max),
-video nvarchar(50),
+video nvarchar(max),
 numberOfVotes int not null,
 numberOfComments int,
 status nvarchar(10) not null)
+
 --Bảng User
 create table [User](
 userID int identity(1,1) primary key,
+password nvarchar(50) not null,
 fullName nvarchar(250) not null,
 roleID int not null,
 email nvarchar(255) not null,
+image nvarchar(max),
+numberOfBlogs int not null,
 gender nvarchar(50),
 dateOfBirth nvarchar(50),
-image nvarchar(max),
+address nvarchar(250),
+contact nvarchar(50),
+aboutme nvarchar(50),
 status nvarchar(10) not null)
 --Bảng Role
 create table Role(
@@ -37,7 +42,8 @@ blogID int not null,
 userID int not null,
 content nvarchar(max) not null,
 date nvarchar(50) not null,
-replyID int,
+image nvarchar(max),
+video nvarchar(max),
 status nvarchar(10) not null)
 --Bảng Subject
 create table Subject(
@@ -78,27 +84,49 @@ alter table Blog add foreign key (subjectID) references Subject(subjectID)
 alter table [User] add foreign key (roleID) references Role(roleID)
 alter table Comment add foreign key (blogID) references Blog(blogID)
 alter table Comment add foreign key (userID) references [User](userID)
-alter table Comment add foreign key (replyID) references Comment(commentID)
 alter table Subject add foreign key (majorID) references Major(majorID)
 alter table RegistrationDetail add foreign key (subjectID) references Subject(subjectID)
 alter table RegistrationDetail add foreign key (registrationID) references Registration(registrationID)
 alter table Registration add foreign key (userID) references [User](userID)
 alter table Feedback add foreign key (userID) references [User](userID)
 alter table Feedback add foreign key (feedbackTypeID) references FeedbackType(feedbackTypeID)
---------Thêm ràng buộc------------
-alter table Blog add constraint checkTitle check (len(trim(title)) > 15)
-alter table Blog add constraint checkContent check (len(trim(content)) > 50)
-alter table [User] add constraint checkFullName check (len(trim(fullName)) > 10)
 
-insert into Role(roleName) values('Student')
-insert into [User](fullName,roleID,gmail,gender,dateOfBirth,image,status)
-values ('Phan Thi To Quyen', 1, 'quyenpttse150351@fpt.edu.vn', null, null, null, 1)
-select * from Role
-use ABC
+-------------------------------------------------------------------------------------------------------------------
+
 drop database ABF
-drop table Blog
-SELECT userID, fullName, roleID, gmail, gender, dateOfBirth, image, status
-            FROM [User] WHERE gmail like 'quyenpttse150351@fpt.edu.vn'
-			delete from [User] where gmail like 'quyenpttse150351@fpt.edu.vn'
+select * from Feedback
+select * from [User]
+select * from Major
+select * from Subject
+select * from Blog
+update Blog set image = null where blogID = 12
+delete from Feedback where userID = 2
+insert into Major(majorName, status) values ('ABC', 1)
+insert into Subject(subjectName, majorID, status) values('ABC', 2, 1)
+insert into Role(roleName) values('Student')
+insert into [User](fullName,roleID,email,gender,dateOfBirth,image,status)
+values ('Phan Thi To Quyen', 1, 'quyenpttse150351@fpt.edu.vn', null, null, null, 1)
+insert into FeedbackType(feedbackName) values('About Mentor')
+SELECT userID, fullName, roleID, gender, dateOfBirth, image, status 
+FROM [User] WHERE email like 'quyenlh01@gmail.com' AND password like '123'
+SELECT userID, fullName, roleID, email, gender, dateOfBirth, image, status
+            FROM [User] WHERE email like 'quyenpttse150351@fpt.edu.vn'
+			delete from [User] where email like 'quyenpttse150351@fpt.edu.vn'
+INSERT INTO [User](password, fullName, roleID, email, gender, dateOfBirth, image, status)
+            VALUES('123','Phan Thi To Quyen',1,'quyenlh01@gmail.com',null,null,null,1)
 INSERT INTO [User](fullName, roleID, email, gender, dateOfBirth, image, status)
-            VALUES('quyenpttse150351',1,'quyenpttse150351@fpt.edu.vn',null,null,null,1)
+            VALUES('thanhhtse150412',1,'thanhhtse150412@fpt.edu.vn',null,null,null,1)
+
+INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 
+			VALUES( 1,null,2,'123asd','akjshfksnnvoiewrwqurfjckanc','8/6/2022 11:22:02','image/bg6.jpg','video/123',4,0,'approved')
+			INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 
+			VALUES( 1,null,2,'123asd','akjshfksnnvoiewrwqurfjckanc','6/3/2022 11:23:02','img/123','video/123',0,0,'approved')
+			INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 
+			VALUES( 1,null,2,'123asd','akjshfksnnvoiewrwqurfjckanc','6/2/2022 11:22:02','img/123','video/123',0,0,'approved')
+Insert into [User](password,fullName,roleID,email,image,numberOfBlogs,
+gender,dateOfBirth,address,contact,aboutme,status) values
+('123','To Quyen',1,'quyenlh01@gmail.com',null,0,null,null,null,null,null,1)
+SELECT blogID,Blog.userID,userApproveID,subjectID,title,content,date, Blog.image,video,numberOfVotes,numberOfComments,Blog.status, fullName from Blog JOIN [USER] ON Blog.userID = [User].userID where Blog.status LIKE 'approved'
+SELECT blogID,Blog.userID,userApproveID,subjectID,title,content,date, Blog.image,video,
+            numberOfVotes,numberOfComments,Blog.status, fullName FROM Blog JOIN [USER] ON Blog.userID = [User].userID 
+            WHERE title LIKE '123asd' AND Blog.status LIKE 'approved'
