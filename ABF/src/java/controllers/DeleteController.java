@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DeleteController extends HttpServlet {
 
       private static final String ERROR = "homepage.jsp";
-      private static final String SUCCESS = "homepage.jsp";
+      private static final String SUCCESS = "SearchController";
       
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -32,7 +32,6 @@ public class DeleteController extends HttpServlet {
         try {
             String blogID = request.getParameter("blogID");
             BlogDAO dao = new BlogDAO();
-            
             boolean check = dao.delete(blogID);
             if(check){
                 url = SUCCESS;

@@ -30,7 +30,7 @@ public class BlogDAO {
             + "JOIN Subject  ON Blog.subjectID = Subject.subjectID \n"
             + "JOIN Major ON Subject.majorID = Major.majorID \n"
             + "WHERE Major.majorName LIKE ?";
-
+    private static final String INSERT = "INSERT INTO Blog(NumberOfVotes) VALUES(?)";
     public List<BlogDTO> getAllBlogs() throws SQLException {
         List<BlogDTO> listAllBlogs = new ArrayList<>();
         Connection conn = null;
@@ -131,6 +131,29 @@ public class BlogDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+    public boolean insert(BlogDTO blogVote) throws SQLException, ClassNotFoundException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(INSERT);
+                ptm.setInt(1, blogVote.getNumberOfVotes());
+                
+                check = ptm.executeUpdate() > 0 ? true : false;
+            }
         } finally {
             if (ptm != null) {
                 ptm.close();

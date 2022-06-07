@@ -13,8 +13,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home page</title>
-
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <style>
             .fa {
                 font-size: 50px;
@@ -24,8 +28,7 @@
 
             .fa:hover {
                 color: darkblue;
-            }
-            <!-- vote css -->
+            } 
             .number {
                 display: inline-block;
                 text-align: center;
@@ -46,6 +49,8 @@
                 cursor: pointer;
                 color: dimgray;
             }
+
+
         </style>
     </head>
     <body>
@@ -104,65 +109,86 @@
                 <span class="down-vote"><i class="fas fa-angle-down"></i></span>
                 <span class="number"><%= blog.getNumberOfVotes()%></span>
             </div>
-            
-            <div>
-                <a href="MainController?action=Delete&blogID=<%= blog.getBlogID()%>&search=<%= search%>"> Delete </a>
+                        <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Delete</button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Delete</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <a href="MainController?action=Delete&blogID=<%= blog.getBlogID()%>&search=<%= search%>" type="button" class="btn btn-primary">Delete</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </article>
-            <script>
-                // function vote
-                const up_vote_span = document.querySelector('.up-vote');
-                const down_vote_span = document.querySelector('.down-vote');
-                let count = document.querySelector('.number');
+        <script>
+            // function vote
+            const up_vote_span = document.querySelector('.up-vote');
+            const down_vote_span = document.querySelector('.down-vote');
+            let count = document.querySelector('.number');
 
-                let upVote = false;
-                let downVote = false;
+            let upVote = false;
+            let downVote = false;
 
-                up_vote_span.addEventListener('click', function () {
+            up_vote_span.addEventListener('click', function () {
 
-                    if (downVote === true) {
+                if (downVote === true) {
 
-                        up_vote_span.style.color = "#3CBC8D";
-                        down_vote_span.style.color = "dimgray";
-                        count.innerHTML = parseInt(count.innerHTML) + 2;
-                        upVote = true;
-                        downVote = false;
+                    up_vote_span.style.color = "#3CBC8D";
+                    down_vote_span.style.color = "dimgray";
+                    count.innerHTML = parseInt(count.innerHTML) + 2;
+                    upVote = true;
+                    downVote = false;
 
-                    } else if (upVote === false) {
-                        up_vote_span.style.color = "#3CBC8D";
-                        count.innerHTML = parseInt(count.innerHTML) + 1;
-                        upVote = true;
-                    } else if (upVote === true) {
-                        up_vote_span.style.color = "dimgray";
-                        count.innerHTML = parseInt(count.innerHTML) - 1;
-                        upVote = false;
-                    }
-                });
+                } else if (upVote === false) {
+                    up_vote_span.style.color = "#3CBC8D";
+                    count.innerHTML = parseInt(count.innerHTML) + 1;
+                    upVote = true;
+                } else if (upVote === true) {
+                    up_vote_span.style.color = "dimgray";
+                    count.innerHTML = parseInt(count.innerHTML) - 1;
+                    upVote = false;
+                }
+            });
 
-                down_vote_span.addEventListener('click', function () {
+            down_vote_span.addEventListener('click', function () {
 
-                    if (upVote === true) {
-                        up_vote_span.style.color = "dimgray";
-                        down_vote_span.style.color = "#3CBC8D";
-                        count.innerHTML = parseInt(count.innerHTML) - 2;
-                        downVote = true;
-                        upVote = false;
-                    } else if (downVote === false) {
-                        down_vote_span.style.color = "#3CBC8D";
-                        count.innerHTML = parseInt(count.innerHTML) - 1;
-                        downVote = true;
-                    } else if (downVote === true) {
-                        down_vote_span.style.color = "dimgray";
-                        count.innerHTML = parseInt(count.innerHTML) + 1;
-                        downVote = false;
-                    }
-                });
-            </script>
-        <%
-                    }
+                if (upVote === true) {
+                    up_vote_span.style.color = "dimgray";
+                    down_vote_span.style.color = "#3CBC8D";
+                    count.innerHTML = parseInt(count.innerHTML) - 2;
+                    downVote = true;
+                    upVote = false;
+                } else if (downVote === false) {
+                    down_vote_span.style.color = "#3CBC8D";
+                    count.innerHTML = parseInt(count.innerHTML) - 1;
+                    downVote = true;
+                } else if (downVote === true) {
+                    down_vote_span.style.color = "dimgray";
+                    count.innerHTML = parseInt(count.innerHTML) + 1;
+                    downVote = false;
+                }
+            });
+
+        </script>
+    </script>
+    <%
                 }
             }
-        %>
-        <a href="feedback.jsp">Feedback</a>
-    </body>
+        }
+    %>
+    <a href="feedback.jsp">Feedback</a>
+</body>
 </html>
