@@ -108,15 +108,14 @@
                                 <!--
                                 <p class="tm-mb-40">Subject ${requestScope.BLOG_ERROR.subjectError}<input type="text" name="subjectID" required=""></p></br>
                                 -->
-                                Subject <select class="form-control" name="subject" required="">
-                                    <option value="none"> -none- </option>
-                                    <option value="PRJ301"> PRJ301 </option>
-                                    <option value="SWP391"> SWP391 </option>
-                                    <option value="SWT301"> SWT301 </option>
-                                    <option value="JPD201"> JPD201 </option>
-                                    <option value="SSL101"> SSL101 </option>
-                                    <option value="ITE123"> ITE123 </option>
-                                    <option value="......"> ...... </option>
+                                Subject <select class="form-control" name="subjectID" required="">
+                                    <option value="0"> -none- </option>
+                                    <option value="3"> PRJ301 </option>
+                                    <option value="4"> SWP391 </option>
+                                    <option value="5"> SWT301 </option>
+                                    <option value="6"> JPD201 </option>
+                                    <option value="7"> SSL101 </option>
+                                    <option value="8"> ITE123 </option>
                                 </select> ${requestScope.BLOG_ERROR.subjectError}
                             </div>
                             <div class="mb-4">
@@ -127,12 +126,13 @@
                                 <!--
                                 Image: ${requestScope.BLOG_ERROR.imageError}<input type="text" name="image" required=""></br></br>
                                 -->
-                                <form method="post" action="UploadFileController" enctype="multipart/form-data">
+                                <form method="post" action="MainController" enctype="multipart/form-data">
                                     Image<input class="form-control" name="file" type="file" required=""></br>
+                                    <!--
                                     <input type="submit" value="Upload" name="action"
                                            <button class="tm-btn tm-btn-primary tm-btn-small"></button>
                                     ${requestScope.BLOG_ERROR.imageError}
-                                </form>
+                                </form>-->
                             </div>
                             <div class="text-right">
                                 <input type="submit" name="action" value="Post"

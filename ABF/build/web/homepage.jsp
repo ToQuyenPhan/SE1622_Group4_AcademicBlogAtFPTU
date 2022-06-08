@@ -122,6 +122,33 @@
                                 %>
                                 <option value="<%= selectedOption.toLowerCase()%>" selected=""><%= selectedOption%></option>
                             </select>
+                            <%
+                                String selectedVoteOption = (String) request.getAttribute("OPTION_VOTE");
+                                if(selectedVoteOption == null){
+                                    selectedVoteOption = "None";
+                                }
+                            %>
+                            Sort By Vote: <select class="sort-by-vote" name="sortByVote">
+                                <%
+                                    if (selectedVoteOption.equals("Ascending")) {
+                                %>
+                                <option value="descending">Descending</option>
+                                <option value="none">None</option>
+                                <%
+                                } else if (selectedVoteOption.equals("Descending")) {
+                                %>
+                                <option value="ascending">Ascending</option>
+                                <option value="none">None</option>
+                                <%
+                                    }else{
+                                %>
+                                <option value="ascending">Ascending</option>
+                                <option value="descending">Descending</option>
+                                <%
+                                            }
+                                %>
+                                <option value="<%= selectedVoteOption.toLowerCase()%>" selected=""><%= selectedVoteOption%></option>
+                            </select>
                             <input type="hidden" name="search" value="<%= search %>">
                             <input class="sort-button" type="submit" name="action" value="Sort">
                         </form>

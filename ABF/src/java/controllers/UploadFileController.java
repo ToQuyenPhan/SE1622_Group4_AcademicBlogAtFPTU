@@ -5,30 +5,24 @@
  */
 package controllers;
 
-import dao.BlogDAO;
-import dto.BlogDTO;
+import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author To Quyen Phan
  */
-@WebServlet(name = "GetListController", urlPatterns = {"/GetListController"})
-public class GetListController extends HttpServlet implements Serializable {
-
-    private static final String ERROR = "error.jsp";
-    private static final String SUCCESS = "homepage.jsp";
-
+@WebServlet(name = "UploadFileController", urlPatterns = {"/UploadFileController"})
+public class UploadFileController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    private static final String ERROR = "postblog.jsp";
+    private static final String SUCCESS = "postblog.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,49 +37,38 @@ public class GetListController extends HttpServlet implements Serializable {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            BlogDAO dao = new BlogDAO();
-            List<BlogDTO> listAllBlogs = dao.getAllBlogs();//Lấy hết các blog
-            if (listAllBlogs.size() > 0) {
-                Collections.sort(listAllBlogs, BlogDTO.compareDate);
-                String value = request.getParameter("sortByDate");
-                if (value == null || "descending".equals(value)) {
-                    Collections.sort(listAllBlogs, BlogDTO.compareDate);
-                    request.setAttribute("OPTION", "Descending");
-                } else {
-                    Collections.reverse(listAllBlogs);
-                    request.setAttribute("OPTION", "Ascending");
-                }
-                String sortVoteValue = request.getParameter("sortByVote");
-                if (sortVoteValue != null) {
-                    if (sortVoteValue.equals("none")) {
-                        request.setAttribute("OPTION_VOTE", "None");
-                    } else if (sortVoteValue.equals("descending")) {
-                        Collections.sort(listAllBlogs, new Comparator<BlogDTO>() {
-                            @Override
-                            public int compare(BlogDTO o1, BlogDTO o2) {
-                                return o2.getNumberOfVotes() - o1.getNumberOfVotes();
-                            }
-                        });
-                        request.setAttribute("OPTION_VOTE", "Descending");
-                    } else {
-                        Collections.sort(listAllBlogs, new Comparator<BlogDTO>() {
-                            @Override
-                            public int compare(BlogDTO o1, BlogDTO o2) {
-                                return o1.getNumberOfVotes() - o2.getNumberOfVotes();
-                            }
-                        });
-                        request.setAttribute("OPTION_VOTE", "Ascending");
-                    }
-                }
-                request.setAttribute("LIST_ALL_BLOGS", listAllBlogs);
-            }
-
+            for (Part part : request.getParts()) {
+            String fileName = extractFileName(part);
+            // refines the fileName in case it is an absolute path
+            fileName = new File(fileName).getName();
+            part.write(this.getFolderUpload().getAbsolutePath() + File.separator + fileName);
             url = SUCCESS;
+        }
+            
         } catch (Exception e) {
-            log("Error at Get List Controller: " + e.toString());
+            log("Error at Upload Controller: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
+    }
+    
+    private String extractFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        String[] items = contentDisp.split(";");
+        for (String s : items) {
+            if (s.trim().startsWith("filename")) {
+                return s.substring(s.indexOf("=") + 2, s.length() - 1);
+            }
+        }
+        return "";
+    }
+
+    public File getFolderUpload() {
+        File folderUpload = new File(System.getProperty("user.home") + "/Uploads");
+        if (!folderUpload.exists()) {
+            folderUpload.mkdirs();
+        }
+        return folderUpload;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

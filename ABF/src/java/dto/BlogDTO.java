@@ -5,7 +5,12 @@
  */
 package dto;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -165,8 +170,27 @@ public class BlogDTO{
         public int compare(Object obj1, Object obj2){
             BlogDTO b1 = (BlogDTO) obj1;
             BlogDTO b2 = (BlogDTO) obj2;
-            int t = b1.getDate().compareTo(b2.getDate());
-            return -t;
+             int t = 0;
+            String[] dateTime1 = b1.getDate().trim().split(" ");
+            String[] dateTime2 = b2.getDate().trim().split(" ");
+            SimpleDateFormat sdate1 = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat sdate2 = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+               
+                Date date1 = sdate1.parse(dateTime1[0]);
+                Date date2 = sdate2.parse(dateTime2[0]);
+                if(date1.after(date2)){
+                    t = 1;
+                }else if(date1.before(date2)){
+                    t = -1;
+                }else{
+                    t = dateTime1[1].compareTo(dateTime2[1]);
+                }
+                
+            } catch (Exception e) {
+               e.printStackTrace();
+            }
+           return -t; 
         }
     };
 }

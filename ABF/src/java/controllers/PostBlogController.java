@@ -6,12 +6,13 @@
 package controllers;
 
 import dao.BlogDAO;
+import dao.UserDAO;
 import dto.BlogDTO;
+import dto.BlogError;
+import dto.UserDTO;
 import java.io.IOException;
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,12 +24,10 @@ import javax.servlet.http.HttpSession;
  *
  * @author To Quyen Phan
  */
-@WebServlet(name = "GetListController", urlPatterns = {"/GetListController"})
-public class GetListController extends HttpServlet implements Serializable {
-
+@WebServlet(name = "PostBlogController", urlPatterns = {"/PostBlogController"})
+public class PostBlogController extends HttpServlet {
     private static final String ERROR = "error.jsp";
     private static final String SUCCESS = "homepage.jsp";
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,47 +41,37 @@ public class GetListController extends HttpServlet implements Serializable {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
+        BlogError blogError = new BlogError();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date dateFormat = new Date();
         try {
+            int userID = Integer.parseInt(request.getParameter("userID"));
+            int subjectID = Integer.parseInt(request.getParameter("subjectID"));
+            String title = request.getParameter("title");
+            String content = request.getParameter("content");
+            String date = sdf.format(dateFormat);
+            String image = request.getParameter("image");
+            boolean checkValidation = false;
             BlogDAO dao = new BlogDAO();
-            List<BlogDTO> listAllBlogs = dao.getAllBlogs();//Lấy hết các blog
-            if (listAllBlogs.size() > 0) {
-                Collections.sort(listAllBlogs, BlogDTO.compareDate);
-                String value = request.getParameter("sortByDate");
-                if (value == null || "descending".equals(value)) {
-                    Collections.sort(listAllBlogs, BlogDTO.compareDate);
-                    request.setAttribute("OPTION", "Descending");
-                } else {
-                    Collections.reverse(listAllBlogs);
-                    request.setAttribute("OPTION", "Ascending");
+            if (title.length() < 10 || title.length() > 50) {
+                blogError.setTitleError("Title must be in [10,50]");
+                checkValidation = true;
+            }
+            if (content.length() < 50) {
+                blogError.setContentError("Content must be greater than 50");
+                checkValidation = true;
+            }
+            if (!checkValidation) {
+                boolean check = dao.postBlog(userID, subjectID, title, content, date, image);
+                if (check) {
+                    url = SUCCESS;
                 }
-                String sortVoteValue = request.getParameter("sortByVote");
-                if (sortVoteValue != null) {
-                    if (sortVoteValue.equals("none")) {
-                        request.setAttribute("OPTION_VOTE", "None");
-                    } else if (sortVoteValue.equals("descending")) {
-                        Collections.sort(listAllBlogs, new Comparator<BlogDTO>() {
-                            @Override
-                            public int compare(BlogDTO o1, BlogDTO o2) {
-                                return o2.getNumberOfVotes() - o1.getNumberOfVotes();
-                            }
-                        });
-                        request.setAttribute("OPTION_VOTE", "Descending");
-                    } else {
-                        Collections.sort(listAllBlogs, new Comparator<BlogDTO>() {
-                            @Override
-                            public int compare(BlogDTO o1, BlogDTO o2) {
-                                return o1.getNumberOfVotes() - o2.getNumberOfVotes();
-                            }
-                        });
-                        request.setAttribute("OPTION_VOTE", "Ascending");
-                    }
-                }
-                request.setAttribute("LIST_ALL_BLOGS", listAllBlogs);
+            } else {
+                request.setAttribute("BLOG_ERROR", blogError);
             }
 
-            url = SUCCESS;
         } catch (Exception e) {
-            log("Error at Get List Controller: " + e.toString());
+            log("Error at Post Blog Controller: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

@@ -70,6 +70,7 @@ public class AuthenFilter implements Filter {
         STUDENT_RESOURCES.add(POST_BLOG_PAGE);
         STUDENT_RESOURCES.add(BLOG_DETAIL_PAGE);
         STUDENT_RESOURCES.add("SearchController");
+        STUDENT_RESOURCES.add("PostBlogController");
 
         //Khai báo các Resource Mentor được phép truy cập
         MENTOR_RESOURCES = new ArrayList<>();
@@ -79,6 +80,7 @@ public class AuthenFilter implements Filter {
         MENTOR_RESOURCES.add(POST_BLOG_PAGE);
         MENTOR_RESOURCES.add(BLOG_DETAIL_PAGE);
         MENTOR_RESOURCES.add("SearchController");
+        MENTOR_RESOURCES.add("PostBlogController");
 
         //Khai báo các Resource ko cần xác thực, phân quyền 
         NON_AUTHEN_RESOURCES = new ArrayList<>();

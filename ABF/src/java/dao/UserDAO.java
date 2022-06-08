@@ -24,6 +24,8 @@ public class UserDAO {
     private static final String CREATE_USER = "INSERT INTO [User](password, fullName, roleID, email, image, numberOfBlogs, gender, dateOfBirth, address, contact, aboutme, status)"
             + " VALUES(?,?,1,?,?,0,null,null,null,null,null,1)";
     private static final String CHECK_ROLE = "SELECT roleName FROM Role WHERE roleID = ?";
+    private static final String CHECK_TO_UPDATE = "SELECT numberOfBlogs FROM [User] WHERE userID = ?";
+    private static final String UPDATE = "UPDATE [User] SET numberOfBlogs = ? WHERE userID = ?";
     
     public UserDTO checkLogin(String email, String password) throws SQLException {
         UserDTO user = null;
