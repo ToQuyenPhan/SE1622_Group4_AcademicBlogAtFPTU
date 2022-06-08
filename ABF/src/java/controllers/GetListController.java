@@ -46,36 +46,43 @@ public class GetListController extends HttpServlet implements Serializable {
             BlogDAO dao = new BlogDAO();
             List<BlogDTO> listAllBlogs = dao.getAllBlogs();//Lấy hết các blog
             if (listAllBlogs.size() > 0) {
-                Collections.sort(listAllBlogs, BlogDTO.compareDate);
-                String value = request.getParameter("sortByDate");
-                if (value == null || "descending".equals(value)) {
-                    Collections.sort(listAllBlogs, BlogDTO.compareDate);
-                    request.setAttribute("OPTION", "Descending");
-                } else {
-                    Collections.reverse(listAllBlogs);
-                    request.setAttribute("OPTION", "Ascending");
-                }
-                String sortVoteValue = request.getParameter("sortByVote");
-                if (sortVoteValue != null) {
-                    if (sortVoteValue.equals("none")) {
-                        request.setAttribute("OPTION_VOTE", "None");
-                    } else if (sortVoteValue.equals("descending")) {
+                String value = request.getParameter("sortBy");
+                String orderValue = request.getParameter("sortOrder");
+                if ("date".equals(value)) {
+                    if("descending".equals(orderValue)){
+                        Collections.sort(listAllBlogs, BlogDTO.compareDate);
+                        request.setAttribute("ORDER_OPTION", "Descending");
+                    }else if("ascending".equals(orderValue)){
+                        Collections.sort(listAllBlogs, BlogDTO.compareDate);
+                        Collections.reverse(listAllBlogs);
+                        request.setAttribute("ORDER_OPTION", "Ascending");
+                    }else{
+                        request.setAttribute("ORDER_OPTION", "None");
+                    }
+                    request.setAttribute("OPTION", "Date");
+                } else if("vote".equals(value)) {
+                    if("descending".equals(orderValue)){
                         Collections.sort(listAllBlogs, new Comparator<BlogDTO>() {
                             @Override
                             public int compare(BlogDTO o1, BlogDTO o2) {
                                 return o2.getNumberOfVotes() - o1.getNumberOfVotes();
                             }
                         });
-                        request.setAttribute("OPTION_VOTE", "Descending");
-                    } else {
+                        request.setAttribute("ORDER_OPTION", "Descending");
+                    }else if("ascending".equals(orderValue)){
                         Collections.sort(listAllBlogs, new Comparator<BlogDTO>() {
                             @Override
                             public int compare(BlogDTO o1, BlogDTO o2) {
                                 return o1.getNumberOfVotes() - o2.getNumberOfVotes();
                             }
                         });
-                        request.setAttribute("OPTION_VOTE", "Ascending");
+                        request.setAttribute("ORDER_OPTION", "Ascending");
+                    }else{
+                        request.setAttribute("ORDER_OPTION", "None");
                     }
+                    request.setAttribute("OPTION", "Vote");
+                }else{
+                    request.setAttribute("OPTION", "None");
                 }
                 request.setAttribute("LIST_ALL_BLOGS", listAllBlogs);
             }

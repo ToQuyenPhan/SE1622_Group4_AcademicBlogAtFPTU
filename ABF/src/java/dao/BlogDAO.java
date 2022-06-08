@@ -28,7 +28,7 @@ public class BlogDAO {
             + "WHERE title LIKE ? AND Blog.status LIKE 'approved'";
     private static final String BLOG_DETAIL = "SELECT blogID,Blog.userID,userApproveID,subjectID,title,content,date, Blog.image,video,"
             + "numberOfVotes,numberOfComments,Blog.status, fullName FROM Blog JOIN [USER] ON Blog.userID = [User].userID "
-            + "WHERE blogID LIKE ? ";
+            + "WHERE blogID = ? ";
     private static final String POST_BLOG = "INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status)"
             + "VALUES( ?,null,?,?,?,?,?,null,0,0,'waiting')";
 
@@ -192,6 +192,37 @@ public class BlogDAO {
             }
         }
         return check;
+    }
+    
+    public BlogDTO getBlogByID(int blogID) throws SQLException, ClassNotFoundException {
+        BlogDTO blog = null;
+        Connection conn = null;
+        conn = DBUtils.getConnection();
+        if (conn != null) {
+            PreparedStatement pst = conn.prepareStatement(BLOG_DETAIL);
+            pst.setInt(1, blogID);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null && rs.next()) {
+                int userID = rs.getInt("userID");
+                int userApproveID = rs.getInt("userApproveID");
+                int subjectID = rs.getInt("subjectID");
+                String title = rs.getString("title");
+                String content = rs.getString("content");
+                String date = rs.getString("date");
+                String image = rs.getString("image");
+                String video = rs.getString("video");
+                int numberOfVotes = rs.getInt("numberOfVotes");
+                int numberOfComments = rs.getInt("numberOfComments");
+                String status = rs.getString("status");
+                String fullName = rs.getString("fullName");
+                blog = new BlogDTO(blogID, userID, userApproveID, subjectID, title, content,
+                        date, image, video, numberOfVotes, numberOfComments, status, fullName);
+            }
+
+            conn.close();
+        }
+
+        return blog;
     }
 
 }

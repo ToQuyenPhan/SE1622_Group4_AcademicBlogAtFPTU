@@ -30,6 +30,8 @@ public class MainController extends HttpServlet {
     private static final String VIEW_BLOG_DETAIL = "ViewBlogDetails";
     private static final String POST = "Post";
     private static final String UPLOAD = "Upload";
+    private static final String COMMENT = "Comment";
+    
     private static final String LOGIN_WITH_GOOGLE_CONTROLLER = "LoginWithGoogleController";
     private static final String LOGIN_CONTROLLER = "LoginController";
     private static final String GET_LIST_CONTROLLER = "GetListController";
@@ -40,6 +42,7 @@ public class MainController extends HttpServlet {
     private static final String BLOG_DETAIL_CONTROLLER = "BlogDetailController";
     private static final String POST_BLOG_CONTROLLER = "PostBlogController";
     private static final String UPLOAD_FILE_CONTROLLER = "UploadFileController";
+    private static final String COMMENT_CONTROLLER = "CommentController";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -75,6 +78,8 @@ public class MainController extends HttpServlet {
                 url = POST_BLOG_CONTROLLER;
             } else if (UPLOAD.equals(action)) {
                 url = UPLOAD_FILE_CONTROLLER;
+            } else if (COMMENT.equals(action)) {
+                url = COMMENT_CONTROLLER;
             } else{
                 request.setAttribute("ERROR_MESSAGE", "Function is not available!");
             }

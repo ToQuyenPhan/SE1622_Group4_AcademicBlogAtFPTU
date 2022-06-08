@@ -26,8 +26,8 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "PostBlogController", urlPatterns = {"/PostBlogController"})
 public class PostBlogController extends HttpServlet {
-    private static final String ERROR = "error.jsp";
-    private static final String SUCCESS = "homepage.jsp";
+    private static final String ERROR = "postblog.jsp";
+    private static final String SUCCESS = "MainController?action=GetList";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -68,6 +68,7 @@ public class PostBlogController extends HttpServlet {
                 }
             } else {
                 request.setAttribute("BLOG_ERROR", blogError);
+                request.setAttribute("TITLE", title);
             }
 
         } catch (Exception e) {

@@ -4,6 +4,7 @@
     Author     : hotan
 --%>
 
+<%@page import="dto.BlogError"%>
 <%@page import="dto.UserDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -40,8 +41,12 @@
                 search = "";
             }
             String image = loginUser.getImage();
-            if(image == null){
+            if (image == null) {
                 image = "image/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png";
+            }
+            BlogError blogError = (BlogError) request.getAttribute("BLOG_ERROR");
+            if(blogError == null){
+                blogError = new BlogError();
             }
         %>
         <header class="tm-header" id="tm-header">
@@ -52,7 +57,7 @@
                 <div class="tm-site-header">
                     <a href="profile.jsp">
                         <div class="mb-3 mx-auto tm-site-logo">
-                                <img src="<%= image%>">
+                            <img src="<%= image%>">
 
                         </div>            
                         <h2 class="text-center"><%= loginUser.getFullName()%></h2>
@@ -101,12 +106,19 @@
                             <input type="hidden" name="userID" value="<%=loginUser.getUserID()%>" readonly="">
 
                             <div class="mb-4">
-                                Title<input class="form-control" name="title" type="text" required="">${requestScope.BLOG_ERROR.titleError}
+                                Title<input class="form-control" name="title" type="text" required="">
+                                <%
+                                    String titleError = blogError.getTitleError();
+                                    if (titleError == null) {
+                                        titleError= "";
+                                    }
+                                %>
+                                <%= titleError %>
                             </div>
 
                             <div class="mb-4">
                                 <!--
-                                <p class="tm-mb-40">Subject ${requestScope.BLOG_ERROR.subjectError}<input type="text" name="subjectID" required=""></p></br>
+                                <p class="tm-mb-40">Subject<input type="text" name="subjectID" required=""></p></br>
                                 -->
                                 Subject <select class="form-control" name="subjectID" required="">
                                     <option value="0"> -none- </option>
@@ -116,11 +128,24 @@
                                     <option value="6"> JPD201 </option>
                                     <option value="7"> SSL101 </option>
                                     <option value="8"> ITE123 </option>
-                                </select> ${requestScope.BLOG_ERROR.subjectError}
+                                </select> 
+                                <%
+                                    String subjectError = blogError.getSubjectIDError();
+                                    if (subjectError == null) {
+                                        subjectError= "";
+                                    }
+                                %>
+                                <%= subjectError %>
                             </div>
                             <div class="mb-4">
                                 Details<textarea class="form-control" name="content" rows="6" required=""></textarea>
-                                ${requestScope.BLOG_ERROR.contentError}
+                                <%
+                                    String contentError = blogError.getContentError();
+                                    if (contentError == null) {
+                                        contentError= "";
+                                    }
+                                %>
+                                <%= contentError %>
                             </div>
                             <div class="mb-4">
                                 <!--
@@ -131,27 +156,34 @@
                                     <!--
                                     <input type="submit" value="Upload" name="action"
                                            <button class="tm-btn tm-btn-primary tm-btn-small"></button>
-                                    ${requestScope.BLOG_ERROR.imageError}
-                                </form>-->
+                                    <%
+                                    String imageError = blogError.getImageError();
+                                    if (imageError == null) {
+                                        imageError= "";
+                                    }
+                                %>
+                                <%= imageError %>
+                                    </form>-->
+                                    </div>
+                                    <div class="text-right">
+                                        <input type="submit" name="action" value="Post"
+                                               <button class="tm-btn tm-btn-primary tm-btn-small"></button>                        
+                                    </div>                                
+                                </form>
                             </div>
-                            <div class="text-right">
-                                <input type="submit" name="action" value="Post"
-                                       <button class="tm-btn tm-btn-primary tm-btn-small"></button>                        
-                            </div>                                
-                        </form>
                     </div>
-                </div>
-                <footer class="row tm-row">
-                    <div class="col-md-6 col-12 tm-color-gray">
-                        FPT University
-                    </div>
-                    <div class="col-md-6 col-12 tm-color-gray tm-copyright">
-                        ACADEMIC BLOG
-                    </div>
+                    <footer class="row tm-row">
+                        <div class="col-md-6 col-12 tm-color-gray">
+                            FPT University
+                        </div>
+                        <div class="col-md-6 col-12 tm-color-gray tm-copyright">
+                            ACADEMIC BLOG
+                        </div>
 
-                </footer>
+                    </footer>
             </main>
         </div>
+
         <script src="js/jquery.min.js"></script>
         <script src="js/templatemo-script.js"></script>
     </body>

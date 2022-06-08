@@ -10,15 +10,15 @@ package dto;
  * @author hotan
  */
 public class BlogError {
-    private int userIDError;
-    private int subjectIDError;
+    private String userIDError;
+    private String subjectIDError;
     private String titleError;
     private String contentError;
     private String dateError;
     private String imageError;
     private String videoError;
 
-    public BlogError(int userIDError, int subjectIDError, String titleError, String contentError, String dateError, String imageError, String videoError) {
+    public BlogError(String userIDError, String subjectIDError, String titleError, String contentError, String dateError, String imageError, String videoError) {
         this.userIDError = userIDError;
         this.subjectIDError = subjectIDError;
         this.titleError = titleError;
@@ -29,8 +29,8 @@ public class BlogError {
     }
 
     public BlogError() {
-        this.userIDError = 0;
-        this.subjectIDError = 0;
+        this.userIDError = "";
+        this.subjectIDError = "";
         this.titleError = "";
         this.contentError = "";
         this.dateError = "";
@@ -38,19 +38,19 @@ public class BlogError {
         this.videoError = "";
     }
 
-    public int getUserIDError() {
+    public String getUserIDError() {
         return userIDError;
     }
 
-    public void setUserIDError(int userIDError) {
+    public void setUserIDError(String userIDError) {
         this.userIDError = userIDError;
     }
 
-    public int getSubjectIDError() {
+    public String getSubjectIDError() {
         return subjectIDError;
     }
 
-    public void setSubjectIDError(int subjectIDError) {
+    public void setSubjectIDError(String subjectIDError) {
         this.subjectIDError = subjectIDError;
     }
 

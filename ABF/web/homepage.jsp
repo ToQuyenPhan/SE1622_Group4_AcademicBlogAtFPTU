@@ -43,7 +43,7 @@
                 search = "";
             }
             String image = loginUser.getImage();
-            if(image == null){
+            if (image == null) {
                 image = "image/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png";
             }
         %>
@@ -55,7 +55,7 @@
                 <div class="tm-site-header">
                     <a href="profile.jsp">
                         <div class="mb-3 mx-auto tm-site-logo">
-                                <img src="<%= image%>">
+                            <img src="<%= image%>">
 
                         </div>            
                         <h2 class="text-center"><%= loginUser.getFullName()%></h2>
@@ -90,7 +90,7 @@
                 <div class="row tm-row">
                     <div class="col-12 row">
                         <form class="form-inline tm-mb-80 tm-search-form col-sm-9 row" action="MainController">                
-                            <input class="form-control tm-search-input col-sm-9" name="search" type="text" placeholder="Search..." aria-label="Search" value="<%= search %>">
+                            <input class="form-control tm-search-input col-sm-9" name="search" type="text" placeholder="Search..." aria-label="Search" value="<%= search%>">
                             <button class="tm-search-button col-sm-1" type="submit" name="action" value="Search">
                                 <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
                             </button>                                
@@ -103,53 +103,60 @@
                     <div class="form-sort">
                         <%
                             String selectedOption = (String) request.getAttribute("OPTION");
-                            if(selectedOption == null){
-                                selectedOption = "Descending";
+                            if (selectedOption == null) {
+                                selectedOption = "None";
                             }
                         %>
                         <form action="MainController">
-                            Sort By Date: <select class="sort-by-date" name="sortByDate">
+                            Sort By: <select class="sort-by-date" name="sortBy">
                                 <%
-                                    if (selectedOption.equals("Ascending")) {
+                                    if (selectedOption.equals("Date")) {
                                 %>
-                                <option value="descending">Descending</option>
+                                <option value="vote">Vote</option>
+                                <option value="none">None</option>
+                                <%
+                                } else if (selectedOption.equals("Vote")) {
+                                %>
+                                <option value="vote">Date</option>
+                                <option value="none">None</option>
                                 <%
                                 } else {
                                 %>
-                                <option value="ascending">Ascending</option>
+                                <option value="date">Date</option>
+                                <option value="vote">Vote</option>
                                 <%
                                     }
                                 %>
                                 <option value="<%= selectedOption.toLowerCase()%>" selected=""><%= selectedOption%></option>
                             </select>
                             <%
-                                String selectedVoteOption = (String) request.getAttribute("OPTION_VOTE");
-                                if(selectedVoteOption == null){
-                                    selectedVoteOption = "None";
+                                String selectedOrderOption = (String) request.getAttribute("ORDER_OPTION");
+                                if (selectedOrderOption == null) {
+                                    selectedOrderOption = "None";
                                 }
                             %>
-                            Sort By Vote: <select class="sort-by-vote" name="sortByVote">
+                            Sort Order: <select class="sort-by-vote" name="sortOrder">
                                 <%
-                                    if (selectedVoteOption.equals("Ascending")) {
+                                    if (selectedOrderOption.equals("Ascending")) {
                                 %>
                                 <option value="descending">Descending</option>
                                 <option value="none">None</option>
                                 <%
-                                } else if (selectedVoteOption.equals("Descending")) {
+                                } else if (selectedOrderOption.equals("Descending")) {
                                 %>
                                 <option value="ascending">Ascending</option>
                                 <option value="none">None</option>
                                 <%
-                                    }else{
+                                } else {
                                 %>
                                 <option value="ascending">Ascending</option>
                                 <option value="descending">Descending</option>
                                 <%
-                                            }
+                                    }
                                 %>
-                                <option value="<%= selectedVoteOption.toLowerCase()%>" selected=""><%= selectedVoteOption%></option>
+                                <option value="<%= selectedOrderOption.toLowerCase()%>" selected=""><%= selectedOrderOption%></option>
                             </select>
-                            <input type="hidden" name="search" value="<%= search %>">
+                            <input type="hidden" name="search" value="<%= search%>">
                             <input class="sort-button" type="submit" name="action" value="Sort">
                         </form>
                     </div>
@@ -157,20 +164,20 @@
                 <div class="row tm-row">
                     <%
 
-                        List<BlogDTO> listAllBlogs = (List<BlogDTO>)request.getAttribute("LIST_ALL_BLOGS");
+                        List<BlogDTO> listAllBlogs = (List<BlogDTO>) request.getAttribute("LIST_ALL_BLOGS");
                         if (listAllBlogs != null) { //chỉ hiển thị khi người dùng đã đăng nhập
                             if (listAllBlogs.size() > 0) {
                                 for (BlogDTO blog : listAllBlogs) {
                     %> 
                     <article class="col-12 col-md-6 tm-post">
                         <hr class="tm-hr-primary">
-                        <a href="MainController?action=ViewBlogDetails&blogID=<%= blog.getBlogID()%>&userID=<%= blog.getUserID() %>" class="effect-lily tm-post-link tm-pt-60">
+                        <a href="MainController?action=ViewBlogDetails&blogID=<%= blog.getBlogID()%>&userID=<%= blog.getUserID()%>" class="effect-lily tm-post-link tm-pt-60">
                             <%
                                 if (blog.getImage() != null) {
                             %>
-                                <div class="tm-post-link-inner">
-                                    <img src="<%= blog.getImage()%>" alt="Image" class="img-fluid">                            
-                                </div>
+                            <div class="tm-post-link-inner">
+                                <img src="<%= blog.getImage()%>" alt="Image" class="img-fluid">                            
+                            </div>
                             <%
                                 }
                             %>
@@ -180,27 +187,27 @@
                             <%= blog.getContent()%>
                         </p>
                         <div class="d-flex justify-content-between tm-pt-45">
-                            <span class="tm-color-primary">By <%= blog.getFullName() %></span>
+                            <span class="tm-color-primary">By <%= blog.getFullName()%></span>
                             <span class="tm-color-primary"><%= blog.getDate()%></span>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between">
                             <span>36 comments</span>
-                            <span><%= blog.getNumberOfVotes() %> votes</span>
+                            <span><%= blog.getNumberOfVotes()%> votes</span>
                         </div>
                     </article>
                     <%
                             }
                         }
                     } else {
-                            String message = (String) request.getAttribute("MESSAGE");
-                            if(message == null){
-                                message = "";
-                            }
+                        String message = (String) request.getAttribute("MESSAGE");
+                        if (message == null) {
+                            message = "";
+                        }
                     %>
                     <div class="search-home-page justify-content-center">
-                        
-                        <h1><%= message %></h1>
+
+                        <h1><%= message%></h1>
                         <br>
                         <br>
                         <br>

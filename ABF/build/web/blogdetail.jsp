@@ -128,7 +128,14 @@
                         </div>
                         <div class="comment-blog-detail">
                             <form action="MainController" method="POST">
-                                <input type="text" name="comment" style="width: 45rem;height: 40px" ></br>
+                                <input type="text" name="content" style="width: 45rem;height: 40px" ></br>
+                                <% 
+                                    String notify_comment = (String) request.getAttribute("notifie_comment");
+                                    if(notify_comment == null){
+                                        notify_comment = "";
+                                    }
+                                %>
+                                <%= notify_comment %>
                                 <input type="hidden" name="userID" value="<%=loginUser.getUserID()%>">                                 
                                 <input type="hidden" name="blogID" value="<%=blogDetail.getBlogID()%>">
                                 <input type="hidden" name="subjectID" value="<%=blogDetail.getSubjectID()%>">
@@ -139,7 +146,7 @@
                     </article>
                     <%
                         }
-                    %>      
+                        %>
                 </div>
             </main>
         </div>
