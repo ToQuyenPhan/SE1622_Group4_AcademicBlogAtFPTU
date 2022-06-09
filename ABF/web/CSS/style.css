@@ -1184,22 +1184,7 @@ a:hover figcaption { color: #056767; }
 .body-postblog-page{
     overflow-y: scroll;
 }
-.postblog-page-tm-nav{
-    background-color: #0CC;
-    color: white !important;
-    border: 1px solid #0CC;
-}
-.postblog-page-tm-nav a{
-    color: white;
-}
-.postblog-page-tm-nav:hover{
-    background-color: white;
-    color: #0CC;
-}
-.postblog-page-tm-nav a:hover{
-    color: #0CC;
-    text-decoration: none;
-}
+
 .sort-by-date{
     margin-right: 2rem;
 }
@@ -1272,16 +1257,175 @@ a:hover figcaption { color: #056767; }
     color: #0CC;
     border: 1px solid #0CC;
 }
-.blog-detail a i{
-    font-size: 2rem;
-}
-.blog-detail a{
+.return-home-page{
     color: black;
     position: absolute;
     top: 2rem;
     left: 2rem  ;
 }
-.blog-detail a:hover{
+.return-home-page:hover{
     color: black;
     text-decoration: none;
+}
+.number-blog-detail div{
+    font-size: 2rem;
+}
+.number-blog-detail div a:first-child{
+    vertical-align: middle;
+    background-color: white;
+}
+.number-blog-detail div a:last-child{
+    font-size: 1.1rem;
+    vertical-align: middle;
+    background-color: white;
+}
+.number-blog-detail div a:first-child:hover{
+    color: #0CC;
+    cursor: pointer;
+}
+.number-blog-detail div a:last-child:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.return-home-page i{
+    font-size: 2rem;
+}
+
+
+
+
+/* Activity Page*/
+.body-activity-page{
+    overflow-y: scroll;
+}
+.activity-page{
+    padding: 2rem;
+}
+.activity-list{
+    background-color: #f5f7fa;
+}
+.activity-list div:first-child{
+    margin-bottom: 1rem;
+}
+.activity-item{
+    background-color: #ffffff;
+    padding: 1rem;
+    border-radius: 0.1rem;
+    box-shadow: 0.1rem 0.1rem 0.2rem rgba(166, 166, 166, 0.25);
+    margin-bottom: 1rem;
+}
+.activity-item-header{
+    width: 100%;
+    border-bottom: 2px solid #f9fafc;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+}
+.activity-item div h6{
+    display: inline-block;
+}
+.activity-item div h5{
+    width: 100%;
+    padding-left: 2rem;
+    margin: 0;
+}
+.activity-item div:last-child{
+    width: 100%;
+    align-items: center;
+}
+.activity-item div:last-child a{
+    background-color: red;
+    transition: box-shadow .3s;
+    border-radius: 0.2rem;
+}
+.activity-item div:last-child a:hover{
+    background-color: rgb(255, 82, 82);
+    box-shadow: 0 0 11px rgba(255, 255, 255, 0.2);  
+    cursor: pointer;
+    color: white;
+}
+.page-activity-list{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+#delete-activity-message-popup{
+	text-align: center;
+        width: 30rem;
+	height: 5rem;
+	background: white;
+	box-sizing: border-box; /* for inside padding */
+	padding: 2rem;
+
+	/* for center */
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%,-50%);
+        border-radius: 0.5rem;
+        box-shadow: 0.1rem 0.1rem 0.2rem rgba(166, 166, 166, 0.25);
+        z-index: 1;
+}
+#delete-activity-message-popup button{
+    position: absolute;
+    top: 10%;
+    right: 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+    border: 1px solid white;
+}
+#delete-activity-message-popup button:hover{
+    background-color: rgb(255, 82, 82);
+    box-shadow: 0 0 11px rgba(255, 255, 255, 0.2);
+}
+#delete-activity-message-popup p{
+    font-size: 1.3rem;
+}
+.delete-activity-message-popup-confirm{
+        width: 40rem;
+	height: 10rem;
+	background: white;
+	box-sizing: border-box; /* for inside padding */
+	padding: 2rem;
+
+	/* for center */
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%,-50%);
+        border-radius: 0.5rem;
+        box-shadow: 0.1rem 0.1rem 0.2rem rgba(166, 166, 166, 0.25);
+        z-index: 1;
+        display: none;
+}
+.delete-activity-message-popup-confirm p{
+    color: black;
+    font-weight: 700;
+    margin-bottom: 3rem;
+}
+.delete-activity-message-popup-confirm div{
+    text-align: right;
+}
+.delete-activity-message-popup-confirm div a{
+    padding: 2rem;
+    color: white;
+    border-radius: 0.5rem;
+}
+.delete-activity-message-popup-confirm div a:first-child{
+    background-color: red;
+}
+.delete-activity-message-popup-confirm div a:last-child{
+    margin-left: 1rem;
+}
+.delete-activity-message-popup-confirm div a:hover{
+    cursor: pointer;
+    box-shadow: 0 0 11px rgba(255, 255, 255, 0.2);
+}
+.delete-activity-message-popup-confirm div a:first-child:hover{
+    background-color: rgb(255, 82, 82);
+}
+.delete-activity-message-popup-confirm div a:last-child:hover{
+    background-color: #09b6b6;
 }

@@ -44,8 +44,16 @@
                 search = "";
             }
             String image = loginUser.getImage();
-            if(image == null){
+            if (image == null) {
                 image = "image/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png";
+            }
+            String voteValue = (String) request.getAttribute("VOTE_VALUE");
+            if (voteValue == null) {
+                voteValue = "";
+            }
+            String numberOfVotes = request.getParameter("numberOfVotes");
+            if (numberOfVotes == null) {
+                numberOfVotes = "";
             }
         %>
         <header class="tm-header" id="tm-header">
@@ -56,7 +64,7 @@
                 <div class="tm-site-header">
                     <a href="profile.jsp">
                         <div class="mb-3 mx-auto tm-site-logo">
-                                <img src="<%= image %>">
+                            <img src="<%= image%>">
 
                         </div>            
                         <h2 class="text-center"><%= loginUser.getFullName()%></h2>
@@ -64,9 +72,13 @@
                 </div>
                 <nav class="tm-nav" id="tm-nav">            
                     <ul>
-                        <li class="tm-nav-item active tm-nav-link postblog-page-tm-nav"><a href="MainController?action=GetList" class="">
+                        <li class="tm-nav-item"><a href="MainController?action=GetList" class="tm-nav-link">
                                 <i class="fas fa-home"></i>
                                 Blog Home
+                            </a></li>
+                        <li class="tm-nav-item"><a href="MainController?action=GetActivityList&userID=<%= loginUser.getUserID()%>" class="tm-nav-link">
+                                <i class="fas fa-tasks"></i>
+                                Activity
                             </a></li>
                         <li class="tm-nav-item"><a href="post.html" class="tm-nav-link">
                                 <i class="fas fa-users"></i>
@@ -122,34 +134,83 @@
                             <br>
                             <cite><%= blogDetail.getDate()%></cite>
                         </div>
-                        <div class="form-inline number-blog-detail">
-                            <span class="tm-color-primary col-sm-6">Number of Vote: <%= blogDetail.getNumberOfVotes()%></span>
+                        <%
+                            if ("".equals(numberOfVotes)) {
+                        %>
+                        <div class="form-inline number-blog-detail row">
+                            <div class="col-sm-6">
+                                <a href="MainController?action=Vote&blogID=<%= blogDetail.getBlogID()%>&numberOfVotes=<%= blogDetail.getNumberOfVotes()%>&userID=<%= loginUser.getUserID()%>">
+                                    <%
+                                        if ("unvote".equals(voteValue)) {
+                                    %>
+                                    <i class="fas fa-vote-yea" style="color: black;"></i>
+                                    <%
+                                    } else {
+                                    %>
+                                    <i class="fas fa-vote-yea" style="color: #0CC;"></i>
+                                    <%
+                                        }
+                                    %>
+
+                                </a>
+                                <a><%= blogDetail.getNumberOfVotes()%></a>
+                            </div>
                             <span class="tm-color-primary col-sm-6" style="font-size: 16px">Number of Comments: <%= blogDetail.getNumberOfComments()%></span>               
                         </div>
+                        <%
+                        } else {
+                        %>
+                        <div id="vote-part" class="form-inline number-blog-detail row">
+                            <div class="col-sm-6">
+                                <a href="MainController?action=Vote&blogID=<%= blogDetail.getBlogID()%>&numberOfVotes=<%= blogDetail.getNumberOfVotes()%>&userID=<%= loginUser.getUserID()%>">
+                                    <%
+                                        if ("unvote".equals(voteValue)) {
+                                    %>
+                                    <i class="fas fa-vote-yea" style="color: black;"></i>
+                                    <%
+                                    } else {
+                                    %>
+                                    <i class="fas fa-vote-yea" style="color: #0CC;"></i>
+                                    <%
+                                        }
+                                    %>
+
+                                </a>
+                                <a><%= blogDetail.getNumberOfVotes()%></a>
+                            </div>
+                            <span class="tm-color-primary col-sm-6" style="font-size: 16px">Number of Comments: <%= blogDetail.getNumberOfComments()%></span>               
+                        </div>
+                        <%
+                            }
+                        %>
                         <div class="comment-blog-detail">
                             <form action="MainController" method="POST">
                                 <input type="text" name="content" style="width: 45rem;height: 40px" ></br>
-                                <% 
+                                <%
                                     String notify_comment = (String) request.getAttribute("notifie_comment");
-                                    if(notify_comment == null){
+                                    if (notify_comment == null) {
                                         notify_comment = "";
                                     }
                                 %>
-                                <%= notify_comment %>
+                                <%= notify_comment%>
                                 <input type="hidden" name="userID" value="<%=loginUser.getUserID()%>">                                 
                                 <input type="hidden" name="blogID" value="<%=blogDetail.getBlogID()%>">
                                 <input type="hidden" name="subjectID" value="<%=blogDetail.getSubjectID()%>">
                                 <input type="submit" name="action" value="Comment">
                             </form>
                         </div> 
-                        <a href="MainController?action=GetList"><i class='far fa-arrow-alt-circle-left'></i></a>
+                        <a class="return-home-page" href="MainController?action=GetList"><i class="far fa-arrow-alt-circle-left"></i></a>
                     </article>
                     <%
                         }
-                        %>
+                    %>
                 </div>
             </main>
         </div>
+        <script>
+            var loc = window.location.href;
+            window.location.href = loc + "#vote-part";
+        </script>
         <script src="js/jquery.min.js"></script>
         <script src="js/templatemo-script.js"></script>
     </body>

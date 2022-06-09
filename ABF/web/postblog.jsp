@@ -65,9 +65,13 @@
                 </div>
                 <nav class="tm-nav" id="tm-nav">            
                     <ul>
-                        <li class="tm-nav-item active tm-nav-link postblog-page-tm-nav"><a href="MainController?action=GetList" class="">
+                        <li class="tm-nav-item"><a href="MainController?action=GetList" class="tm-nav-link">
                                 <i class="fas fa-home"></i>
                                 Blog Home
+                            </a></li>
+                        <li class="tm-nav-item"><a href="MainController?action=GetActivityList&userID=<%= loginUser.getUserID() %>" class="tm-nav-link">
+                                <i class="fas fa-tasks"></i>
+                                Activity
                             </a></li>
                         <li class="tm-nav-item"><a href="post.html" class="tm-nav-link">
                                 <i class="fas fa-users"></i>
@@ -88,16 +92,7 @@
         <div class="container-fluid">
             <main class="tm-main">
                 <!-- Search form -->
-                <div class="row tm-row">
-                    <div class="col-12">
-                        <form method="GET" class="form-inline tm-mb-80 tm-search-form">                
-                            <input class="form-control tm-search-input" name="query" type="text" placeholder="Search..." aria-label="Search">
-                            <button class="tm-search-button" type="submit">
-                                <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
-                            </button>                                
-                        </form>
-                    </div>                
-                </div>            
+
                 <div class="row tm-row">
                     <div class="col-12">
                         <hr class="tm-hr-primary tm-mb-45">
@@ -161,9 +156,9 @@
                                     if (imageError == null) {
                                         imageError= "";
                                     }
-                                %>
-                                <%= imageError %>
-                                    </form>-->
+                                    %>
+                                    <%= imageError %>
+                                        </form>-->
                                     </div>
                                     <div class="text-right">
                                         <input type="submit" name="action" value="Post"

@@ -5,16 +5,17 @@
  */
 package controllers;
 
+import dao.ActivityDAO;
 import dao.BlogDAO;
 import dto.BlogDTO;
+import dto.UserDTO;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -45,6 +46,15 @@ public class BlogDetailController extends HttpServlet {
                 int blogID = Integer.parseInt(strBlogID);
                 BlogDAO dao = new BlogDAO();
                 BlogDTO blogDetail = dao.BlogDetail(blogID);
+                HttpSession session = request.getSession();
+                UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+                ActivityDAO activityDAO = new ActivityDAO();
+                boolean check = activityDAO.findVoteActivity(blogID, loginUser.getUserID());
+                if(check){
+                    request.setAttribute("VOTE_VALUE", "voted");
+                }else{
+                    request.setAttribute("VOTE_VALUE", "unvote");
+                }
                 if (blogDetail != null) {
                     request.setAttribute("BLOG_DETAIL", blogDetail);
                     url = SUCCESS;

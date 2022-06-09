@@ -31,6 +31,7 @@ public class BlogDAO {
             + "WHERE blogID = ? ";
     private static final String POST_BLOG = "INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status)"
             + "VALUES( ?,null,?,?,?,?,?,null,0,0,'waiting')";
+    private static final String UPDATE_VOTE = "UPDATE Blog SET numberOfVotes = ? WHERE blogID = ?";
 
     public List<BlogDTO> getAllBlogs() throws SQLException {
         List<BlogDTO> listAllBlogs = new ArrayList<>();
@@ -225,4 +226,32 @@ public class BlogDAO {
         return blog;
     }
 
+    public boolean updateVote(int blogID, int numberOfVotes) throws SQLException{
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement psm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                psm = conn.prepareStatement(UPDATE_VOTE);
+                psm.setInt(1, numberOfVotes);
+                psm.setInt(2, blogID);
+                check = psm.executeUpdate() > 0 ? true : false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (psm != null) {
+                psm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
 }
