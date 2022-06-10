@@ -19,6 +19,7 @@ import utils.DBUtils;
  * @author To Quyen Phan
  */
 public class ActivityDAO {
+
     private static final String GET_ACTIVITY = "SELECT historyActivityID, date, activity FROM HistoryActivity JOIN ActivityType ON"
             + " HistoryActivity.activityTypeID = ActivityType.activityTypeID WHERE userID = ? AND status = 1";
     private static final String DELETE_ACTIVITY = "UPDATE HistoryActivity SET status = 0 WHERE historyActivityID = ?";
@@ -27,7 +28,10 @@ public class ActivityDAO {
     private static final String UPDATE_ACTIVITY = "INSERT INTO HistoryActivity(userID, date, activityTypeID, blogID, status) "
             + "VALUES(?,?,1,?,1)";
     private static final String DELETE_VOTE = "DELETE HistoryActivity WHERE userID = ? AND blogID = ? AND activityTypeID = 1";
-    
+    private static final String SEARCH_ACTIVITY = "SELECT historyActivityID, date, activity FROM HistoryActivity JOIN ActivityType \n"
+            + "ON HistoryActivity.activityTypeID = ActivityType.activityTypeID \n"
+            + "WHERE activityName = 'vote' AND status = 1;";
+
     public List<ActivityDTO> getAllActivities(int userID) throws SQLException {
         List<ActivityDTO> listAllActivities = new ArrayList<>();
         Connection conn = null;
@@ -61,8 +65,8 @@ public class ActivityDAO {
         }
         return listAllActivities;
     }
-    
-    public boolean deleteActivity(int historyActivityID) throws SQLException{
+
+    public boolean deleteActivity(int historyActivityID) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement psm = null;
@@ -89,8 +93,8 @@ public class ActivityDAO {
         }
         return check;
     }
-    
-    public boolean findVoteActivity(int blogID, int userID) throws SQLException{
+
+    public boolean findVoteActivity(int blogID, int userID) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement psm = null;
@@ -102,7 +106,7 @@ public class ActivityDAO {
                 psm.setInt(1, blogID);
                 psm.setInt(2, userID);
                 rs = psm.executeQuery();
-                if(rs.next()){
+                if (rs.next()) {
                     check = true;
                 }
             }
@@ -121,8 +125,8 @@ public class ActivityDAO {
         }
         return check;
     }
-    
-    public boolean updateActivity(int blogID, int userID, String date) throws SQLException{
+
+    public boolean updateActivity(int blogID, int userID, String date) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement psm = null;
@@ -151,8 +155,8 @@ public class ActivityDAO {
         }
         return check;
     }
-    
-    public boolean deleteUpdate(int blogID, int userID) throws SQLException{
+
+    public boolean deleteUpdate(int blogID, int userID) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement psm = null;
