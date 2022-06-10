@@ -19,7 +19,6 @@ import utils.DBUtils;
  * @author To Quyen Phan
  */
 public class BlogDAO {
-
     private static final String GET_ALL_BLOGS = "SELECT blogID,Blog.userID,userApproveID,subjectID,title,content,date, Blog.image,video,"
             + "numberOfVotes,numberOfComments,Blog.status, fullName FROM Blog JOIN [USER] ON Blog.userID = [User].userID "
             + "WHERE Blog.status LIKE 'approved'";
@@ -35,6 +34,7 @@ public class BlogDAO {
     private static final String GET_ALL_APPROVE_BLOGS = "SELECT blogID,Blog.userID,userApproveID,subjectID,title,content,date, Blog.image,video,"
             + "numberOfVotes,numberOfComments,Blog.status, fullName FROM Blog JOIN [USER] ON Blog.userID = [User].userID "
             + "WHERE Blog.status LIKE 'waiting' AND Blog.userID != ?";
+    private static final String DELETE_BLOG = "UPDATE Blog SET status = 'disable' WHERE blogID = ?";
 
     public List<BlogDTO> getAllBlogs() throws SQLException {
         List<BlogDTO> listAllBlogs = new ArrayList<>();
@@ -168,7 +168,7 @@ public class BlogDAO {
         }
         return blogDetail;
     }
-    
+
     public boolean postBlog(int userID, int subjectID, String title, String content, String date, String image) throws SQLException {
         boolean check = false;
         Connection conn = null;
@@ -197,7 +197,7 @@ public class BlogDAO {
         }
         return check;
     }
-    
+
     public BlogDTO getBlogByID(int blogID) throws SQLException, ClassNotFoundException {
         BlogDTO blog = null;
         Connection conn = null;
@@ -229,7 +229,7 @@ public class BlogDAO {
         return blog;
     }
 
-    public boolean updateVote(int blogID, int numberOfVotes) throws SQLException{
+    public boolean updateVote(int blogID, int numberOfVotes) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement psm = null;
@@ -257,7 +257,7 @@ public class BlogDAO {
         }
         return check;
     }
-    
+
     public List<BlogDTO> getAllApproveBlogs(int loginUserID) throws SQLException {
         List<BlogDTO> listAllApproveBlogs = new ArrayList<>();
         Connection conn = null;
@@ -302,4 +302,29 @@ public class BlogDAO {
         }
         return listAllApproveBlogs;
     }
+
+    public boolean deleteBlog(int blogID) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(DELETE_BLOG);
+                ptm.setInt(1, blogID);
+                check = ptm.executeUpdate() > 0 ? true : false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+
 }

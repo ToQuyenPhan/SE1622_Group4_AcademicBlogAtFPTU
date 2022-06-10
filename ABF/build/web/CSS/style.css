@@ -1300,9 +1300,11 @@ a:hover figcaption { color: #056767; }
 }
 .activity-page{
     padding: 2rem;
+    height: 100vh;
 }
 .activity-list{
     background-color: #f5f7fa;
+    height: 100%;
 }
 .activity-list div:first-child{
     margin-bottom: 1rem;
