@@ -67,7 +67,21 @@
                                 <i class="fas fa-home"></i>
                                 Blog Home
                             </a></li>
-                        <li class="tm-nav-item"><a href="MainController?action=GetActivityList&userID=<%= loginUser.getUserID() %>" class="tm-nav-link">
+                            <%
+                                String roleUser = (String) session.getAttribute("ROLE");
+                                if (roleUser == null) {
+                                    roleUser = "";
+                                }
+                                if ("Mentor".equals(roleUser)) {
+                            %>
+                            <li class="tm-nav-item"><a href="MainController?action=GetApproveList" class="tm-nav-link">
+                                <i class="fa fa-check"></i>
+                                Approve Blog List
+                            </a></li>
+                            <%
+                                }
+                            %>     
+                        <li class="tm-nav-item"><a href="MainController?action=GetActivityList&userID=<%= loginUser.getUserID()%>" class="tm-nav-link">
                                 <i class="fas fa-tasks"></i>
                                 Activity
                             </a></li>

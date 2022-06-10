@@ -7,8 +7,9 @@ package controllers;
 
 import dao.BlogDAO;
 import dto.BlogDTO;
+import dto.UserDTO;
 import java.io.IOException;
-import java.io.Serializable;
+import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -17,17 +18,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author To Quyen Phan
  */
-@WebServlet(name = "GetListController", urlPatterns = {"/GetListController"})
-public class GetListController extends HttpServlet implements Serializable {
-
+@WebServlet(name = "GetApproveBlogListController", urlPatterns = {"/GetApproveBlogListController"})
+public class GetApproveBlogListController extends HttpServlet {
     private static final String ERROR = "error.jsp";
-    private static final String SUCCESS = "homepage.jsp";
-
+    private static final String SUCCESS = "approveblog.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,49 +43,28 @@ public class GetListController extends HttpServlet implements Serializable {
         String url = ERROR;
         try {
             BlogDAO dao = new BlogDAO();
-            List<BlogDTO> listAllBlogs = dao.getAllBlogs();//Lấy hết các blog
-            if (listAllBlogs.size() > 0) {
+            HttpSession session = request.getSession();
+            UserDTO loginUser = (UserDTO)session.getAttribute("LOGIN_USER");
+            int userID = loginUser.getUserID();
+            List<BlogDTO> listApproveBlogs = dao.getAllApproveBlogs(userID);//Lấy hết các blog
+            if (listApproveBlogs.size() > 0) {
                 String value = request.getParameter("sortBy");
                 String orderValue = request.getParameter("sortOrder");
                 if ("date".equals(value)) {//Nếu người dùng chọn sort by date
                     if("descending".equals(orderValue)){//Sắp xếp theo giảm dần
-                        Collections.sort(listAllBlogs, BlogDTO.compareDate);
+                        Collections.sort(listApproveBlogs, BlogDTO.compareDate);
                         request.setAttribute("ORDER_OPTION", "Descending");
                     }else if("ascending".equals(orderValue)){//Sắp xếp giảm dần
-                        Collections.sort(listAllBlogs, BlogDTO.compareDate);
-                        Collections.reverse(listAllBlogs);
+                        Collections.sort(listApproveBlogs, BlogDTO.compareDate);
+                        Collections.reverse(listApproveBlogs);
                         request.setAttribute("ORDER_OPTION", "Ascending");
                     }else{
                         request.setAttribute("ORDER_OPTION", "None");
                     }
                     request.setAttribute("OPTION", "Date");
-                } else if("vote".equals(value)) {//Nếu người dùng chọn sort by vote
-                    if("descending".equals(orderValue)){//Sắp xếp giảm dần
-                        Collections.sort(listAllBlogs, new Comparator<BlogDTO>() {
-                            @Override
-                            public int compare(BlogDTO o1, BlogDTO o2) {
-                                return o2.getNumberOfVotes() - o1.getNumberOfVotes();
-                            }
-                        });
-                        request.setAttribute("ORDER_OPTION", "Descending");
-                    }else if("ascending".equals(orderValue)){//Sắp xếp tăng dần
-                        Collections.sort(listAllBlogs, new Comparator<BlogDTO>() {
-                            @Override
-                            public int compare(BlogDTO o1, BlogDTO o2) {
-                                return o1.getNumberOfVotes() - o2.getNumberOfVotes();
-                            }
-                        });
-                        request.setAttribute("ORDER_OPTION", "Ascending");
-                    }else{
-                        request.setAttribute("ORDER_OPTION", "None");
-                    }
-                    request.setAttribute("OPTION", "Vote");
-                }else{
-                    request.setAttribute("OPTION", "None");
-                }
-                request.setAttribute("LIST_ALL_BLOGS", listAllBlogs);
+                } 
+                request.setAttribute("LIST_ALL_BLOGS", listApproveBlogs);
             }
-
             url = SUCCESS;
         } catch (Exception e) {
             log("Error at Get List Controller: " + e.toString());

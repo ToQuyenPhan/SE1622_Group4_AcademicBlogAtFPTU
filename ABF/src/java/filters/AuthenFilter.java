@@ -49,6 +49,8 @@ public class AuthenFilter implements Filter {
     private static final String POST_BLOG_PAGE = "postblog.jsp";
     private static final String BLOG_DETAIL_PAGE = "blogdetail.jsp";
     private static final String ACTIVITY_PAGE = "activity.jsp";
+    private static final String APPROVE_BLOG_PAGE = "approveblog.jsp";
+    private static final String APPROVE_BLOG_DETAIL_PAGE = "approveblogdetail.jsp";
 
     private static final boolean debug = true;
 
@@ -81,6 +83,8 @@ public class AuthenFilter implements Filter {
         MENTOR_RESOURCES.add(PROFILE_PAGE);
         MENTOR_RESOURCES.add(POST_BLOG_PAGE);
         MENTOR_RESOURCES.add(BLOG_DETAIL_PAGE);
+        MENTOR_RESOURCES.add(APPROVE_BLOG_PAGE);
+        MENTOR_RESOURCES.add(APPROVE_BLOG_DETAIL_PAGE);
         MENTOR_RESOURCES.add(ACTIVITY_PAGE);
         MENTOR_RESOURCES.add("SearchController");
         MENTOR_RESOURCES.add("PostBlogController");

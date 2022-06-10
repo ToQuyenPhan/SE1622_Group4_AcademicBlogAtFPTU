@@ -7,7 +7,6 @@ package controllers;
 
 import dao.ActivityDAO;
 import dao.BlogDAO;
-import dto.ActivityDTO;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -53,21 +52,23 @@ public class VoteController extends HttpServlet {
                     if (strNumberOfVotes != null) {
                         int numberOfVotes = Integer.parseInt(strNumberOfVotes);
                         ActivityDAO dao = new ActivityDAO();
+                        //Kiểm tra xem người dùng đã vote blog này chưa
                         boolean check = dao.findVoteActivity(blogID, userID);
                         BlogDAO blogDAO = new BlogDAO();
                         boolean checkUpdateActivity = false;
-                        if (check) {
+                        if (check) {//Nếu người dùng đã vote blog
                             numberOfVotes -= 1;
                             checkUpdateActivity = dao.deleteUpdate(blogID, userID);
                             request.setAttribute("VOTE_VALUE", "unvote");
-                        } else {
+                        } else {//Nễu người dùng chưa vote blog
                             numberOfVotes += 1;
+                            //Thêm hoạt động người dùng vào database
                             Date dateNow = Calendar.getInstance().getTime();
                             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                             checkUpdateActivity = dao.updateActivity(blogID, userID, dateFormat.format(dateNow));
                             request.setAttribute("VOTE_VALUE", "voted");
                         }
-                        if (checkUpdateActivity) {
+                        if (checkUpdateActivity) {//Update lại số lượng vote
                             boolean checkUpdate = blogDAO.updateVote(blogID, numberOfVotes);
                             if (checkUpdate) {
                                 url = SUCCESS;

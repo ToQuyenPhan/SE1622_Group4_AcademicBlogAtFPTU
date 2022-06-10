@@ -6,21 +6,26 @@
 package controllers;
 
 import dao.ActivityDAO;
+import dao.BlogDAO;
+import dto.BlogDTO;
+import dto.UserDTO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author To Quyen Phan
  */
-@WebServlet(name = "DeleteActivityController", urlPatterns = {"/DeleteActivityController"})
-public class DeleteActivityController extends HttpServlet {
-    private static final String ERROR = "MainController?action=GetActivityList";
-    private static final String SUCCESS = "MainController?action=GetActivityList";
+@WebServlet(name = "ApproveBlogDetailController", urlPatterns = {"/ApproveBlogDetailController"})
+public class ApproveBlogDetailController extends HttpServlet {
+    private static final String ERROR = "MainController?action=GetApproveList";
+    private static final String SUCCESS = "approveblogdetail.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,20 +40,18 @@ public class DeleteActivityController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            String strHistoryActivityID = request.getParameter("historyActivityID");
-            if(strHistoryActivityID != null && !"".equals(strHistoryActivityID)){
-                int historyActivityID = Integer.parseInt(strHistoryActivityID);
-                ActivityDAO dao = new ActivityDAO();
-                boolean check = dao.deleteActivity(historyActivityID);//Cập nhật bảng actiity
-                if(check){
-                    request.setAttribute("DELETE_MESSAGE", "Delete successfully!");
-                }else{
-                    request.setAttribute("DELETE_MESSAGE", "Failed to delete!");
+            String strBlogID = request.getParameter("blogID");
+            if (strBlogID != null) {
+                int blogID = Integer.parseInt(strBlogID);
+                BlogDAO dao = new BlogDAO();
+                BlogDTO blogDetail = dao.BlogDetail(blogID);
+                if (blogDetail != null) {
+                    request.setAttribute("APPROVE_BLOG_DETAIL", blogDetail);
+                    url = SUCCESS;
                 }
-                url = SUCCESS;
             }
         } catch (Exception e) {
-            log("Error at Get Activity List Controller: " + e.toString());
+            log("Error at SearchController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

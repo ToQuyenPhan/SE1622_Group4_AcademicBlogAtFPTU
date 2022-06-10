@@ -55,11 +55,15 @@ public class LoginController extends HttpServlet {
                     if (ADMIN.equals(roleName)) {
                         url = ADMIN_PAGE;
                     } else {
-                        if (STUDENT.equals(roleName) || MENTOR.equals(roleName)) {
-                            url = USER_CONTROLLER;
-                        } else {//Nhắc nhở nhẹ nhàng
-                            request.setAttribute("ERROR", "Your role is invalid!");
-                        }
+                        if (STUDENT.equals(roleName)){
+                                url = USER_CONTROLLER;
+                                session.setAttribute("ROLE", STUDENT);
+                            }if(MENTOR.equals(roleName)){
+                                url = USER_CONTROLLER;
+                                session.setAttribute("ROLE", MENTOR);
+                            } else {//Nhắc nhở nhẹ nhàng
+                                request.setAttribute("ERROR", "Your role is invalid!");
+                            }
                     }
                 } else {//Nhắc nhở nhẹ nhàng
                     request.setAttribute("ERROR", "Your account is no longer active!");

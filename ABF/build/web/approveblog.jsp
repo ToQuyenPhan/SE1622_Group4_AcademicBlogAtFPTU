@@ -1,9 +1,8 @@
 <%-- 
-    Document   : homepage
-    Created on : May 30, 2022, 7:18:09 PM
+    Document   : approvebloglist
+    Created on : Jun 10, 2022, 3:30:55 PM
     Author     : To Quyen Phan
 --%>
-
 
 <%@page import="dto.BlogDTO"%>
 <%@page import="java.util.List"%>
@@ -14,7 +13,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Academic Blog</title>
+        <title>Approve Blog</title>
         <link rel="stylesheet" href="fontawesome/css/all.min.css"> <!-- https://fontawesome.com/ -->
         <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet"> <!-- https://fonts.google.com/ -->
         <link href="CSS/bootstrap.min.css" rel="stylesheet">
@@ -63,7 +62,7 @@
                 </div>
                 <nav class="tm-nav" id="tm-nav">            
                     <ul>
-                        <li class="tm-nav-item active"><a href="#" class="tm-nav-link">
+                        <li class="tm-nav-item"><a href="MainController?action=GetList" class="tm-nav-link">
                                 <i class="fas fa-home"></i>
                                 Blog Home
                             </a></li>
@@ -74,7 +73,7 @@
                                 }
                                 if ("Mentor".equals(roleUser)) {
                             %>
-                            <li class="tm-nav-item"><a href="MainController?action=GetApproveList" class="tm-nav-link">
+                        <li class="tm-nav-item active"><a href="#" class="tm-nav-link">
                                 <i class="fa fa-check"></i>
                                 Approve Blog List
                             </a></li>
@@ -130,18 +129,11 @@
                                 <%
                                     if (selectedOption.equals("Date")) {
                                 %>
-                                <option value="vote">Vote</option>
-                                <option value="none">None</option>
-                                <%
-                                } else if (selectedOption.equals("Vote")) {
-                                %>
-                                <option value="vote">Date</option>
                                 <option value="none">None</option>
                                 <%
                                 } else {
                                 %>
                                 <option value="date">Date</option>
-                                <option value="vote">Vote</option>
                                 <%
                                     }
                                 %>
@@ -175,7 +167,7 @@
                                 <option value="<%= selectedOrderOption.toLowerCase()%>" selected=""><%= selectedOrderOption%></option>
                             </select>
                             <input type="hidden" name="search" value="<%= search%>">
-                            <input class="sort-button" type="submit" name="action" value="Sort">
+                            <input class="sort-button" type="submit" name="action" value="Sort Blog">
                         </form>
                     </div>
                 </div>            
@@ -186,10 +178,37 @@
                         if (listAllBlogs != null) { //chỉ hiển thị khi người dùng đã đăng nhập
                             if (listAllBlogs.size() > 0) {
                                 for (BlogDTO blog : listAllBlogs) {
+                                    if (blog.getImage() != null) {
                     %> 
-                    <article class="col-12 col-md-6 tm-post">
+                    <article class="col-12 col-md-12 tm-post">
                         <hr class="tm-hr-primary">
-                        <a href="MainController?action=ViewBlogDetails&blogID=<%= blog.getBlogID()%>&userID=<%= blog.getUserID()%>" class="effect-lily tm-post-link tm-pt-60">
+                        <div class="row">
+                            <a href="MainController?action=ViewApproveBlogDetails&blogID=<%= blog.getBlogID()%>&userID=<%= blog.getUserID()%>" class="col-sm-4 approve-blog-img">
+                                <div>
+                                    <img src="<%= blog.getImage()%>" alt="Image">                            
+                                </div>
+                            </a>
+                            <div class="col-sm-8 approve-blog-content">
+                                <a href="MainController?action=ViewApproveBlogDetails&blogID=<%= blog.getBlogID()%>&userID=<%= blog.getUserID()%>" class="effect-lily tm-post-link">
+                                    <h2 class="tm-pt-30 tm-color-primary tm-post-title"><%= blog.getTitle()%></h2>
+                                </a>                   
+                                <p class="tm-pt-30">
+                                    <%= blog.getContent()%>
+                                </p>
+                                <div class="d-flex justify-content-between tm-pt-45">
+                                    <span class="tm-color-primary">By <%= blog.getFullName()%></span>
+                                    <span class="tm-color-primary"><%= blog.getDate()%></span>
+                                </div>
+                            </div>
+                        </div>
+                                <hr>
+                    </article>
+                    <%
+                    } else {
+                    %>
+                    <article class="col-12 col-md-12 tm-post">
+                        <hr class="tm-hr-primary">
+                        <a href="MainController?action=ViewApproveBlogDetails&blogID=<%= blog.getBlogID()%>&userID=<%= blog.getUserID()%>" class="effect-lily tm-post-link tm-pt-60 approve-blog-content-second">
                             <%
                                 if (blog.getImage() != null) {
                             %>
@@ -209,27 +228,22 @@
                             <span class="tm-color-primary"><%= blog.getDate()%></span>
                         </div>
                         <hr>
-                        <div class="d-flex justify-content-between">
-                            <span>36 comments</span>
-                            <span><%= blog.getNumberOfVotes()%> votes</span>
-                        </div>
                     </article>
                     <%
+                                }
                             }
                         }
                     } else {
-                        String message = (String) request.getAttribute("MESSAGE");
-                        if (message == null) {
-                            message = "";
-                        }
                     %>
                     <div class="search-home-page justify-content-center">
 
-                        <h1><%= message%></h1>
+                        <h1>Empty!</h1>
                         <br>
                         <br>
                         <br>
                         <br>
+                        <br>   
+                        <br>   
                         <br>   
                     </div>
                     <%

@@ -73,8 +73,12 @@ public class LoginWithGoogleController extends HttpServlet {
                         if (ADMIN.equals(roleName)) {
                             url = ADMIN_PAGE;
                         } else {
-                            if (STUDENT.equals(roleName) || MENTOR.equals(roleName)) {
+                            if (STUDENT.equals(roleName)){
                                 url = USER_CONTROLLER;
+                                session.setAttribute("ROLE", STUDENT);
+                            }if(MENTOR.equals(roleName)){
+                                url = USER_CONTROLLER;
+                                session.setAttribute("ROLE", MENTOR);
                             } else {//Nhắc nhở nhẹ nhàng
                                 request.setAttribute("ERROR", "Your role is invalid!");
                             }

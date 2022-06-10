@@ -38,7 +38,7 @@ private static final String SUCCESS = "feedback.jsp";
         String url = ERROR;
         try{
             FeedbackDAO dao = new FeedbackDAO();
-            List<FeedbackTypeDTO> listAllFeedbackTypes = dao.getAllFeedbackTypes();//Lấy hết các blog
+            List<FeedbackTypeDTO> listAllFeedbackTypes = dao.getAllFeedbackTypes();//Lấy hết các loại feedback
             if(listAllFeedbackTypes.size() > 0){              
                 request.setAttribute("LIST_ALL_FEEDBACK_TYPE", listAllFeedbackTypes);
                 url = SUCCESS;

@@ -7,7 +7,6 @@ package controllers;
 
 import dao.BlogDAO;
 import dao.CommentDAO;
-import dto.BlogDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;

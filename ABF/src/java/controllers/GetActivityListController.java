@@ -41,7 +41,7 @@ public class GetActivityListController extends HttpServlet {
             if(strUserID != null && !"".equals(strUserID)){
                 int userID = Integer.parseInt(strUserID);
                 ActivityDAO dao = new ActivityDAO();
-                List<ActivityDTO> listAllActivities = dao.getAllActivities(userID);
+                List<ActivityDTO> listAllActivities = dao.getAllActivities(userID);//Lấy hết các activity để hiển thị lên
                 if(listAllActivities.size() > 0){
                     request.setAttribute("LIST_ALL_ACTIVITY", listAllActivities);
                 }else{
