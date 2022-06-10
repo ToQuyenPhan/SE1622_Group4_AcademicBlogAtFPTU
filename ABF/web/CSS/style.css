@@ -1290,6 +1290,17 @@ a:hover figcaption { color: #056767; }
 .return-home-page i{
     font-size: 2rem;
 }
+.edit-button a{
+    background-color: #007bff ! important;
+}
+.edit-button:hover a{
+    background-color: #0069d9 !important;
+}
+
+/* Edit Blog */
+.body-edit-blog{
+    overflow-y: scroll;
+}
 
 
 

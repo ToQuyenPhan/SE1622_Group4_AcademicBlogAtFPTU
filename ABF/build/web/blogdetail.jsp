@@ -116,7 +116,9 @@
                         %>
                         <div class="form-inline button-blog-detail">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Delete</button>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Edit</button>
+                            <button type="button" class="edit-button btn btn-primary">
+                                <a href="MainController?action=EditBlog&blogID=<%=blogDetail.getBlogID()%>&userID=<%=loginUser.getUserID()%>&subjectID=<%=blogDetail.getSubjectID()%>">Edit</a>
+                            </button>
                         </div>
                         <%
                             }

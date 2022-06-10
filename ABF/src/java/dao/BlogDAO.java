@@ -35,6 +35,9 @@ public class BlogDAO {
             + "numberOfVotes,numberOfComments,Blog.status, fullName FROM Blog JOIN [USER] ON Blog.userID = [User].userID "
             + "WHERE Blog.status LIKE 'waiting' AND Blog.userID != ?";
     private static final String DELETE_BLOG = "UPDATE Blog SET status = 'disable' WHERE blogID = ?";
+    private static final String EDIT_BLOG = "UPDATE Blog  \n"
+            + "set subjectID=?, title=? , content=?,date=?,image=?, video=?\n"
+            + "where blogID=?";
 
     public List<BlogDTO> getAllBlogs() throws SQLException {
         List<BlogDTO> listAllBlogs = new ArrayList<>();
@@ -325,6 +328,28 @@ public class BlogDAO {
             }
         }
         return check;
+    }
+    
+    public static int editBlog(int blogID, int subjectID, String title, String content, String date, String image, String video) throws ClassNotFoundException, SQLException {
+        Connection cn = null;
+        PreparedStatement ptm = null;
+        int rs = 0;
+        cn = DBUtils.getConnection();
+        if (cn != null) {
+            ptm = cn.prepareStatement(EDIT_BLOG);
+            ptm.setInt(1, subjectID);
+            ptm.setString(2, title);
+            ptm.setString(3, content);
+            ptm.setString(4, date);
+            ptm.setString(5, image);
+            ptm.setString(6, video);
+            ptm.setInt(7, blogID);
+            rs = ptm.executeUpdate();
+
+        }
+
+        cn.close();
+        return rs;
     }
 
 }
