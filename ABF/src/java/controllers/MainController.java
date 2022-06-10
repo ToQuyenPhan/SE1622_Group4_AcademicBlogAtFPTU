@@ -5,7 +5,6 @@
  */
 package controllers;
 
-
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "MainController", urlPatterns = {"/MainController"})
 public class MainController extends HttpServlet {
+
     private static final String ERROR = "error.jsp";
     private static final String LOGIN = "Login";
     private static final String LOGIN_WITH_GOOGLE = "LoginWithGoogle";
@@ -34,7 +34,8 @@ public class MainController extends HttpServlet {
     private static final String GET_ACTIVITY_LIST = "GetActivityList";
     private static final String DELETE_ACTIVITY = "DeleteActivity";
     private static final String VOTE = "Vote";
-    
+    private static final String DELETE_BLOG = "DeleteBlog";
+
     private static final String LOGIN_WITH_GOOGLE_CONTROLLER = "LoginWithGoogleController";
     private static final String LOGIN_CONTROLLER = "LoginController";
     private static final String GET_LIST_CONTROLLER = "GetListController";
@@ -49,6 +50,8 @@ public class MainController extends HttpServlet {
     private static final String GET_ACTIVITY_LIST_CONTROLLER = "GetActivityListController";
     private static final String DELETE_ACTIVITY_CONTROLLER = "DeleteActivityController";
     private static final String VOTE_CONTROLLER = "VoteController";
+    private static final String DELETE_BLOG_CONTROLLER = "DeleteBlogController";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -66,9 +69,9 @@ public class MainController extends HttpServlet {
             String action = request.getParameter("action");
             if (LOGIN_WITH_GOOGLE.equals(action)) {
                 url = LOGIN_WITH_GOOGLE_CONTROLLER;
-            } else if(LOGIN.equals(action)){
-                url = LOGIN_CONTROLLER;    
-            }else if (GETLIST.equals(action)) {
+            } else if (LOGIN.equals(action)) {
+                url = LOGIN_CONTROLLER;
+            } else if (GETLIST.equals(action)) {
                 url = GET_LIST_CONTROLLER;
             } else if (GETFEEDBACKTYPELIST.equals(action)) {
                 url = GET_FEEDBACK_TYPE_LIST_CONTROLLER;
@@ -92,7 +95,9 @@ public class MainController extends HttpServlet {
                 url = DELETE_ACTIVITY_CONTROLLER;
             } else if (VOTE.equals(action)) {
                 url = VOTE_CONTROLLER;
-            } else{
+            } else if (DELETE_BLOG.equals(action)) {
+                url = DELETE_BLOG_CONTROLLER;
+            } else {
                 request.setAttribute("ERROR_MESSAGE", "Function is not available!");
             }
         } catch (Exception e) {

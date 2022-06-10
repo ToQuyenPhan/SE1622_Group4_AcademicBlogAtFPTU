@@ -32,6 +32,7 @@ public class BlogDAO {
     private static final String POST_BLOG = "INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status)"
             + "VALUES( ?,null,?,?,?,?,?,null,0,0,'waiting')";
     private static final String UPDATE_VOTE = "UPDATE Blog SET numberOfVotes = ? WHERE blogID = ?";
+    private static final String DELETE_BLOG = "UPDATE Blog SET status = 'disable' WHERE blogID = ?";
 
     public List<BlogDTO> getAllBlogs() throws SQLException {
         List<BlogDTO> listAllBlogs = new ArrayList<>();
@@ -247,6 +248,29 @@ public class BlogDAO {
             }
             if (psm != null) {
                 psm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+    public boolean deleteBlog(int blogID) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(DELETE_BLOG);
+                ptm.setInt(1, blogID);
+                check = ptm.executeUpdate() > 0 ? true : false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (ptm != null) {
+                ptm.close();
             }
             if (conn != null) {
                 conn.close();
