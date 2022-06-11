@@ -51,6 +51,8 @@ public class AuthenFilter implements Filter {
     private static final String ACTIVITY_PAGE = "activity.jsp";
     private static final String APPROVE_BLOG_PAGE = "approveblog.jsp";
     private static final String APPROVE_BLOG_DETAIL_PAGE = "approveblogdetail.jsp";
+    private static final String MAJOR_PAGE = "major.jsp";
+    private static final String SUBJECT_PAGE = "subject.jsp";
 
     private static final boolean debug = true;
 
@@ -64,6 +66,8 @@ public class AuthenFilter implements Filter {
         ADMIN_RESOURCES = new ArrayList<>();
         ADMIN_RESOURCES.add(ADMIN_PAGE);
         ADMIN_RESOURCES.add(PROFILE_PAGE);
+        ADMIN_RESOURCES.add(MAJOR_PAGE);
+        ADMIN_RESOURCES.add(SUBJECT_PAGE);
 
         //Khai báo các Resource Student được phép truy cập
         STUDENT_RESOURCES = new ArrayList<>();

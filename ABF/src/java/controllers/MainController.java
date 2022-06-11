@@ -40,6 +40,10 @@ public class MainController extends HttpServlet {
     private static final String DELETE_BLOG = "DeleteBlog";
     private static final String EDIT_BLOG = "EditBlog";
     private static final String EDIT = "Edit";
+    private static final String GET_MAJOR_LIST = "GetMajorList";
+    private static final String DELETE_MAJOR = "DeleteMajor";
+    private static final String GET_SUBJECT_LIST = "GetSubjectList";
+    private static final String DELETE_SUBJECT = "DeleteSubject";
     
     private static final String LOGIN_WITH_GOOGLE_CONTROLLER = "LoginWithGoogleController";
     private static final String LOGIN_CONTROLLER = "LoginController";
@@ -60,6 +64,10 @@ public class MainController extends HttpServlet {
     private static final String DELETE_BLOG_CONTROLLER = "DeleteBlogController";
     private static final String GO_TO_EDIT_BLOG_PAGE_CONTROLLER = "GoToEditBlogPageController";
     private static final String EDIT_BLOG_CONTROLLER = "EditBlogController";
+    private static final String GET_MAJOR_LIST_CONTROLLER = "GetMajorListController";
+    private static final String DELETE_MAJOR_CONTROLLER = "DeleteMajorController";
+    private static final String GET_SUBJECT_LIST_CONTROLLER = "GetSubjectListController";
+    private static final String DELETE_SUBJECT_CONTROLLER = "DeleteSubjectController";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -113,6 +121,14 @@ public class MainController extends HttpServlet {
                 url = GO_TO_EDIT_BLOG_PAGE_CONTROLLER;
             } else if (EDIT.equals(action)) {
                 url = EDIT_BLOG_CONTROLLER;
+            } else if (GET_MAJOR_LIST.equals(action)) {
+                url = GET_MAJOR_LIST_CONTROLLER;
+            } else if (DELETE_MAJOR.equals(action)) {
+                url = DELETE_MAJOR_CONTROLLER;
+            } else if (GET_SUBJECT_LIST.equals(action)) {
+                url = GET_SUBJECT_LIST_CONTROLLER;
+            } else if (DELETE_SUBJECT.equals(action)) {
+                url = DELETE_SUBJECT_CONTROLLER;
             } else{
                 request.setAttribute("ERROR_MESSAGE", "Function is not available!");
             }
