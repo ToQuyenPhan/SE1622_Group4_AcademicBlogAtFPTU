@@ -193,7 +193,7 @@
                                     <h2 class="tm-pt-30 tm-color-primary tm-post-title"><%= blog.getTitle()%></h2>
                                 </a>                   
                                 <p class="tm-pt-30">
-                                    <%= blog.getContent()%>
+                                    <%= blog.getContent()%>                                
                                 </p>
                                 <div class="d-flex justify-content-between tm-pt-45">
                                     <span class="tm-color-primary">By <%= blog.getFullName()%></span>
@@ -201,7 +201,7 @@
                                 </div>
                             </div>
                         </div>
-                                <hr>
+                        <hr>
                     </article>
                     <%
                     } else {
@@ -221,8 +221,8 @@
                             <h2 class="tm-pt-30 tm-color-primary tm-post-title"><%= blog.getTitle()%></h2>
                         </a>                    
                         <p class="tm-pt-30">
-                            <%= blog.getContent()%>
-                        </p>
+                            <%= blog.getContent()%>                       
+                        </p>                        
                         <div class="d-flex justify-content-between tm-pt-45">
                             <span class="tm-color-primary">By <%= blog.getFullName()%></span>
                             <span class="tm-color-primary"><%= blog.getDate()%></span>

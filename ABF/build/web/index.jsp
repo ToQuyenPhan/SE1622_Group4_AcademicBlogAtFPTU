@@ -41,6 +41,7 @@
                 </div>
                 <input class="submit-welcome-page" type="submit" name="action" value="Login">
                 <i class="fa fa-close" onclick="openForm(2)"></i>
+                <a href="signup.jsp">Register New Account</a>
             </form>
         </div>
         <!-- Optional JavaScript -->

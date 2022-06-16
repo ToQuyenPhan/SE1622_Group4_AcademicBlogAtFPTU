@@ -19,6 +19,7 @@ import utils.DBUtils;
  * @author To Quyen Phan
  */
 public class BlogDAO {
+
     private static final String GET_ALL_BLOGS = "SELECT blogID,Blog.userID,userApproveID,subjectID,title,content,date, Blog.image,video,"
             + "numberOfVotes,numberOfComments,Blog.status, fullName FROM Blog JOIN [USER] ON Blog.userID = [User].userID "
             + "WHERE Blog.status LIKE 'approved'";
@@ -38,6 +39,8 @@ public class BlogDAO {
     private static final String EDIT_BLOG = "UPDATE Blog  \n"
             + "set subjectID=?, title=? , content=?,date=?,image=?, video=?\n"
             + "where blogID=?";
+    private static final String APPROVE_BLOG = "UPDATE Blog SET status= 'approved' WHERE blogID = ?";
+    private static final String REJECT_BLOG = "UPDATE Blog SET status= 'rejected' WHERE blogID = ?";
 
     public List<BlogDTO> getAllBlogs() throws SQLException {
         List<BlogDTO> listAllBlogs = new ArrayList<>();
@@ -329,7 +332,7 @@ public class BlogDAO {
         }
         return check;
     }
-    
+
     public static int editBlog(int blogID, int subjectID, String title, String content, String date, String image, String video) throws ClassNotFoundException, SQLException {
         Connection cn = null;
         PreparedStatement ptm = null;
@@ -352,4 +355,59 @@ public class BlogDAO {
         return rs;
     }
 
+    public boolean approveBlog(int blogID) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement psm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                psm = conn.prepareStatement(APPROVE_BLOG);
+                psm.setInt(1, blogID);
+                check = psm.executeUpdate() > 0 ? true : false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (psm != null) {
+                psm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+    
+    public boolean rejectBlog(int blogID) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement psm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                psm = conn.prepareStatement(REJECT_BLOG);
+                psm.setInt(1, blogID);
+                check = psm.executeUpdate() > 0 ? true : false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (psm != null) {
+                psm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
 }

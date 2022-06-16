@@ -17,6 +17,7 @@ import utils.DBUtils;
  * @author To Quyen Phan
  */
 public class UserDAO {
+
     private static final String FIND_USER = "SELECT userID, password, fullName, roleID, image, numberOfBlogs, gender, dateOfBirth, address, contact, aboutme, status"
             + " FROM [User] WHERE email like ?";
     private static final String LOGIN = "SELECT userID, fullName, roleID, image, numberOfBlogs, gender, dateOfBirth, address, contact, aboutme, status"
@@ -26,7 +27,10 @@ public class UserDAO {
     private static final String CHECK_ROLE = "SELECT roleName FROM Role WHERE roleID = ?";
     private static final String CHECK_TO_UPDATE = "SELECT numberOfBlogs FROM [User] WHERE userID = ?";
     private static final String UPDATE = "UPDATE [User] SET numberOfBlogs = ? WHERE userID = ?";
-    
+    private static final String CHECK_DUPLICATE = "SELECT fullName FROM [User] WHERE email=?";
+    private static final String CREATE_ACCOUNT = "INSERT INTO [User](password, fullName, roleID, email, image, numberOfBlogs, gender, dateOfBirth, address, contact, aboutme, status)"
+            + " VALUES(?,?,2,?,null,0,null,null,null,null,null,1)";
+
     public UserDTO checkLogin(String email, String password) throws SQLException {
         UserDTO user = null;
         Connection conn = null;
@@ -49,7 +53,7 @@ public class UserDAO {
                     String dateOfBirth = rs.getString("dateOfBirth");
                     String address = rs.getString("address");
                     String contact = rs.getString("contact");
-                    String aboutme = rs.getString("aboutme");                   
+                    String aboutme = rs.getString("aboutme");
                     boolean status = rs.getBoolean("status");
                     user = new UserDTO(userID, password, fullName, roleID, email, image, numberOfBlogs, gender, dateOfBirth, address, contact, aboutme, status);
                 }
@@ -69,7 +73,7 @@ public class UserDAO {
         }
         return user;
     }
-    
+
     public UserDTO checkLoginByEmail(String email) throws SQLException {
         UserDTO user = null;
         Connection conn = null;
@@ -92,7 +96,7 @@ public class UserDAO {
                     String dateOfBirth = rs.getString("dateOfBirth");
                     String address = rs.getString("address");
                     String contact = rs.getString("contact");
-                    String aboutme = rs.getString("aboutme");      
+                    String aboutme = rs.getString("aboutme");
                     boolean status = rs.getBoolean("status");
                     user = new UserDTO(userID, password, fullName, roleID, email, image, numberOfBlogs, gender, dateOfBirth, address, contact, aboutme, status);
                 }
@@ -112,7 +116,7 @@ public class UserDAO {
         }
         return user;
     }
-    
+
     public String checkRole(int roleID) throws SQLException {
         String roleName = null;
         Connection conn = null;
@@ -143,7 +147,7 @@ public class UserDAO {
         }
         return roleName;
     }
-    
+
     public boolean createUser(String fullName, String email, String image) throws SQLException, ClassNotFoundException {
         boolean check = false;
         Connection conn = null;
@@ -163,6 +167,64 @@ public class UserDAO {
         } finally {
             if (psm != null) {
                 psm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+
+    public boolean createAccount(String fullName, String email, String password) throws SQLException, ClassNotFoundException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement psm = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                psm = conn.prepareStatement(CREATE_ACCOUNT);
+                psm.setString(1, password);
+                psm.setString(2, fullName);
+                psm.setString(3, email);
+
+                check = psm.executeUpdate() > 0 ? true : false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (psm != null) {
+                psm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+
+    public boolean checkDuplicate(String email) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(CHECK_DUPLICATE);
+                ptm.setString(1, email);
+                rs = ptm.executeQuery();
+                if (rs.next()) {
+                    check = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
             }
             if (conn != null) {
                 conn.close();

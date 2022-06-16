@@ -5,7 +5,6 @@
  */
 package controllers;
 
-
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "MainController", urlPatterns = {"/MainController"})
 public class MainController extends HttpServlet {
+
     private static final String ERROR = "error.jsp";
     private static final String LOGIN = "Login";
     private static final String LOGIN_WITH_GOOGLE = "LoginWithGoogle";
@@ -44,7 +44,10 @@ public class MainController extends HttpServlet {
     private static final String DELETE_MAJOR = "DeleteMajor";
     private static final String GET_SUBJECT_LIST = "GetSubjectList";
     private static final String DELETE_SUBJECT = "DeleteSubject";
-    
+    private static final String APPROVE_BLOG = "Approve";
+    private static final String REJECT_BLOG = "Reject";
+    private static final String CREATE = "Create";
+
     private static final String LOGIN_WITH_GOOGLE_CONTROLLER = "LoginWithGoogleController";
     private static final String LOGIN_CONTROLLER = "LoginController";
     private static final String GET_LIST_CONTROLLER = "GetListController";
@@ -68,6 +71,10 @@ public class MainController extends HttpServlet {
     private static final String DELETE_MAJOR_CONTROLLER = "DeleteMajorController";
     private static final String GET_SUBJECT_LIST_CONTROLLER = "GetSubjectListController";
     private static final String DELETE_SUBJECT_CONTROLLER = "DeleteSubjectController";
+    private static final String APPROVE_BLOG_CONTROLLER = "ApproveBlogController";
+    private static final String REJECT_BLOG_CONTROLLER = "RejectBlogController";
+    private static final String CREATE_CONTROLLER = "CreateController";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -85,9 +92,9 @@ public class MainController extends HttpServlet {
             String action = request.getParameter("action");
             if (LOGIN_WITH_GOOGLE.equals(action)) {
                 url = LOGIN_WITH_GOOGLE_CONTROLLER;
-            } else if(LOGIN.equals(action)){
-                url = LOGIN_CONTROLLER;    
-            }else if (GETLIST.equals(action)) {
+            } else if (LOGIN.equals(action)) {
+                url = LOGIN_CONTROLLER;
+            } else if (GETLIST.equals(action)) {
                 url = GET_LIST_CONTROLLER;
             } else if (GETFEEDBACKTYPELIST.equals(action)) {
                 url = GET_FEEDBACK_TYPE_LIST_CONTROLLER;
@@ -129,7 +136,15 @@ public class MainController extends HttpServlet {
                 url = GET_SUBJECT_LIST_CONTROLLER;
             } else if (DELETE_SUBJECT.equals(action)) {
                 url = DELETE_SUBJECT_CONTROLLER;
-            } else{
+            } else if (APPROVE_BLOG.equals(action)) {
+                url = APPROVE_BLOG_CONTROLLER;
+            } else if (VIEW_APPROVE_BLOG_DETAIL.equals(action)) {
+                url = APPROVE_BLOG_DETAIL_CONTROLLER;
+            } else if (REJECT_BLOG.equals(action)) {
+                url = REJECT_BLOG_CONTROLLER;
+            } else if (CREATE.equals(action)) {
+                url = CREATE_CONTROLLER;
+            } else {
                 request.setAttribute("ERROR_MESSAGE", "Function is not available!");
             }
         } catch (Exception e) {

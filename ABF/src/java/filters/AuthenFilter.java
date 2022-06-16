@@ -103,6 +103,7 @@ public class AuthenFilter implements Filter {
         NON_AUTHEN_RESOURCES.add(".gif");
         NON_AUTHEN_RESOURCES.add(".png");
         NON_AUTHEN_RESOURCES.add(".jpeg");
+        NON_AUTHEN_RESOURCES.add("signup.jsp");
 
     }
 
