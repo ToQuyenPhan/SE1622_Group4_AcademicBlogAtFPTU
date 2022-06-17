@@ -35,6 +35,9 @@ public class MainController extends HttpServlet {
     private static final String DELETE_ACTIVITY = "DeleteActivity";
     private static final String VOTE = "Vote";
     private static final String DELETE_BLOG = "DeleteBlog";
+    private static final String PERSONAL_SEARCH = "PersonalSearch";
+    private static final String GET_PERSONAL_LIST = "GetPersonalList";
+    private static final String SEARCH_ACTIVITY_BY_NAME = "SearchActivityByName";
 
     private static final String LOGIN_WITH_GOOGLE_CONTROLLER = "LoginWithGoogleController";
     private static final String LOGIN_CONTROLLER = "LoginController";
@@ -51,6 +54,9 @@ public class MainController extends HttpServlet {
     private static final String DELETE_ACTIVITY_CONTROLLER = "DeleteActivityController";
     private static final String VOTE_CONTROLLER = "VoteController";
     private static final String DELETE_BLOG_CONTROLLER = "DeleteBlogController";
+    private static final String PERSONAL_SEARCH_CONTROLLER = "PersonalSearchController";
+    private static final String GET_PERSONAL_LIST_CONTROLLER = "GetPersonalListController";
+    private static final String SEARCH_ACTIVITY_BY_NAME_CONTROLLER = "SearchActivitiesByNameController";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -97,6 +103,12 @@ public class MainController extends HttpServlet {
                 url = VOTE_CONTROLLER;
             } else if (DELETE_BLOG.equals(action)) {
                 url = DELETE_BLOG_CONTROLLER;
+            } else if (PERSONAL_SEARCH.equals(action)) {
+                url = PERSONAL_SEARCH_CONTROLLER;
+            } else if (GET_PERSONAL_LIST.equals(action)) {
+                url = GET_PERSONAL_LIST_CONTROLLER;
+            } else if (SEARCH_ACTIVITY_BY_NAME.equals(action)) {
+                url = SEARCH_ACTIVITY_BY_NAME_CONTROLLER;
             } else {
                 request.setAttribute("ERROR_MESSAGE", "Function is not available!");
             }

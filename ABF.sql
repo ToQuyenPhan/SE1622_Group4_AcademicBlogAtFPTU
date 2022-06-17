@@ -102,6 +102,7 @@ status int
 create table ActivityType(
 activityTypeID int identity(1,1) primary key,
 activity nvarchar(50) not null,
+activityName nvarchar(50) not null
 )
 --------Thêm khoá ngoại------------
 alter table Blog add foreign key (userID) references [User](userID)
@@ -147,7 +148,7 @@ insert into Role(roleName) values('Mentor')
 
 --Bảng User--
 insert into [User](password,fullName,roleID,email,image,numberOfBlogs,gender,dateOfBirth,
-address,contact,aboutme,status) values ('123','Phan Thi To Quyen', 1, 'quyenlh01@gmail.com',
+address,contact,aboutme,status) values ('1','Nguyen Thai Phong', 1, 'phongntse150407@gmail.com',
 null, 0,null, null,null,null,null, 1)
 
 --Bảng FeedbackType--
@@ -164,17 +165,17 @@ INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image
 			VALUES( 1,null,2,'123asd','akjshfksnnvoiewrwqurfjckanc','6/2/2022 11:22:02',null, null,0,0,'approved')
 
 --Bảng ActivityType
-insert into ActivityType(activity) values('You voted a blog.')
-insert into ActivityType(activity) values('You posted a blog.')
-insert into ActivityType(activity) values('You commented a blog.')
+insert into ActivityType(activity, activityName) values('You voted a blog.','Vote')
+insert into ActivityType(activity, activityName) values('You posted a blog.','Post')
+insert into ActivityType(activity, activityName) values('You commented a blog.','Comment')
 
 --Bảng HistoryActivity--
 insert into HistoryActivity(userID, date, activityTypeID, blogID, status) 
-values(2, '11/12/2011 11:30:02', 1, 1,1) 
+values(1, '11/12/2011 11:30:02', 4, 1,1) 
 insert into HistoryActivity(userID, date, activityTypeID, blogID, status) 
-values(2, '11/12/2011 11:33:02', 1, 1,1)
+values(1, '11/12/2011 11:33:02', 5, 1,1)
 insert into HistoryActivity(userID, date, activityTypeID, blogID, status) 
-values(2, '11/12/2011 11:32:02', 1, 1,1)
+values(1, '11/12/2011 11:32:02', 6, 1,1)
 
 delete HistoryActivity where userID = 2 AND blogID = 1 AND activityTypeID = 1
 Update [User] SET roleID = 2 where userID = 1
@@ -190,7 +191,7 @@ INSERT INTO [User](fullName, roleID, email, gender, dateOfBirth, image, status)
             VALUES('thanhhtse150412',1,'thanhhtse150412@fpt.edu.vn',null,null,null,1)
 
 INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 
-			VALUES( 1,null,2,'123asd','akjshfksnnvoiewrwqurfjckanc','8/6/2022 11:22:02','image/bg6.jpg','video/123',4,0,'approved')
+			VALUES( 2,null,2,'123asd','akjshfksnnvoiewrwqurfjckanc','8/6/2022 11:22:02','image/bg6.jpg','video/123',4,0,'approved')
 			INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 
 			VALUES( 1,null,2,'123asd','akjshfksnnvoiewrwqurfjckanc','6/3/2022 11:23:02','img/123','video/123',0,0,'approved')
 			INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 

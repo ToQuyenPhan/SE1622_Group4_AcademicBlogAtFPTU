@@ -49,6 +49,7 @@ public class AuthenFilter implements Filter {
     private static final String POST_BLOG_PAGE = "postblog.jsp";
     private static final String BLOG_DETAIL_PAGE = "blogdetail.jsp";
     private static final String ACTIVITY_PAGE = "activity.jsp";
+    private static final String PERSONAL_PAGE = "personalpage.jsp";
 
     private static final boolean debug = true;
 
@@ -72,7 +73,9 @@ public class AuthenFilter implements Filter {
         STUDENT_RESOURCES.add(BLOG_DETAIL_PAGE);
         STUDENT_RESOURCES.add(ACTIVITY_PAGE);
         STUDENT_RESOURCES.add("SearchController");
+        STUDENT_RESOURCES.add("PersonalSearchController");
         STUDENT_RESOURCES.add("PostBlogController");
+        STUDENT_RESOURCES.add(PERSONAL_PAGE);
 
         //Khai báo các Resource Mentor được phép truy cập
         MENTOR_RESOURCES = new ArrayList<>();
@@ -83,7 +86,9 @@ public class AuthenFilter implements Filter {
         MENTOR_RESOURCES.add(BLOG_DETAIL_PAGE);
         MENTOR_RESOURCES.add(ACTIVITY_PAGE);
         MENTOR_RESOURCES.add("SearchController");
+        STUDENT_RESOURCES.add("PersonalSearchController");
         MENTOR_RESOURCES.add("PostBlogController");
+        MENTOR_RESOURCES.add(PERSONAL_PAGE);
 
         //Khai báo các Resource ko cần xác thực, phân quyền 
         NON_AUTHEN_RESOURCES = new ArrayList<>();
@@ -191,7 +196,7 @@ public class AuthenFilter implements Filter {
                     } else {
                         if (MENTOR.equals(dao.checkRole(loginUser.getRoleID())) && MENTOR_RESOURCES.contains(requestResource)) {
                             chain.doFilter(request, response);
-                        }else{
+                        } else {
                             res.sendRedirect(WELCOME);
                         }
                     }

@@ -53,7 +53,7 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="tm-site-header">
-                    <a href="profile.jsp">
+                    <a href="MainController?action=GetPersonalList&userID=<%= loginUser.getUserID() %>">
                         <div class="mb-3 mx-auto tm-site-logo">
                             <img src="<%= image%>">
 

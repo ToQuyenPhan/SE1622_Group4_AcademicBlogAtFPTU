@@ -87,16 +87,20 @@
         <div class="container-fluid activity-page">
             <main class="tm-main activity-list">
                 <!-- Search form -->
+
                 <div class="row tm-row">
                     <div class="col-12 row">
-                        <form class="form-inline tm-mb-80 tm-search-form col-sm-9 row">                
-                            <input class="form-control tm-search-input col-sm-9" name="query" type="text" placeholder="Search..." aria-label="Search">
-                            <button class="tm-search-button col-sm-1" type="submit">
+                        <form class="form-inline tm-mb-80 tm-search-form col-sm-9 row" action="MainController">                
+                            <input class="form-control tm-search-input col-sm-9" name="searchName" value="<%=search%>" type="text" placeholder="Search..." aria-label="Search">
+                            <input type="hidden" name="userID" value="<%= loginUser.getUserID() %>">
+                            <button class="tm-search-button col-sm-1" type="submit" name="action" value="SearchActivityByName">
                                 <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
                             </button>                                
                         </form>
                     </div>                
-                </div> 
+                </div>
+
+
                 <%
                     List<ActivityDTO> listAllActivities = (List<ActivityDTO>) request.getAttribute("LIST_ALL_ACTIVITY");
                     if (listAllActivities != null) {
