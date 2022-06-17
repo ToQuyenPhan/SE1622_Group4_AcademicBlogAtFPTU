@@ -44,6 +44,8 @@ public class MainController extends HttpServlet {
     private static final String DELETE_MAJOR = "DeleteMajor";
     private static final String GET_SUBJECT_LIST = "GetSubjectList";
     private static final String DELETE_SUBJECT = "DeleteSubject";
+    private static final String APPROVE_BLOG = "Approve";
+    private static final String REJECT_BLOG = "Reject";
     
     private static final String LOGIN_WITH_GOOGLE_CONTROLLER = "LoginWithGoogleController";
     private static final String LOGIN_CONTROLLER = "LoginController";
@@ -68,6 +70,8 @@ public class MainController extends HttpServlet {
     private static final String DELETE_MAJOR_CONTROLLER = "DeleteMajorController";
     private static final String GET_SUBJECT_LIST_CONTROLLER = "GetSubjectListController";
     private static final String DELETE_SUBJECT_CONTROLLER = "DeleteSubjectController";
+    private static final String APPROVE_BLOG_CONTROLLER = "ApproveBlogController";
+    private static final String REJECT_BLOG_CONTROLLER = "RejectBlogController";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -129,6 +133,12 @@ public class MainController extends HttpServlet {
                 url = GET_SUBJECT_LIST_CONTROLLER;
             } else if (DELETE_SUBJECT.equals(action)) {
                 url = DELETE_SUBJECT_CONTROLLER;
+            } else if (VIEW_APPROVE_BLOG_DETAIL.equals(action)) {
+                url = APPROVE_BLOG_DETAIL_CONTROLLER;
+            } else if (APPROVE_BLOG.equals(action)) {
+                url = APPROVE_BLOG_CONTROLLER;
+            } else if (REJECT_BLOG.equals(action)) {
+                url = REJECT_BLOG_CONTROLLER;
             } else{
                 request.setAttribute("ERROR_MESSAGE", "Function is not available!");
             }

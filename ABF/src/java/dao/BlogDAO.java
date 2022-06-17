@@ -38,7 +38,9 @@ public class BlogDAO {
     private static final String EDIT_BLOG = "UPDATE Blog  \n"
             + "set subjectID=?, title=? , content=?,date=?,image=?, video=?\n"
             + "where blogID=?";
-
+    private static final String APPROVE_BLOG = "UPDATE Blog SET status= 'approved' WHERE blogID = ?";
+    private static final String REJECT_BLOG = "UPDATE Blog SET status= 'rejected' WHERE blogID = ?";
+    
     public List<BlogDTO> getAllBlogs() throws SQLException {
         List<BlogDTO> listAllBlogs = new ArrayList<>();
         Connection conn = null;
@@ -351,5 +353,60 @@ public class BlogDAO {
         cn.close();
         return rs;
     }
-
+    
+    public boolean approveBlog(int blogID) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement psm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                psm = conn.prepareStatement(APPROVE_BLOG);
+                psm.setInt(1, blogID);
+                check = psm.executeUpdate() > 0 ? true : false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (psm != null) {
+                psm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+    
+     public boolean rejectBlog(int blogID) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement psm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                psm = conn.prepareStatement(REJECT_BLOG);
+                psm.setInt(1, blogID);
+                check = psm.executeUpdate() > 0 ? true : false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (psm != null) {
+                psm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
 }

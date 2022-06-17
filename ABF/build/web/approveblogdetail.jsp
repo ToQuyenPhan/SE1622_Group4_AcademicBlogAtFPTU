@@ -149,6 +149,8 @@
                         </div>
                         <form action="MainController" class="approve-reject-form">
                             <input type="submit" name="action" value="Approve">
+                            <input type="hidden" name="blogID" value="<%=blogDetail.getBlogID()%>">  
+                            <input type="hidden" name="userID" value="<%=loginUser.getUserID()%>">
                             <input type="submit" name="action" value="Reject">
                         </form>
                         <a class="return-home-page" href="MainController?action=GetApproveList"><i class="far fa-arrow-alt-circle-left"></i></a>

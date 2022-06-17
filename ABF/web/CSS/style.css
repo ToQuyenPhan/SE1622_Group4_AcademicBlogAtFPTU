@@ -666,7 +666,7 @@ hr {
     max-width: 300px;    
     display: flex;
     align-items: center;
-    font-size: 1.4rem;
+    font-size: 1rem;
     padding: 30px;
 }
 
@@ -995,7 +995,7 @@ a:hover figcaption { color: #056767; }
 .tm-contact-form .form-group { display: flex; }
 
 @media (max-width: 1540px) {
-    .tm-header { width: 320px; }
+    .tm-header { width: 250px; }
 
     .tm-main {
         margin-left: 320px;
