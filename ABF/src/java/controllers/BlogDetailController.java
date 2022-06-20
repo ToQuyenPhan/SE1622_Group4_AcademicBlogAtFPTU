@@ -7,9 +7,12 @@ package controllers;
 
 import dao.ActivityDAO;
 import dao.BlogDAO;
+import dao.CommentDAO;
 import dto.BlogDTO;
+import dto.CommentDTO;
 import dto.UserDTO;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -46,6 +49,8 @@ public class BlogDetailController extends HttpServlet {
                 int blogID = Integer.parseInt(strBlogID);
                 BlogDAO dao = new BlogDAO();
                 BlogDTO blogDetail = dao.BlogDetail(blogID);
+                CommentDAO commentDAO = new CommentDAO();
+                List<CommentDTO> commentList = commentDAO.getCommentbyBlogID(blogID);
                 HttpSession session = request.getSession();
                 UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
                 ActivityDAO activityDAO = new ActivityDAO();
@@ -57,6 +62,9 @@ public class BlogDetailController extends HttpServlet {
                 }
                 if (blogDetail != null) {
                     request.setAttribute("BLOG_DETAIL", blogDetail);
+                    if(commentList.size() > 0){
+                        request.setAttribute("COMMENT_LIST", commentList);
+                    }
                     url = SUCCESS;
                 }
             }

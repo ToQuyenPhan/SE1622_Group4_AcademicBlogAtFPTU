@@ -96,7 +96,7 @@
                     </a>                    
                 </div>
                 <div class="col-12 col-md-12">
-                    <a href="post.html" class="">
+                    <a href="MainController?action=GetFeedbackList" class="">
                         <h1 class="tm-pt-30 tm-color-primary tm-post-title">Manage Feedbacks</h1>
                     </a>                    
                 </div>

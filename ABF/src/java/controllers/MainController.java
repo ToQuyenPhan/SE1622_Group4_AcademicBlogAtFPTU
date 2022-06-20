@@ -46,6 +46,8 @@ public class MainController extends HttpServlet {
     private static final String DELETE_SUBJECT = "DeleteSubject";
     private static final String APPROVE_BLOG = "Approve";
     private static final String REJECT_BLOG = "Reject";
+    private static final String FEEDBACK_LIST = "GetFeedbackList";
+    private static final String FEEDBACK_DETAIL = "FeedbackDetail";
     
     private static final String LOGIN_WITH_GOOGLE_CONTROLLER = "LoginWithGoogleController";
     private static final String LOGIN_CONTROLLER = "LoginController";
@@ -72,6 +74,8 @@ public class MainController extends HttpServlet {
     private static final String DELETE_SUBJECT_CONTROLLER = "DeleteSubjectController";
     private static final String APPROVE_BLOG_CONTROLLER = "ApproveBlogController";
     private static final String REJECT_BLOG_CONTROLLER = "RejectBlogController";
+    private static final String FEEDBACK_LIST_CONTROLLER = "GetFeedbackListController";
+    private static final String FEEDBACK_DETAIL_CONTROLLER = "FeedbackDetailController";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -139,7 +143,11 @@ public class MainController extends HttpServlet {
                 url = APPROVE_BLOG_CONTROLLER;
             } else if (REJECT_BLOG.equals(action)) {
                 url = REJECT_BLOG_CONTROLLER;
-            } else{
+            } else if (FEEDBACK_LIST.equals(action)) {
+                url = FEEDBACK_LIST_CONTROLLER;
+            } else if (FEEDBACK_DETAIL.equals(action)) {
+                url = FEEDBACK_DETAIL_CONTROLLER;} 
+            else{
                 request.setAttribute("ERROR_MESSAGE", "Function is not available!");
             }
         } catch (Exception e) {

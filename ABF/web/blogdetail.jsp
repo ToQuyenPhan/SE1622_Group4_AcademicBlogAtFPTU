@@ -4,6 +4,7 @@
     Author     : ASUS
 --%>
 
+<%@page import="dto.CommentDTO"%>
 <%@page import="dto.BlogDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="dto.UserDTO"%>
@@ -193,19 +194,34 @@
                         <div class="comment-blog-detail">
                             <form action="MainController" method="POST">
                                 <input type="text" name="content" style="width: 45rem;height: 40px" ></br>
-                                <%
+                                <!--<%
                                     String notify_comment = (String) request.getAttribute("notifie_comment");
                                     if (notify_comment == null) {
                                         notify_comment = "";
                                     }
                                 %>
-                                <%= notify_comment%>
+                                <%= notify_comment%>-->
                                 <input type="hidden" name="userID" value="<%=loginUser.getUserID()%>">                                 
                                 <input type="hidden" name="blogID" value="<%=blogDetail.getBlogID()%>">
                                 <input type="hidden" name="subjectID" value="<%=blogDetail.getSubjectID()%>">
                                 <input type="submit" name="action" value="Comment">
                             </form>
-                        </div> 
+                        </div>
+                        <%
+                            List<CommentDTO> commentList = (List<CommentDTO>) request.getAttribute("COMMENT_LIST");
+                            if (commentList != null) {
+                                if (commentList.size() > 0) {
+                                    for (CommentDTO comment : commentList) {
+                        %>
+                        <div>
+                            <h6><%= comment.getContent() %></h6>
+                        </div>
+                        <%
+                                    }
+                                }
+                            }
+                        %>
+                        
                         <a class="return-home-page" href="MainController?action=GetList"><i class="far fa-arrow-alt-circle-left"></i></a>
                     </article>
                     <%

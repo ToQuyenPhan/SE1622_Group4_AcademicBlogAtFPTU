@@ -52,13 +52,12 @@
                 <button class="navbar-toggler" type="button" aria-label="Toggle navigation">
                     <i class="fas fa-bars"></i>
                 </button>
-                <div class="tm-site-header">
-                    <a href="profile.jsp">
-                        <div class="mb-3 mx-auto tm-site-logo">
-                            <img src="<%= image%>">
-
+                <div class="logo">
+                    <a href="#">
+                        <div class="logo">
+                            <img src="image/logo.png">
                         </div>            
-                        <h2 class="text-center"><%= loginUser.getFullName()%></h2>
+                        <!--<h2 class="text-center"><%= loginUser.getFullName()%></h2>-->
                     </a>
                 </div>
                 <nav class="tm-nav" id="tm-nav">            

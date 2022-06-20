@@ -586,6 +586,7 @@ hr {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
 .form-control::-webkit-input-placeholder { color: #999; }  
 .form-control:-ms-input-placeholder { color: #999; }  
 .form-control::placeholder { color: #999; }
@@ -638,7 +639,16 @@ hr {
 }
 
 .tm-site-logo i { color: #0CC; }
-
+.logo{
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    text-align: center; 
+}
+.logo img{
+    width: 100px;
+    height: 10rem;
+}
 .tm-main {
     margin-left: 400px;
     padding: 80px 100px 25px;
@@ -663,7 +673,7 @@ hr {
     background-color: transparent;
     height: 75px;
     width: 100%;
-    max-width: 300px;    
+    max-width: 300px;   
     display: flex;
     align-items: center;
     font-size: 1rem;
@@ -828,7 +838,7 @@ ul {
     padding: 8px 43px;
     border: none;
 }
-
+    
 .tm-btn-small { padding: 8px 33px; }
 
 .tm-btn-primary:hover {

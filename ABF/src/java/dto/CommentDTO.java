@@ -10,7 +10,7 @@ package dto;
  * @author To Quyen Phan
  */
 public class CommentDTO {
-    private int commentid;
+    private int commentID;
     private int blogID;
     private int userID;
     private String content;
@@ -21,7 +21,7 @@ public class CommentDTO {
     }
 
     public CommentDTO(int commentid, int blogID, int userID, String content, String date, String status) {
-        this.commentid = commentid;
+        this.commentID = commentid;
         this.blogID = blogID;
         this.userID = userID;
         this.content = content;
@@ -29,12 +29,12 @@ public class CommentDTO {
         this.status = status;
     }
 
-    public int getCommentid() {
-        return commentid;
+    public int getCommentID() {
+        return commentID;
     }
 
-    public void setCommentid(int commentid) {
-        this.commentid = commentid;
+    public void setCommentID(int commentID) {
+        this.commentID = commentID;
     }
 
     public int getBlogID() {

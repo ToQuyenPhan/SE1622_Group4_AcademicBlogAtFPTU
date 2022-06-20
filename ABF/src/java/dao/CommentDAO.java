@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import utils.DBUtils;
 
 /**
@@ -18,27 +20,28 @@ import utils.DBUtils;
  */
 public class CommentDAO {
    private static final String INSERT = "Insert into Comment(blogID,userID,content,date,status) values(?,?,?,?,1)";
-   
-    private static final String GET_COMMENT_BY_BLOGID = "";
-    public static CommentDTO getCommentbyBlogID(int blogID) throws ClassNotFoundException, SQLException{
-        CommentDTO cm = null;
+   private static final String GET_ALL_COMMENT = "SELECT commentID, userID, content, date, status FROM Comment WHERE blogID = ? AND status = 1";
+  
+    public static List<CommentDTO> getCommentbyBlogID(int blogID) throws ClassNotFoundException, SQLException{
+        List<CommentDTO> list = new ArrayList<>();
         Connection cn= DBUtils.getConnection();
         if(cn != null){
-            PreparedStatement pn = cn.prepareStatement(GET_COMMENT_BY_BLOGID);
+            PreparedStatement pn = cn.prepareStatement(GET_ALL_COMMENT);
             pn.setInt(1, blogID);
             ResultSet rs = pn.executeQuery();
-            if (rs != null && rs.next()) {
+            while (rs != null && rs.next()) {
                 int commentID = rs.getInt("commentID");
                 int userID = rs.getInt("userID");
                 String content = rs.getString("content");
                 String date = rs.getString("date");
                 String status = rs.getString("status");
-                cm = new CommentDTO(blogID,commentID, userID, content, date, status);
+                list.add(new CommentDTO(commentID, blogID, userID, content, date, status));
             }
             cn.close();
         }
-        return cm;
+        return list;
     }
+    
     public static int insertComment(int blogID, int userID, String content,String date) throws ClassNotFoundException, SQLException {
         int result = 0;
         Connection cn = null;

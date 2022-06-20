@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import dto.UserDTO;
+import java.util.ArrayList;
+import java.util.List;
 import utils.DBUtils;
 
 /**
@@ -26,6 +28,10 @@ public class UserDAO {
     private static final String CHECK_ROLE = "SELECT roleName FROM Role WHERE roleID = ?";
     private static final String CHECK_TO_UPDATE = "SELECT numberOfBlogs FROM [User] WHERE userID = ?";
     private static final String UPDATE = "UPDATE [User] SET numberOfBlogs = ? WHERE userID = ?";
+    private static final String GET_ALL_USER = "SELECT userID, password, fullName, roleID, email, image, numberOfBlogs, gender, dateOfBirth, address, contact, aboutme, status"
+            + " FROM [User] ";
+    private static final String FIND_USER_BY_ID = "SELECT  password, fullName, roleID,email, image, numberOfBlogs, gender, dateOfBirth, address, contact, aboutme, status\n"
+            + "         FROM [User] WHERE UserID = ?";
     
     public UserDTO checkLogin(String email, String password) throws SQLException {
         UserDTO user = null;
@@ -170,4 +176,68 @@ public class UserDAO {
         }
         return check;
     }
+    
+    public List<UserDTO> getAllUser() {
+        List<UserDTO> list = new ArrayList<>();
+        Connection cn = null;
+        try {
+            cn = DBUtils.getConnection();
+            if (cn != null) {
+                PreparedStatement pst = cn.prepareStatement(GET_ALL_USER);
+                ResultSet rs = pst.executeQuery();
+                while (rs != null && rs.next()) {
+                    int userID = rs.getInt("userID");
+                    String password = rs.getString("password");
+                    String fullName = rs.getString("fullName");
+                    int roleID = rs.getInt("roleID");
+                    String email = rs.getString("email");
+                    String image = rs.getString("image");
+                    int numberOfBlogs = rs.getInt("numberOfBlogs");
+                    String gender = rs.getString("gender");
+                    String dateOfBirth = rs.getString("dateOfBirth");
+                    String address = rs.getString("address");
+                    String contact = rs.getString("contact");
+                    String aboutme = rs.getString("aboutme");
+                    boolean status = rs.getBoolean("status");
+                    UserDTO c = new UserDTO(userID, password, fullName, roleID, email, image, numberOfBlogs, gender, dateOfBirth, address, contact, aboutme, status);
+                    list.add(c);
+                }
+            }
+            cn.close();
+        } catch (Exception e) {
+        }
+        return list;
+    }
+    
+    public UserDTO GetUserByID(int id) throws ClassNotFoundException, SQLException {
+        UserDTO user = null;
+        Connection conn = null;
+        PreparedStatement psm = null;
+        ResultSet rs = null;
+        conn = DBUtils.getConnection();
+        if (conn != null) {
+            psm = conn.prepareStatement(FIND_USER_BY_ID);
+            psm.setInt(1, id);
+            rs = psm.executeQuery();
+            if (rs.next()) {
+                String password = rs.getString("password");
+                String fullName = rs.getString("fullName");
+                int roleID = rs.getInt("roleID");
+                String email = rs.getString("email");
+                String image = rs.getString("image");
+                int numberOfBlogs = rs.getInt("numberOfBlogs");
+                String gender = rs.getString("gender");
+                String dateOfBirth = rs.getString("dateOfBirth");
+                String address = rs.getString("address");
+                String contact = rs.getString("contact");
+                String aboutme = rs.getString("aboutme");
+                boolean status = rs.getBoolean("status");
+                user = new UserDTO(id, password, fullName, roleID, email, image, numberOfBlogs, gender, dateOfBirth, address, contact, aboutme, status);
+            }
+            conn.close();
+
+        }
+        return user;
+    }
+
 }

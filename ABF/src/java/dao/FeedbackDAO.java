@@ -5,6 +5,7 @@
  */
 package dao;
 
+import dto.FeedbackDTO;
 import dto.FeedbackTypeDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,6 +23,8 @@ public class FeedbackDAO {
     private static final String GET_ALL_FEEDBACK_TYPE = "SELECT feedbackTypeID, feedbackName from FeedbackType";
     private static final String GIVE_FEEDBACK = "INSERT INTO Feedback(userID, feedbackTypeID, description, date)"
             + " VALUES(?,?,?,?)";
+    private static final String GET_ALL_FEEDBACK = "SELECT [feedbackID],[userID],[feedbackTypeID],[description],[date]\n"
+            + "  FROM [ABF].[dbo].[Feedback]";
 
     public List<FeedbackTypeDTO> getAllFeedbackTypes() throws SQLException {
         List<FeedbackTypeDTO> listAllFeedbackTypes = new ArrayList<>();
@@ -80,5 +83,75 @@ public class FeedbackDAO {
             }
         }
         return check;
+    }
+    
+    public List<FeedbackDTO> getAllFeedback() throws SQLException {
+        List<FeedbackDTO> listAllFeedback = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement psm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                psm = conn.prepareStatement(GET_ALL_FEEDBACK);
+                rs = psm.executeQuery();
+                while (rs.next()) {
+                    int feedbackID = rs.getInt("feedbackID");
+                    int userID = rs.getInt("userID");
+                    int feedbackTypesID = rs.getInt("feedbackTypeID");
+                    String description = rs.getString("description");
+                    String date = rs.getString("date");
+                    listAllFeedback.add(new FeedbackDTO(feedbackID, userID, feedbackTypesID, description, date));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (psm != null) {
+                psm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return listAllFeedback;
+    }
+    
+    public FeedbackDTO getFeedbackByID(int id) throws SQLException {
+        FeedbackDTO fb = new FeedbackDTO();
+        Connection conn = null;
+        PreparedStatement psm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                psm = conn.prepareStatement(GET_ALL_FEEDBACK);
+                rs = psm.executeQuery();
+                while (rs.next()) {
+                    int feedbackID = rs.getInt("feedbackID");
+                    int userID = rs.getInt("userID");
+                    int feedbackTypesID = rs.getInt("feedbackTypeID");
+                    String description = rs.getString("description");
+                    String date = rs.getString("date");
+                    fb = new FeedbackDTO(feedbackID, userID, feedbackTypesID, description, date);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (psm != null) {
+                psm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return fb;
     }
 }
