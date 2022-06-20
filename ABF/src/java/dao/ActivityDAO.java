@@ -28,7 +28,6 @@ public class ActivityDAO {
     private static final String UPDATE_ACTIVITY = "INSERT INTO HistoryActivity(userID, date, activityTypeID, blogID, status) "
             + "VALUES(?,?,1,?,1)";
     private static final String DELETE_VOTE = "DELETE HistoryActivity WHERE userID = ? AND blogID = ? AND activityTypeID = 1";
-    //private static final String SEARCH_ACTIVITY = "SELECT historyActivityID,userID, date, activityTypeID FROM HistoryActivity WHERE date = ? AND status = 1";
     private static final String SEARCH_ACTIVITY = "SELECT historyActivityID,userID, date, activity FROM HistoryActivity h\n" +
 "            JOIN ActivityType a ON h.activityTypeID = a.activityTypeID \n" +
 "           WHERE a.activityName like ? AND h.userID = ? AND h.status = 1";

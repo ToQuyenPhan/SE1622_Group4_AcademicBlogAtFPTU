@@ -71,6 +71,10 @@
                                 <i class="fas fa-tasks"></i>
                                 Activity
                             </a></li>
+                        <li class="tm-nav-item "><a href="MainController?action=GetPersonalDraftList&userID=<%= loginUser.getUserID() %>" class="tm-nav-link">
+                                <i class="fas fa-home"></i>
+                                Draft Blogs
+                            </a></li>   
                         <li class="tm-nav-item"><a href="post.html" class="tm-nav-link">
                                 <i class="fas fa-users"></i>
                                 Majors
@@ -170,7 +174,7 @@
                 <div class="row tm-row">
                     <%
 
-                        List<BlogDTO> listAllBlogs = (List<BlogDTO>) request.getAttribute("LIST_ALL_BLOGS");
+                        List<BlogDTO> listAllBlogs = (List<BlogDTO>) request.getAttribute("LIST_ALL_PERSONAL_BLOGS");
                         if (listAllBlogs != null) { //chỉ hiển thị khi người dùng đã đăng nhập
                             if (listAllBlogs.size() > 0) {
                                 for (BlogDTO blog : listAllBlogs) {

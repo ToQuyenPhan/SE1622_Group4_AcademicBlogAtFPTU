@@ -36,6 +36,11 @@ public class BlogDAO {
     private static final String GET_ALL_PERSONAL_BLOGS = "SELECT blogID,Blog.userID,userApproveID,subjectID,title,content,date, Blog.image,video,"
             + "numberOfVotes,numberOfComments,Blog.status, fullName FROM Blog JOIN [USER] ON Blog.userID = [User].userID "
             + "WHERE Blog.userID = ? AND Blog.status LIKE 'approved'";
+    private static final String SAVE_DRAFT_BLOG = "INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status)"
+            + "VALUES( ?,null,?,?,?,?,?,null,0,0,'draft')";
+    private static final String GET_ALL_PERSONAL_DRAFT_BLOGS = "SELECT b.blogID, b.userID,b.userApproveID,b.subjectID,b.title,b.content,b.date, b.image,b.video,b.numberOfVotes,b.numberOfComments,b.status, u.fullName "
+            + "FROM Blog b JOIN [USER] u ON b.userID = u.userID "
+            + "WHERE b.userID = ? AND b.status LIKE 'draft'";
 
     public List<BlogDTO> getAllBlogs() throws SQLException {
         List<BlogDTO> listAllBlogs = new ArrayList<>();
@@ -80,7 +85,8 @@ public class BlogDAO {
         }
         return listAllBlogs;
     }
- public List<BlogDTO> getAllPersonalBlogs(int userID) throws SQLException {
+
+    public List<BlogDTO> getAllPersonalBlogs(int userID) throws SQLException {
         List<BlogDTO> listAllBlogs = new ArrayList<>();
         Connection conn = null;
         PreparedStatement psm = null;
@@ -168,7 +174,8 @@ public class BlogDAO {
         }
         return listAllBlogs;
     }
-     public List<BlogDTO> personalSearchByTitle(String searchPersonal) throws SQLException {
+
+    public List<BlogDTO> personalSearchByTitle(String searchPersonal) throws SQLException {
         List<BlogDTO> listAllBlogs = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -256,7 +263,7 @@ public class BlogDAO {
         }
         return blogDetail;
     }
-    
+
     public boolean postBlog(int userID, int subjectID, String title, String content, String date, String image) throws SQLException {
         boolean check = false;
         Connection conn = null;
@@ -285,7 +292,7 @@ public class BlogDAO {
         }
         return check;
     }
-    
+
     public BlogDTO getBlogByID(int blogID) throws SQLException, ClassNotFoundException {
         BlogDTO blog = null;
         Connection conn = null;
@@ -317,7 +324,7 @@ public class BlogDAO {
         return blog;
     }
 
-    public boolean updateVote(int blogID, int numberOfVotes) throws SQLException{
+    public boolean updateVote(int blogID, int numberOfVotes) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement psm = null;
@@ -345,6 +352,7 @@ public class BlogDAO {
         }
         return check;
     }
+
     public boolean deleteBlog(int blogID) throws SQLException {
         boolean check = false;
         Connection conn = null;
@@ -367,5 +375,78 @@ public class BlogDAO {
             }
         }
         return check;
+    }
+
+    public boolean draftBlog(int userID, int subjectID, String title, String content, String date, String image) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(SAVE_DRAFT_BLOG);
+                ptm.setInt(1, userID);
+                ptm.setInt(2, subjectID);
+                ptm.setString(3, title);
+                ptm.setString(4, content);
+                ptm.setString(5, date);
+                ptm.setString(6, image); //?
+                check = ptm.executeUpdate() > 0 ? true : false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+
+    public List<BlogDTO> getAllPersonalDraftBlogs(int userID) throws SQLException {
+        List<BlogDTO> listAllBlogs = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement psm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                psm = conn.prepareStatement(GET_ALL_PERSONAL_DRAFT_BLOGS);
+                psm.setInt(1, userID);
+                rs = psm.executeQuery();
+                while (rs.next()) {
+                    int blogID = rs.getInt("blogID");
+                    int userApproveID = rs.getInt("userApproveID");
+                    int subjectID = rs.getInt("subjectID");
+                    String title = rs.getString("title");
+                    String content = rs.getString("content");
+                    String date = rs.getString("date");
+                    String image = rs.getString("image");
+                    String video = rs.getString("video");
+                    int numberOfVotes = rs.getInt("numberOfVotes");
+                    int numberOfComments = rs.getInt("numberOfComments");
+                    String status = rs.getString("status");
+                    String fullName = rs.getString("fullName");
+                    listAllBlogs.add(new BlogDTO(blogID, userID, userApproveID, subjectID, title, content,
+                            date, image, video, numberOfVotes, numberOfComments, status, fullName));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (psm != null) {
+                psm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return listAllBlogs;
     }
 }

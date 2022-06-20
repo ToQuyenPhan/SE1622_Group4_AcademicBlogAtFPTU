@@ -45,7 +45,7 @@
                 image = "image/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png";
             }
             BlogError blogError = (BlogError) request.getAttribute("BLOG_ERROR");
-            if(blogError == null){
+            if (blogError == null) {
                 blogError = new BlogError();
             }
         %>
@@ -69,7 +69,7 @@
                                 <i class="fas fa-home"></i>
                                 Blog Home
                             </a></li>
-                        <li class="tm-nav-item"><a href="MainController?action=GetActivityList&userID=<%= loginUser.getUserID() %>" class="tm-nav-link">
+                        <li class="tm-nav-item"><a href="MainController?action=GetActivityList&userID=<%= loginUser.getUserID()%>" class="tm-nav-link">
                                 <i class="fas fa-tasks"></i>
                                 Activity
                             </a></li>
@@ -105,10 +105,10 @@
                                 <%
                                     String titleError = blogError.getTitleError();
                                     if (titleError == null) {
-                                        titleError= "";
+                                        titleError = "";
                                     }
                                 %>
-                                <%= titleError %>
+                                <%= titleError%>
                             </div>
 
                             <div class="mb-4">
@@ -127,20 +127,20 @@
                                 <%
                                     String subjectError = blogError.getSubjectIDError();
                                     if (subjectError == null) {
-                                        subjectError= "";
+                                        subjectError = "";
                                     }
                                 %>
-                                <%= subjectError %>
+                                <%= subjectError%>
                             </div>
                             <div class="mb-4">
                                 Details<textarea class="form-control" name="content" rows="6" required=""></textarea>
                                 <%
                                     String contentError = blogError.getContentError();
                                     if (contentError == null) {
-                                        contentError= "";
+                                        contentError = "";
                                     }
                                 %>
-                                <%= contentError %>
+                                <%= contentError%>
                             </div>
                             <div class="mb-4">
                                 <!--
@@ -152,19 +152,24 @@
                                     <input type="submit" value="Upload" name="action"
                                            <button class="tm-btn tm-btn-primary tm-btn-small"></button>
                                     <%
-                                    String imageError = blogError.getImageError();
-                                    if (imageError == null) {
-                                        imageError= "";
-                                    }
+                                        String imageError = blogError.getImageError();
+                                        if (imageError == null) {
+                                            imageError = "";
+                                        }
                                     %>
-                                    <%= imageError %>
+                                    <%= imageError%>
                                         </form>-->
                                     </div>
                                     <div class="text-right">
+
+                                        <input type="submit" name="action" value="SaveDraftBlog"
+                                               <button class="tm-btn tm-btn-primary tm-btn-small"></button>
+
                                         <input type="submit" name="action" value="Post"
-                                               <button class="tm-btn tm-btn-primary tm-btn-small"></button>                        
-                                    </div>                                
+                                               <button class="tm-btn tm-btn-primary tm-btn-small"></button>  
+                                    </div>
                                 </form>
+                               
                             </div>
                     </div>
                     <footer class="row tm-row">

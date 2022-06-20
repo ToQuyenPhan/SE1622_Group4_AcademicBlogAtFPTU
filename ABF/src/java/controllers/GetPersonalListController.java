@@ -77,7 +77,7 @@ public class GetPersonalListController extends HttpServlet {
                 }else{
                     request.setAttribute("OPTION", "None");
                 }
-                request.setAttribute("LIST_ALL_BLOGS", listAllBlogs);
+                request.setAttribute("LIST_ALL_PERSONAL_BLOGS", listAllBlogs);
             }
 
             url = SUCCESS;
