@@ -52,7 +52,7 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="tm-site-header">
-                    <a href="MainController?action=GetPersonalList&userID=<%= loginUser.getUserID() %>">
+                    <a href="MainController?action=GetPersonalList&userID=<%= loginUser.getUserID()%>">
                         <div class="mb-3 mx-auto tm-site-logo">
                             <img src="<%= image%>">
 
@@ -62,14 +62,18 @@
                 </div>
                 <nav class="tm-nav" id="tm-nav">            
                     <ul>
-                        <li class="tm-nav-item active"><a href="#" class="tm-nav-link">
+                        <li class="tm-nav-item "><a href="#" class="tm-nav-link">
                                 <i class="fas fa-home"></i>
                                 Blog Home
                             </a></li>
-                        <li class="tm-nav-item"><a href="MainController?action=GetActivityList&userID=<%= loginUser.getUserID() %>" class="tm-nav-link">
+                        <li class="tm-nav-item"><a href="MainController?action=GetActivityList&userID=<%= loginUser.getUserID()%>" class="tm-nav-link">
                                 <i class="fas fa-tasks"></i>
                                 Activity
                             </a></li>
+                        <li class="tm-nav-item active"><a href="MainController?action=GetPersonalDraftList&userID=<%= loginUser.getUserID()%>" class="tm-nav-link">
+                                <i class="fas fa-home"></i>
+                                Draft Blogs
+                            </a></li>  
                         <li class="tm-nav-item"><a href="post.html" class="tm-nav-link">
                                 <i class="fas fa-users"></i>
                                 Majors
@@ -93,8 +97,8 @@
                 <div class="row tm-row">
                     <div class="col-12 row">
                         <form class="form-inline tm-mb-80 tm-search-form col-sm-9 row" action="MainController">                
-                            <input class="form-control tm-search-input col-sm-9" name="search" type="text" placeholder="Search..." aria-label="Search" value="<%= search%>">
-                            <button class="tm-search-button col-sm-1" type="submit" name="action" value="Search">
+                            <input class="form-control tm-search-input col-sm-9" name="searchDraft" type="text" placeholder="Search..." aria-label="Search" value="<%= search%>">
+                            <button class="tm-search-button col-sm-1" type="submit" name="action" value="SearchDraftBlog">
                                 <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
                             </button>                                
                         </form>

@@ -41,6 +41,8 @@ public class BlogDAO {
     private static final String GET_ALL_PERSONAL_DRAFT_BLOGS = "SELECT b.blogID, b.userID,b.userApproveID,b.subjectID,b.title,b.content,b.date, b.image,b.video,b.numberOfVotes,b.numberOfComments,b.status, u.fullName "
             + "FROM Blog b JOIN [USER] u ON b.userID = u.userID "
             + "WHERE b.userID = ? AND b.status LIKE 'draft'";
+    private static final String SEARCH_DRAFT_BLOG = "SELECT b.blogID,b.userID,b.userApproveID,b.subjectID,b.title,b.content,b.date, b.image,b.video, b.numberOfVotes,b.numberOfComments,b.status, u.fullName "
+            + "FROM Blog b JOIN [USER] u ON b.userID = u.userID WHERE b.title LIKE ? AND b.status LIKE 'draft'";
 
     public List<BlogDTO> getAllBlogs() throws SQLException {
         List<BlogDTO> listAllBlogs = new ArrayList<>();
@@ -442,6 +444,51 @@ public class BlogDAO {
             }
             if (psm != null) {
                 psm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return listAllBlogs;
+    }
+
+    public List<BlogDTO> searchDraftByTitle(String searchDraft) throws SQLException {
+        List<BlogDTO> listAllBlogs = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(SEARCH_DRAFT_BLOG);
+                ptm.setString(1, "%" + searchDraft + "%");
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    int blogID = rs.getInt("blogID");
+                    int userID = rs.getInt("userID");
+                    int userApproveID = rs.getInt("userApproveID");
+                    int subjectID = rs.getInt("subjectID");
+                    String title = rs.getString("title");
+                    String content = rs.getString("content");
+                    String date = rs.getString("date");
+                    String image = rs.getString("image");
+                    String video = rs.getString("video");
+                    int numberOfVotes = rs.getInt("numberOfVotes");
+                    int numberOfComments = rs.getInt("numberOfComments");
+                    String status = rs.getString("status");
+                    String fullName = rs.getString("fullName");
+                    listAllBlogs.add(new BlogDTO(blogID, userID, userApproveID, subjectID, title, content,
+                            date, image, video, numberOfVotes, numberOfComments, status, fullName));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
             }
             if (conn != null) {
                 conn.close();

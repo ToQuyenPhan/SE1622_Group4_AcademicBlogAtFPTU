@@ -40,6 +40,7 @@ public class MainController extends HttpServlet {
     private static final String SEARCH_ACTIVITY_BY_NAME = "SearchActivityByName";
     private static final String SAVE_DRAFT_BLOG = "SaveDraftBlog";
     private static final String GET_PERSONAL_DRAFT_LIST = "GetPersonalDraftList";
+    private static final String SEARCH_DRAFT_BLOG = "SearchDraftBlog";
 
     private static final String LOGIN_WITH_GOOGLE_CONTROLLER = "LoginWithGoogleController";
     private static final String LOGIN_CONTROLLER = "LoginController";
@@ -61,6 +62,7 @@ public class MainController extends HttpServlet {
     private static final String SEARCH_ACTIVITY_BY_NAME_CONTROLLER = "SearchActivitiesByNameController";
     private static final String SAVE_DRAFT_BLOG_CONTROLLER = "SaveDraftBlogController";
     private static final String GET_PERSONAL_DRAFT_LIST_CONTROLLER = "GetPersonalDraftListController";
+    private static final String SEARCH_DRAFT_BLOG_CONTROLLER = "SearchDraftBlogController";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -117,6 +119,8 @@ public class MainController extends HttpServlet {
                 url = SAVE_DRAFT_BLOG_CONTROLLER;
             } else if (GET_PERSONAL_DRAFT_LIST.equals(action)) {
                 url = GET_PERSONAL_DRAFT_LIST_CONTROLLER;
+            } else if (SEARCH_DRAFT_BLOG.equals(action)) {
+                url = SEARCH_DRAFT_BLOG_CONTROLLER;
             } else {
                 request.setAttribute("ERROR_MESSAGE", "Function is not available!");
             }
