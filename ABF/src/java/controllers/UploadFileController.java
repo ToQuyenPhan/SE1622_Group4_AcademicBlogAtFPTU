@@ -8,6 +8,7 @@ package controllers;
 import java.io.File;
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,10 +20,18 @@ import javax.servlet.http.Part;
  * @author To Quyen Phan
  */
 @WebServlet(name = "UploadFileController", urlPatterns = {"/UploadFileController"})
+@MultipartConfig(
+        location="/tmp",
+        fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
+        maxFileSize = 1024 * 1024 * 10, // 10 MB
+        maxRequestSize = 1024 * 1024 * 100 // 100 MB
+)
 public class UploadFileController extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
     private static final String ERROR = "postblog.jsp";
     private static final String SUCCESS = "postblog.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,14 +53,18 @@ public class UploadFileController extends HttpServlet {
             part.write(this.getFolderUpload().getAbsolutePath() + File.separator + fileName);
             url = SUCCESS;
         }
-            
+//            Part filePart = request.getPart("file");
+//            String fileName = filePart.getSubmittedFileName();
+//            for (Part part : request.getParts()) {
+//                part.write("C:\\upload\\" + fileName);
+//            }
         } catch (Exception e) {
             log("Error at Upload Controller: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
-    
+
     private String extractFileName(Part part) {
         String contentDisp = part.getHeader("content-disposition");
         String[] items = contentDisp.split(";");

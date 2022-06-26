@@ -50,7 +50,7 @@
                 image = "image/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png";
             }
             BlogError blogError = (BlogError) request.getAttribute("BLOG_ERROR");
-            if(blogError == null){
+            if (blogError == null) {
                 blogError = new BlogError();
             }
         %>
@@ -74,7 +74,7 @@
                                 <i class="fas fa-home"></i>
                                 Blog Home
                             </a></li>
-                        <li class="tm-nav-item"><a href="MainController?action=GetActivityList&userID=<%= loginUser.getUserID() %>" class="tm-nav-link">
+                        <li class="tm-nav-item"><a href="MainController?action=GetActivityList&userID=<%= loginUser.getUserID()%>" class="tm-nav-link">
                                 <i class="fas fa-tasks"></i>
                                 Activity
                             </a></li>
@@ -106,14 +106,14 @@
                             <input type="hidden" name="userID" value="<%=loginUser.getUserID()%>" readonly="">
 
                             <div class="mb-4">
-                                Title<input class="form-control" name="title" type="text" required="">
+                                Title<input class="form-control" name="title" type="text" required="" minlength="10" maxlength="255">
                                 <%
                                     String titleError = blogError.getTitleError();
                                     if (titleError == null) {
-                                        titleError= "";
+                                        titleError = "";
                                     }
                                 %>
-                                <%= titleError %>
+                                <h6><%= titleError%></h6>
                             </div>
 
                             <div class="mb-4">
@@ -136,58 +136,65 @@
                                 <%
                                     String subjectError = blogError.getSubjectIDError();
                                     if (subjectError == null) {
-                                        subjectError= "";
+                                        subjectError = "";
                                     }
                                 %>
-                                <%= subjectError %>
+                                <%= subjectError%>
                             </div>
                             <div class="mb-4">
-                                Details<textarea class="form-control" name="content" rows="6" required=""></textarea>
+                                Details<textarea class="form-control" name="content" rows="6" required="" minlength="50" maxlength="1000"></textarea>
                                 <%
                                     String contentError = blogError.getContentError();
                                     if (contentError == null) {
-                                        contentError= "";
+                                        contentError = "";
                                     }
                                 %>
-                                <%= contentError %>
+                                <h6><%= contentError%></h6>
                             </div>
                             <div class="mb-4">
-                                <!--
-                                Image: ${requestScope.BLOG_ERROR.imageError}<input type="text" name="image" required=""></br></br>
-                                -->
-                                <form method="post" action="MainController" enctype="multipart/form-data">
+                                Image: ${requestScope.BLOG_ERROR.imageError}<!--<input type="text" name="image" class="form-control" placeholder="image/photo1" pattern="image/.*"></br></br>-->
+
+                                <form method="post" action="UploadFileController" enctype="multipart/form-data">
                                     Image<input class="form-control" name="file" type="file" required=""></br>
-                                    <!--
                                     <input type="submit" value="Upload" name="action"
                                            <button class="tm-btn tm-btn-primary tm-btn-small"></button>
-                                    <%
-                                    String imageError = blogError.getImageError();
-                                    if (imageError == null) {
-                                        imageError= "";
-                                    }
-                                    %>
-                                    <%= imageError %>
-                                        </form>-->
-                                    </div>
-                                    <div class="text-right">
-                                        <input type="submit" name="action" value="Post"
-                                               <button class="tm-btn tm-btn-primary tm-btn-small"></button>                        
-                                    </div>                                
-                                </form>
-                            </div>
-                    </div>
-                    <footer class="row tm-row">
-                        <div class="col-md-6 col-12 tm-color-gray">
-                            FPT University
-                        </div>
-                        <div class="col-md-6 col-12 tm-color-gray tm-copyright">
-                            ACADEMIC BLOG
-                        </div>
+                                ${requestScope.BLOG_ERROR.imageError}
+                            </form>
 
-                    </footer>
+
+                            </div>
+
+
+                            <div class="text-right">
+                                <input type="submit" name="action" value="Post"
+                                       <button class="tm-btn tm-btn-primary tm-btn-small"></button>                        
+                            </div>                                
+                        </form>
+                    </div>
+                </div>
+                <footer class="row tm-row">
+                    <div class="col-md-6 col-12 tm-color-gray">
+                        FPT University
+                    </div>
+                    <div class="col-md-6 col-12 tm-color-gray tm-copyright">
+                        ACADEMIC BLOG
+                    </div>
+
+                </footer>
             </main>
         </div>
 
+        <script>
+                    async function uploadFile() {
+                    let formData = new FormData();
+                            formData.append("file", ajaxfile.files[0]);
+                            await fetch('fileuploadservlet', {
+                            method: "POST",
+                                    body: formData
+                            });
+                            alert('The file upload with Ajax and Java was a success!');
+                    }
+        </script>
         <script src="js/jquery.min.js"></script>
         <script src="js/templatemo-script.js"></script>
     </body>

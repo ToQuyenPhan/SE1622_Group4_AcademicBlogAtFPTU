@@ -47,18 +47,18 @@ public class PostBlogController extends HttpServlet {
         try {
             int userID = Integer.parseInt(request.getParameter("userID"));
             int subjectID = Integer.parseInt(request.getParameter("subjectID"));
-            String title = request.getParameter("title");
-            String content = request.getParameter("content");
+            String title = request.getParameter("title").trim();
+            String content = request.getParameter("content").trim();
             String date = sdf.format(dateFormat);
             String image = request.getParameter("image");
             boolean checkValidation = false;
             BlogDAO dao = new BlogDAO();
             if (title.length() < 10 || title.length() > 50) {
-                blogError.setTitleError("Title must be in [10,50]");
+                blogError.setTitleError("Title must be in [10,50]!");
                 checkValidation = true;
             }
             if (content.length() < 50) {
-                blogError.setContentError("Content must be greater than 50");
+                blogError.setContentError("Content must be greater than 50!");
                 checkValidation = true;
             }
             if (!checkValidation) {
@@ -69,6 +69,7 @@ public class PostBlogController extends HttpServlet {
             } else {
                 request.setAttribute("BLOG_ERROR", blogError);
                 request.setAttribute("TITLE", title);
+                request.setAttribute("CONTENT", content);
             }
 
         } catch (Exception e) {

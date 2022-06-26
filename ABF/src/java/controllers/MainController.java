@@ -48,6 +48,9 @@ public class MainController extends HttpServlet {
     private static final String REJECT_BLOG = "Reject";
     private static final String FEEDBACK_LIST = "GetFeedbackList";
     private static final String FEEDBACK_DETAIL = "FeedbackDetail";
+    private static final String GO_TO_WELCOME_PAGE = "GoToWelcomePage";
+    private static final String GO_TO_POST_BLOG = "GoToPostBlogPage";
+    private static final String VIEW_PERSONAL_PAGE = "ViewPersonalPage";
     
     private static final String LOGIN_WITH_GOOGLE_CONTROLLER = "LoginWithGoogleController";
     private static final String LOGIN_CONTROLLER = "LoginController";
@@ -76,6 +79,9 @@ public class MainController extends HttpServlet {
     private static final String REJECT_BLOG_CONTROLLER = "RejectBlogController";
     private static final String FEEDBACK_LIST_CONTROLLER = "GetFeedbackListController";
     private static final String FEEDBACK_DETAIL_CONTROLLER = "FeedbackDetailController";
+    private static final String WELCOME_PAGE = "index.jsp";
+    private static final String POST_BLOG_PAGE = "postblog.jsp";
+    private static final String VIEW_PERSONAL_PAGE_CONTROLLER = "ViewPersonalPageController";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -147,6 +153,12 @@ public class MainController extends HttpServlet {
                 url = FEEDBACK_LIST_CONTROLLER;
             } else if (FEEDBACK_DETAIL.equals(action)) {
                 url = FEEDBACK_DETAIL_CONTROLLER;} 
+            else if (GO_TO_WELCOME_PAGE.equals(action)) {
+                url = WELCOME_PAGE;} 
+            else if (GO_TO_POST_BLOG.equals(action)) {
+                url = POST_BLOG_PAGE;} 
+            else if (VIEW_PERSONAL_PAGE.equals(action)) {
+                url = VIEW_PERSONAL_PAGE_CONTROLLER;} 
             else{
                 request.setAttribute("ERROR_MESSAGE", "Function is not available!");
             }

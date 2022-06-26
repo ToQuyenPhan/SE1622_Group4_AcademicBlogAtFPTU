@@ -40,6 +40,9 @@ public class BlogDAO {
             + "where blogID=?";
     private static final String APPROVE_BLOG = "UPDATE Blog SET status= 'approved' WHERE blogID = ?";
     private static final String REJECT_BLOG = "UPDATE Blog SET status= 'rejected' WHERE blogID = ?";
+    private static final String GET_ALL_PERSONAL_BLOGS = "SELECT blogID,Blog.userID,userApproveID,subjectID,title,content,date, Blog.image,video,"
+            + "numberOfVotes,numberOfComments,Blog.status, fullName FROM Blog JOIN [USER] ON Blog.userID = [User].userID "
+            + "WHERE Blog.userID = ?";
     
     public List<BlogDTO> getAllBlogs() throws SQLException {
         List<BlogDTO> listAllBlogs = new ArrayList<>();
@@ -408,5 +411,49 @@ public class BlogDAO {
             }
         }
         return check;
+    }
+     
+     public List<BlogDTO> getAllPersonalBlogs(int userID) throws SQLException {
+        List<BlogDTO> listAllBlogs = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement psm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                psm = conn.prepareStatement(GET_ALL_PERSONAL_BLOGS);
+                psm.setInt(1, userID);
+                rs = psm.executeQuery();
+                while (rs.next()) {
+                    int blogID = rs.getInt("blogID");
+                    int userApproveID = rs.getInt("userApproveID");
+                    int subjectID = rs.getInt("subjectID");
+                    String title = rs.getString("title");
+                    String content = rs.getString("content");
+                    String date = rs.getString("date");
+                    String image = rs.getString("image");
+                    String video = rs.getString("video");
+                    int numberOfVotes = rs.getInt("numberOfVotes");
+                    int numberOfComments = rs.getInt("numberOfComments");
+                    String status = rs.getString("status");
+                    String fullName = rs.getString("fullName");
+                    listAllBlogs.add(new BlogDTO(blogID, userID, userApproveID, subjectID, title, content,
+                            date, image, video, numberOfVotes, numberOfComments, status, fullName));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (psm != null) {
+                psm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return listAllBlogs;
     }
 }

@@ -84,6 +84,10 @@
                                 <i class="fas fa-tasks"></i>
                                 Activity
                             </a></li>
+                        <li class="tm-nav-item"><a href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>" class="tm-nav-link">
+                                <i class="fas fa-tasks"></i>
+                                Personal List
+                            </a></li>
                         <li class="tm-nav-item"><a href="post.html" class="tm-nav-link">
                                 <i class="fas fa-users"></i>
                                 Majors
@@ -112,7 +116,7 @@
                                 <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
                             </button>                                
                         </form>
-                        <a href="postblog.jsp" class="tm-nav-link col-sm-3">
+                        <a href="MainController?action=GoToPostBlogPage" class="tm-nav-link col-sm-3">
                             <i class="fas fa-pen"></i>
                             New Post
                         </a>

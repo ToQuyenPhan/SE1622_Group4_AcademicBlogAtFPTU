@@ -1191,10 +1191,14 @@ a:hover figcaption { color: #056767; }
 .tm-main div div a:hover{
     text-decoration: none;
 }
+
+/* Post Blog */
 .body-postblog-page{
     overflow-y: scroll;
 }
-
+.body-postblog-page h6{
+    color: red;
+}
 .sort-by-date{
     margin-right: 2rem;
 }
