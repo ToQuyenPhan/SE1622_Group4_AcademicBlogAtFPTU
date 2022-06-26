@@ -100,6 +100,10 @@
                                 <i class="far fa-comments"></i>
                                 Feedback
                             </a></li>
+                        <li class="tm-nav-item"><a href="MainController?action=Logout" class="tm-nav-link">
+                                <i class="fa fa-window-close"></i>
+                                Logout
+                            </a></li>
                     </ul>
                 </nav>
             </div>

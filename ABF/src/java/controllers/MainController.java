@@ -51,6 +51,9 @@ public class MainController extends HttpServlet {
     private static final String GO_TO_WELCOME_PAGE = "GoToWelcomePage";
     private static final String GO_TO_POST_BLOG = "GoToPostBlogPage";
     private static final String VIEW_PERSONAL_PAGE = "ViewPersonalPage";
+    private static final String SAVE_DRAFT_BLOG = "SaveDraftBlog";
+    private static final String LOGOUT = "Logout";
+    private static final String SEARCH_ACTIVITY_BY_NAME = "PersonalSearch";
     
     private static final String LOGIN_WITH_GOOGLE_CONTROLLER = "LoginWithGoogleController";
     private static final String LOGIN_CONTROLLER = "LoginController";
@@ -82,6 +85,9 @@ public class MainController extends HttpServlet {
     private static final String WELCOME_PAGE = "index.jsp";
     private static final String POST_BLOG_PAGE = "postblog.jsp";
     private static final String VIEW_PERSONAL_PAGE_CONTROLLER = "ViewPersonalPageController";
+    private static final String SAVE_DRAFT_BLOG_CONTROLLER = "SaveDraftBlogController";
+    private static final String LOGOUT_CONTROLLER = "LogoutController";
+    private static final String SEARCH_ACTIVITY_BY_NAME_CONTROLLER = "SearchActivitiesByNameController";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -159,6 +165,12 @@ public class MainController extends HttpServlet {
                 url = POST_BLOG_PAGE;} 
             else if (VIEW_PERSONAL_PAGE.equals(action)) {
                 url = VIEW_PERSONAL_PAGE_CONTROLLER;} 
+            else if (SAVE_DRAFT_BLOG.equals(action)) {
+                url = SAVE_DRAFT_BLOG_CONTROLLER;} 
+            else if (LOGOUT.equals(action)) {
+                url = LOGOUT_CONTROLLER;} 
+            else if (SEARCH_ACTIVITY_BY_NAME.equals(action)) {
+                url = SEARCH_ACTIVITY_BY_NAME_CONTROLLER;} 
             else{
                 request.setAttribute("ERROR_MESSAGE", "Function is not available!");
             }

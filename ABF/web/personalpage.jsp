@@ -1,4 +1,3 @@
-
 <%-- 
     Document   : personalpage
     Created on : Jun 13, 2022, 3:09:15 PM
@@ -68,29 +67,11 @@
                                 <i class="fas fa-home"></i>
                                 Blog Home
                             </a></li>
-                            <%
-                                String roleUser = (String) session.getAttribute("ROLE");
-                                if (roleUser == null) {
-                                    roleUser = "";
-                                }
-                                if ("Mentor".equals(roleUser)) {
-                            %>
-                        <li class="tm-nav-item"><a href="MainController?action=GetApproveList" class="tm-nav-link">
-                                <i class="fa fa-check"></i>
-                                Approve Blog List
-                            </a></li>
-                            <%
-                                }
-                            %>    
-                        <li class="tm-nav-item"><a href="MainController?action=GetActivityList&userID=<%= loginUser.getUserID()%>" class="tm-nav-link">
+                        <li class="tm-nav-item"><a href="MainController?action=GetActivityList&userID=<%= loginUser.getUserID() %>" class="tm-nav-link">
                                 <i class="fas fa-tasks"></i>
                                 Activity
                             </a></li>
-                        <li class="tm-nav-item active"><a href="#" class="tm-nav-link">
-                                <i class="fas fa-tasks"></i>
-                                Personal List
-                            </a></li>
-                        <li class="tm-nav-item "><a href="MainController?action=GetPersonalDraftList&userID=<%= loginUser.getUserID()%>" class="tm-nav-link">
+                        <li class="tm-nav-item "><a href="MainController?action=GetPersonalDraftList&userID=<%= loginUser.getUserID() %>" class="tm-nav-link">
                                 <i class="fas fa-home"></i>
                                 Draft Blogs
                             </a></li>   
@@ -117,18 +98,18 @@
                 <div class="row tm-row">
                     <div class="col-12 row">
                         <form class="form-inline tm-mb-80 tm-search-form col-sm-9 row" action="MainController">                
-                            <input class="form-control tm-search-input col-sm-9" name="searchPersonal" type="text" placeholder="Search..." aria-label="Search" value="<%= search%>">
+                            <input class="form-control tm-search-input col-sm-9" name="searchName" type="text" placeholder="Search..." aria-label="Search" value="<%= search%>">
                             <button class="tm-search-button col-sm-1" type="submit" name="action" value="PersonalSearch">
                                 <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
                             </button>                                
                         </form>
-
+                          
                         <a href="postblog.jsp" class="tm-nav-link col-sm-3">
                             <i class="fas fa-pen"></i>
                             New Post
                         </a>
                     </div>
-
+                            
                     <div class="form-sort">
                         <%
                             String selectedOption = (String) request.getAttribute("OPTION");
