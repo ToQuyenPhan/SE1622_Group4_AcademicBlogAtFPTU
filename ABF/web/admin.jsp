@@ -76,6 +76,10 @@
                                 <i class="far fa-comments"></i>
                                 Feedback
                             </a></li>
+                        <li class="tm-nav-item"><a href="MainController?action=Logout" class="tm-nav-link">
+                                <i class="fa fa-window-close"></i>
+                                Logout
+                            </a></li>
                     </ul>
                 </nav>
             </div>
@@ -85,24 +89,24 @@
             <main class="tm-main">
                 <!-- Search form -->
                 <div class="row tm-row admin-page">
-                <div class="col-12 col-md-12">
-                    <a href="post.html" class="">
-                        <h1 class="tm-pt-30 tm-color-primary tm-post-title">Manage Accounts</h1>
-                    </a>                    
-                </div>
-                <div class="col-12 col-md-12">
-                    <a href="MainController?action=GetMajorList" class="">
-                        <h1 class="tm-pt-30 tm-color-primary tm-post-title">Manage Majors</h1>
-                    </a>                    
-                </div>
-                <div class="col-12 col-md-12">
-                    <a href="MainController?action=GetFeedbackList" class="">
-                        <h1 class="tm-pt-30 tm-color-primary tm-post-title">Manage Feedbacks</h1>
-                    </a>                    
-                </div>
-            </div>        
-            <footer class="row tm-row">
-            </footer>
+                    <div class="col-12 col-md-12">
+                        <a href="manageaccount.jsp" class="">
+                            <h1 class="tm-pt-30 tm-color-primary tm-post-title">Manage Accounts</h1>
+                        </a>                    
+                    </div>
+                    <div class="col-12 col-md-12">
+                        <a href="MainController?action=GetMajorList" class="">
+                            <h1 class="tm-pt-30 tm-color-primary tm-post-title">Manage Majors</h1>
+                        </a>                    
+                    </div>
+                    <div class="col-12 col-md-12">
+                        <a href="MainController?action=GetFeedbackList" class="">
+                            <h1 class="tm-pt-30 tm-color-primary tm-post-title">Manage Feedbacks</h1>
+                        </a>                    
+                    </div>
+                </div>        
+                <footer class="row tm-row">
+                </footer>
             </main>
         </div>
         <script src="js/jquery.min.js"></script>

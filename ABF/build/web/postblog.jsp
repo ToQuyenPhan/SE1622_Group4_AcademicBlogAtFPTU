@@ -4,6 +4,9 @@
     Author     : hotan
 --%>
 
+<%@page import="dao.SubjectDAO"%>
+<%@page import="dto.SubjectDTO"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="dto.BlogError"%>
 <%@page import="dto.UserDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -99,88 +102,55 @@
                         <form action="MainController" method="POST">
                             <h2 class="tm-color-primary tm-post-title mb-4">Your Post</h2>
                             <input type="hidden" name="userID" value="<%=loginUser.getUserID()%>" readonly="">
+                            <div class="mb-4">
+                                <label for="Title"></label> Title </label>
+                                <input class="form-control" name="title" type="text" required="" minlength="10" maxlength="255">
+                                ${requestScope.BLOG_ERROR.titleError}
 
-                            <div class="mb-4">
-                                Title<input class="form-control" name="title" type="text" required="">
-                                <%
-                                    String titleError = blogError.getTitleError();
-                                    if (titleError == null) {
-                                        titleError = "";
-                                    }
-                                %>
-                                <%= titleError%>
-                            </div>
-
-                            <div class="mb-4">
-                                <!--
-                                <p class="tm-mb-40">Subject<input type="text" name="subjectID" required=""></p></br>
-                                -->
-                                Subject <select class="form-control" name="subjectID" required="">
-                                    <option value="0"> -none- </option>
-                                    <option value="3"> PRJ301 </option>
-                                    <option value="4"> SWP391 </option>
-                                    <option value="5"> SWT301 </option>
-                                    <option value="6"> JPD201 </option>
-                                    <option value="7"> SSL101 </option>
-                                    <option value="8"> ITE123 </option>
-                                </select> 
-                                <%
-                                    String subjectError = blogError.getSubjectIDError();
-                                    if (subjectError == null) {
-                                        subjectError = "";
-                                    }
-                                %>
-                                <%= subjectError%>
                             </div>
                             <div class="mb-4">
-                                Details<textarea class="form-control" name="content" rows="6" required=""></textarea>
-                                <%
-                                    String contentError = blogError.getContentError();
-                                    if (contentError == null) {
-                                        contentError = "";
-                                    }
-                                %>
-                                <%= contentError%>
-                            </div>
-                            <div class="mb-4">
-                                <!--
-                                Image: ${requestScope.BLOG_ERROR.imageError}<input type="text" name="image" required=""></br></br>
-                                -->
-                                <form method="post" action="MainController" enctype="multipart/form-data">
-                                    Image<input class="form-control" name="file" type="file" required=""></br>
-                                    <!--
-                                    <input type="submit" value="Upload" name="action"
-                                           <button class="tm-btn tm-btn-primary tm-btn-small"></button>
+                                Subject
+                                <select name="subjectID" class="form-control" >
                                     <%
-                                        String imageError = blogError.getImageError();
-                                        if (imageError == null) {
-                                            imageError = "";
+                                        ArrayList<SubjectDTO> listc = SubjectDAO.getSubject();
+                                        if (listc != null && !listc.isEmpty()) {
+                                            for (SubjectDTO c : listc) {
+
+                                    %>
+                                    <option value="<%=c.getSubjectID()%>"><%= c.getSubjectName()%> </option>
+                                    <%
+                                            }
                                         }
                                     %>
-                                    <%= imageError%>
-                                        </form>-->
-                                    </div>
-                                    <div class="text-right">
-
-                                        <input type="submit" name="action" value="SaveDraftBlog"
-                                               <button class="tm-btn tm-btn-primary tm-btn-small"></button>
-
-                                        <input type="submit" name="action" value="Post"
-                                               <button class="tm-btn tm-btn-primary tm-btn-small"></button>  
-                                    </div>
-                                </form>
-                               
+                                </select>
                             </div>
-                    </div>
-                    <footer class="row tm-row">
-                        <div class="col-md-6 col-12 tm-color-gray">
-                            FPT University
-                        </div>
-                        <div class="col-md-6 col-12 tm-color-gray tm-copyright">
-                            ACADEMIC BLOG
-                        </div>
+                            <div class="mb-4">
+                                Details
+                                <textarea class="form-control" name="content" rows="6"  required="" minlength="50" maxlength="1000"></textarea>
+                                ${requestScope.BLOG_ERROR.contentError}
+                            </div>
+                            <div class="mb-4">
+                                Image: ${requestScope.BLOG_ERROR.imageError}<input type="text" name="image" class="form-control" placeholder="image/photo1" pattern="image/.*"></br></br>
+                            </div>
+                            <div class="text-right">
+                                <input type="submit" name="action" value="SaveDraftBlog"
+                                       <button class="tm-btn tm-btn-primary tm-btn-small"></button>
+                                <input type="submit" name="action" value="Post"
+                                       <button class="tm-btn tm-btn-primary tm-btn-small"></button>  
+                            </div>
+                        </form>
 
-                    </footer>
+                    </div>
+                </div>
+                <footer class="row tm-row">
+                    <div class="col-md-6 col-12 tm-color-gray">
+                        FPT University
+                    </div>
+                    <div class="col-md-6 col-12 tm-color-gray tm-copyright">
+                        ACADEMIC BLOG
+                    </div>
+
+                </footer>
             </main>
         </div>
 

@@ -45,15 +45,11 @@
             return true;
             alert(t);
         }
-
-
-
         function thongbaosuccess() {
             alert("Edit success!");
         }
     </script>
     <body class="body-edit-blog">
-
         <header class="tm-header" id="tm-header">
             <div class="tm-header-wrapper">
                 <button class="navbar-toggler" type="button" aria-label="Toggle navigation">
@@ -61,7 +57,6 @@
                 </button>
                 <div class="tm-site-header">
                     <div class="mb-3 mx-auto tm-site-logo"><img src="img/logo.png"><i class="fas fa-times fa-2x"></i></div>            
-
                 </div>
                 <nav class="tm-nav" id="tm-nav">            
                     <ul>
@@ -125,13 +120,6 @@
                 <div class="row tm-row">
                     <div class="col-12">
                         <hr class="tm-hr-primary tm-mb-55">
-                        <!-- Video player 1422x800 -->
-                        <!--
-                        <video width="954" height="535" controls class="tm-mb-40">
-                            <source src="" type="">							  
-                            Your browser does not support the video tag.
-                        </video>
-                        -->
                     </div>
                 </div>
                 <%
@@ -149,9 +137,7 @@
                                     <div class="mb-4">
                                         Title<input class="form-control" name="title" type="text" value="<%=blog.getTitle()%>"><span id="e1"></span>
                                     </div>
-
                                     <div class="mb-4">
-
                                         <p>Subject<select name="subjectID" >
                                                 <%
                                                     ArrayList<SubjectDTO> listc = SubjectDAO.getSubject();
@@ -166,7 +152,6 @@
                                                 <%}
                                                         }
                                                     }%>
-
                                             </select>
                                             </br>
                                             <p class="mb-4">

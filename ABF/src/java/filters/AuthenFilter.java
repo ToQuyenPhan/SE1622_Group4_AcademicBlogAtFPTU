@@ -53,7 +53,8 @@ public class AuthenFilter implements Filter {
     private static final String APPROVE_BLOG_DETAIL_PAGE = "approveblogdetail.jsp";
     private static final String MAJOR_PAGE = "major.jsp";
     private static final String SUBJECT_PAGE = "subject.jsp";
-
+    private static final String MANAGE_ACCOUNT = "manageaccount.jsp";
+    
     private static final boolean debug = true;
 
     // The filter configuration object we are associated with.  If
@@ -68,6 +69,7 @@ public class AuthenFilter implements Filter {
         ADMIN_RESOURCES.add(PROFILE_PAGE);
         ADMIN_RESOURCES.add(MAJOR_PAGE);
         ADMIN_RESOURCES.add(SUBJECT_PAGE);
+        ADMIN_RESOURCES.add(MANAGE_ACCOUNT);
 
         //Khai báo các Resource Student được phép truy cập
         STUDENT_RESOURCES = new ArrayList<>();
