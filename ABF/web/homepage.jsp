@@ -77,6 +77,10 @@
                                 <i class="fa fa-check"></i>
                                 Approve Blog List
                             </a></li>
+                            <li class="tm-nav-item"><a href="voterating.jsp" class="tm-nav-link">
+                                <i class="fa fa-check"></i>
+                                Vote Rating
+                            </a></li>
                             <%
                                 }
                             %>     
