@@ -32,6 +32,9 @@ public class UserDAO {
             + " FROM [User] ";
     private static final String FIND_USER_BY_ID = "SELECT  password, fullName, roleID,email, image, numberOfBlogs, gender, dateOfBirth, address, contact, aboutme, status\n"
             + "         FROM [User] WHERE UserID = ?";
+    private static final String UPDATE_STATUS = "UPDATE [User]\n"
+            + "  SET status = ? \n"
+            + "  Where userID = ?";
     
     public UserDTO checkLogin(String email, String password) throws SQLException {
         UserDTO user = null;
@@ -240,4 +243,21 @@ public class UserDAO {
         return user;
     }
 
+    public static int updateStatusUser(int userID, String oldStatus) throws ClassNotFoundException, SQLException {
+        int result = 0;
+        Connection cn = null;
+        cn = DBUtils.getConnection();
+        if (cn != null) {
+            PreparedStatement pst = cn.prepareStatement(UPDATE_STATUS);
+            if (oldStatus.equalsIgnoreCase("true")) {
+                pst.setString(1, "0");
+            } else {
+                pst.setString(1, "1");
+            }
+            pst.setInt(2, userID);
+            result = pst.executeUpdate();
+        }
+        cn.close();
+        return result;
+    }
 }

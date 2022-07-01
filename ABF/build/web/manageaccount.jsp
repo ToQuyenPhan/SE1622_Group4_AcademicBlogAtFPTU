@@ -1,24 +1,26 @@
 <%-- 
-    Document   : activity
-    Created on : Jun 9, 2022, 1:33:47 PM
-    Author     : To Quyen Phan
+    Document   : manageAccount
+    Created on : Jun 19, 2022, 3:04:02 PM
+    Author     : hotan
 --%>
 
-<%@page import="dto.UserDTO"%>
-<%@page import="dto.ActivityDTO"%>
 <%@page import="java.util.List"%>
+<%@page import="dao.UserDAO"%>
+<%@page import="dto.UserDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Activity Page</title>
+        <title>Manage account Page</title>
         <link rel="stylesheet" href="fontawesome/css/all.min.css"> <!-- https://fontawesome.com/ -->
         <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet"> <!-- https://fonts.google.com/ -->
         <link href="CSS/bootstrap.min.css" rel="stylesheet">
         <link href="css/templatemo-xtra-blog.css" rel="stylesheet">
         <link rel="stylesheet" href="CSS/style.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
         <!--
             
@@ -28,16 +30,12 @@
         
         -->
     </head>
-    <body class="body-activity-page">
+    <body class="body-homepage">
         <%
             //Hiển thị Full Name của user
             UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
             if (loginUser == null) {
                 loginUser = new UserDTO();
-            }
-            String search = request.getParameter("search");
-            if (search == null) {
-                search = "";
             }
             String image = loginUser.getImage();
             if (image == null) {
@@ -52,7 +50,7 @@
                 <div class="tm-site-header">
                     <a href="profile.jsp">
                         <div class="mb-3 mx-auto tm-site-logo">
-                            <img class="responsive" src="<%= image%>">
+                            <img src="<%= image%>">
 
                         </div>            
                         <h2 class="text-center"><%= loginUser.getFullName()%></h2>
@@ -60,23 +58,23 @@
                 </div>
                 <nav class="tm-nav" id="tm-nav">            
                     <ul>
-                        <li class="tm-nav-item"><a href="MainController?action=GetList" class="tm-nav-link">
-                                <i class="fas fa-home"></i>
-                                Blog Home
-                            </a></li>
                         <li class="tm-nav-item active"><a href="#" class="tm-nav-link">
+                                <i class="fas fa-user-tie"></i>
+                                Admin Dashboard
+                            </a></li>
+                        <li class="tm-nav-item"><a href="MainController?action=GetActivityList&userID=<%= loginUser.getUserID()%>" class="tm-nav-link">
                                 <i class="fas fa-tasks"></i>
                                 Activity
                             </a></li>
-                        <li class="tm-nav-item"><a href="post.html" class="tm-nav-link">
+                        <li class="tm-nav-item"><a href="MainController?action=GetMajorList" class="tm-nav-link">
                                 <i class="fas fa-users"></i>
                                 Majors
                             </a></li>
-                        <li class="tm-nav-item"><a href="about.html" class="tm-nav-link">
+                        <li class="tm-nav-item"><a href="MainController?action=GetSubjectList" class="tm-nav-link">
                                 <i class="fas fa-users"></i>
                                 Subjects
                             </a></li>
-                        <li class="tm-nav-item"><a href="MainController?action=GetFeedbackTypeList" class="tm-nav-link">
+                        <li class="tm-nav-item"><a href="#" class="tm-nav-link">
                                 <i class="far fa-comments"></i>
                                 Feedback
                             </a></li>
@@ -84,73 +82,86 @@
                 </nav>
             </div>
         </header>
+
         <div class="container-fluid activity-page">
             <main class="tm-main activity-list">
                 <!-- Search form -->
                 <div class="row tm-row">
                     <div class="col-12 row">
-                        <form class="form-inline tm-mb-80 tm-search-form col-sm-9 row" action="MainController" method="POST">                
-                            <input class="form-control tm-search-input col-sm-9" name="searchName" type="text" placeholder="Search..." aria-label="Search">
-                            <input type="hidden" name="userID" value="<%= loginUser.getUserID() %>">
-                            <button class="tm-search-button col-sm-1" type="submit" name="action" value="PersonalSearch">
+                        <form class="form-inline tm-mb-80 tm-search-form col-sm-10 row">                
+                            <input class="form-control tm-search-input col-sm-10" name="query" type="text" placeholder="Search..." aria-label="Search">
+                            <button class="tm-search-button col-sm-1" type="submit">
                                 <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
                             </button>                                
                         </form>
                     </div>                
                 </div> 
-                <%
-                    List<ActivityDTO> listAllActivities = (List<ActivityDTO>) request.getAttribute("LIST_ALL_ACTIVITY");
-                    if (listAllActivities != null) {
-                        if (listAllActivities.size() > 0) {
-                            int all = listAllActivities.size();
-                            int index = 0;
-                            for (ActivityDTO activity : listAllActivities) {
-                %>
+
                 <div class="row tm-row activity-item">
-                    <div class="row activity-item-header">
-                        <h6 class="col-sm-12"><%= activity.getDate()%></h6>
+                    <div class="table-responsive">
+                        <%
+                            UserDAO dao = new UserDAO();
+                            List<UserDTO> listAllUser = dao.getAllUser();
+                            if (listAllUser.size() > 0) {
+
+
+                        %>
+                        <table class="table">
+                            <thead class="bg-light">
+                                <tr class="border-0" style="">
+                                    <th class="border-0">No</th>                                    
+                                    <th class="border-0">Full Name</th>
+                                    <th class="border-0">Email</th> 
+                                    <th class="border-0">Role</th>                                  
+                                    <th class="border-0">Status</th> 
+                                    <th class="border-0" style="text-align: center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%  int count = 1;
+                                    for (UserDTO user : listAllUser) {
+                                        if (loginUser == null) {
+                                            loginUser = new UserDTO();
+                                        }
+                                %>
+                                <tr style="">                            
+                                    <td><%= count++%></td>
+                                    <td><%= user.getFullName()%></td>
+                                    <td><%= user.getEmail()%></td>
+                                    <%
+                                        if (user.getRoleID() == 1) {
+                                    %>
+                                    <td>User</td>
+                                    <%
+                                    } else {
+                                    %>
+                                    <td>Admin</td>
+                                    <% }
+
+                                        if (user.isStatus() == true) {
+                                    %>
+                                    <td>Active</td>
+                                    <% if (user.getRoleID() != 1) {%>
+                                    <td style="text-align:center"><a href="MainController?action=UpdateStatusUser&userID=<%=user.getUserID()%>&oldStatus=<%=user.isStatus()%>">Ban</a></td>
+                                    <%
+                                        }
+                                    } else {
+                                    %>
+                                    <td>InActive</td>   
+                                    <% if (user.getRoleID() != 1) {%>
+                                    <td style="text-align:center"><a href="MainController?action=UpdateStatusUser&userID=<%=user.getUserID()%>&oldStatus=<%=user.isStatus()%>">UnBan</a></td>
+                                    <% }
+                                                }
+                                            }
+                                        }
+                                    %>
+
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="row">
-                        <h5 class="col-sm-11"><%= activity.getActivity()%></h5> 
-                        <a onclick="showPopUp(<%= index%>, <%= all%>)" class="col-sm-1">Delete</a>
-                    </div>  
                 </div>
-                <div class="delete-activity-message-popup-confirm" id="<%= index%>">
-                    <p>Are you sure to delete this activity?</p>
-                    <div>
-                        <a href="MainController?action=DeleteActivity&historyActivityID=<%= activity.getHistoryActivityID()%>&userID=<%= activity.getUserID()%>">Delete</a>
-                        <a onclick="closePopUpConfirm(<%= index%>, <%= all%>)">Cancel</a>
-                    </div>
-                </div>
-                <%
-                            index++;
-                        }
-                    }
-                } else {
-                    String message = (String) request.getAttribute("MESSAGE");
-                    if (message == null) {
-                        message = "";
-                    }
-                %>
-                <div>
-                    <h1><%= message%></h1>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                </div>
-                <%
-                    }
-                %>
+
                 <div class="row tm-row page-activity-list">
                     <div class="tm-prev-next-wrapper">
                         <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next disabled tm-mr-20">Prev</a>
@@ -176,24 +187,6 @@
                         </nav>
                     </div>                
                 </div>  
-                <%
-                    String deleteMessage = (String) request.getAttribute("DELETE_MESSAGE");
-                    if (deleteMessage != null) {
-                %>
-                <div id="delete-activity-message-popup" style="display: block;">
-                    <button onclick="closePopUp()" id="close-delete-activity-message-popup">X</button>
-                    <p><%= deleteMessage%></p>
-                </div>
-                <%
-                } else {
-                %>
-                <div id="delete-activity-message-popup" style="display: none;">
-                    <button onclick="closePopUp()" id="close-delete-activity-message-popup">X</button>
-                    <p><%= deleteMessage%></p>
-                </div>
-                <%
-                    }
-                %>
                 <footer class="row tm-row">
                 </footer>
             </main>

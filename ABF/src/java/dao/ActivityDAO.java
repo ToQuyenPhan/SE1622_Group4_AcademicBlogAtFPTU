@@ -27,9 +27,9 @@ public class ActivityDAO {
     private static final String UPDATE_ACTIVITY = "INSERT INTO HistoryActivity(userID, date, activityTypeID, blogID, status) "
             + "VALUES(?,?,1,?,1)";
     private static final String DELETE_VOTE = "DELETE HistoryActivity WHERE userID = ? AND blogID = ? AND activityTypeID = 1";
-    private static final String SEARCH_ACTIVITY = "SELECT historyActivityID,userID, date, activity FROM HistoryActivity h\n" +
-"            JOIN ActivityType a ON h.activityTypeID = a.activityTypeID \n" +
-"           WHERE a.activityName like ? AND h.userID = ? AND h.status = 1";
+    private static final String SEARCH_ACTIVITY = "SELECT historyActivityID,userID, date, activity FROM HistoryActivity h" +
+"            JOIN ActivityType a ON h.activityTypeID = a.activityTypeID " +
+"           WHERE a.activity like ? AND h.userID = ? AND h.status = 1";
     
     public List<ActivityDTO> getAllActivities(int userID) throws SQLException {
         List<ActivityDTO> listAllActivities = new ArrayList<>();
@@ -193,7 +193,7 @@ public class ActivityDAO {
             conn = DBUtils.getConnection();
             if (conn != null) {
                 psm = conn.prepareStatement(SEARCH_ACTIVITY);
-                psm.setString(1,searchName );
+                psm.setString(1, "%" + searchName + "%" );
                 psm.setInt(2,userID);
                 rs = psm.executeQuery();
                 while (rs.next()) {
