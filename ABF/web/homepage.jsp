@@ -10,6 +10,16 @@
 <%@page import="dto.UserDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%
+    String msq = request.getParameter("noti");
+    if (msq != null) {
+%>
+<script>
+    alert("Post success");
+</script>
+<%
+    }
+%>        
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -47,6 +57,7 @@
                 image = "image/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png";
             }
         %>
+        
         <header class="tm-header" id="tm-header">
             <div class="tm-header-wrapper">
                 <button class="navbar-toggler" type="button" aria-label="Toggle navigation">

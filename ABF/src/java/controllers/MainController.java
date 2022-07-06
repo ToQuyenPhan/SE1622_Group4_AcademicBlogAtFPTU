@@ -5,7 +5,6 @@
  */
 package controllers;
 
-
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "MainController", urlPatterns = {"/MainController"})
 public class MainController extends HttpServlet {
+
     private static final String ERROR = "error.jsp";
     private static final String LOGIN = "Login";
     private static final String LOGIN_WITH_GOOGLE = "LoginWithGoogle";
@@ -54,7 +54,8 @@ public class MainController extends HttpServlet {
     private static final String SAVE_DRAFT_BLOG = "SaveDraftBlog";
     private static final String LOGOUT = "Logout";
     private static final String SEARCH_ACTIVITY_BY_NAME = "PersonalSearch";
-    
+    private static final String BAN_OR_UNBAN = "Ban";
+
     private static final String LOGIN_WITH_GOOGLE_CONTROLLER = "LoginWithGoogleController";
     private static final String LOGIN_CONTROLLER = "LoginController";
     private static final String GET_LIST_CONTROLLER = "GetListController";
@@ -88,6 +89,7 @@ public class MainController extends HttpServlet {
     private static final String SAVE_DRAFT_BLOG_CONTROLLER = "SaveDraftBlogController";
     private static final String LOGOUT_CONTROLLER = "LogoutController";
     private static final String SEARCH_ACTIVITY_BY_NAME_CONTROLLER = "SearchActivitiesByNameController";
+    private static final String BAN_OR_UNBAN_CONTROLLER = "BanOrUnbanController";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -105,9 +107,9 @@ public class MainController extends HttpServlet {
             String action = request.getParameter("action");
             if (LOGIN_WITH_GOOGLE.equals(action)) {
                 url = LOGIN_WITH_GOOGLE_CONTROLLER;
-            } else if(LOGIN.equals(action)){
-                url = LOGIN_CONTROLLER;    
-            }else if (GETLIST.equals(action)) {
+            } else if (LOGIN.equals(action)) {
+                url = LOGIN_CONTROLLER;
+            } else if (GETLIST.equals(action)) {
                 url = GET_LIST_CONTROLLER;
             } else if (GETFEEDBACKTYPELIST.equals(action)) {
                 url = GET_FEEDBACK_TYPE_LIST_CONTROLLER;
@@ -158,20 +160,22 @@ public class MainController extends HttpServlet {
             } else if (FEEDBACK_LIST.equals(action)) {
                 url = FEEDBACK_LIST_CONTROLLER;
             } else if (FEEDBACK_DETAIL.equals(action)) {
-                url = FEEDBACK_DETAIL_CONTROLLER;} 
-            else if (GO_TO_WELCOME_PAGE.equals(action)) {
-                url = WELCOME_PAGE;} 
-            else if (GO_TO_POST_BLOG.equals(action)) {
-                url = POST_BLOG_PAGE;} 
-            else if (VIEW_PERSONAL_PAGE.equals(action)) {
-                url = VIEW_PERSONAL_PAGE_CONTROLLER;} 
-            else if (SAVE_DRAFT_BLOG.equals(action)) {
-                url = SAVE_DRAFT_BLOG_CONTROLLER;} 
-            else if (LOGOUT.equals(action)) {
-                url = LOGOUT_CONTROLLER;} 
-            else if (SEARCH_ACTIVITY_BY_NAME.equals(action)) {
-                url = SEARCH_ACTIVITY_BY_NAME_CONTROLLER;} 
-            else{
+                url = FEEDBACK_DETAIL_CONTROLLER;
+            } else if (GO_TO_WELCOME_PAGE.equals(action)) {
+                url = WELCOME_PAGE;
+            } else if (GO_TO_POST_BLOG.equals(action)) {
+                url = POST_BLOG_PAGE;
+            } else if (VIEW_PERSONAL_PAGE.equals(action)) {
+                url = VIEW_PERSONAL_PAGE_CONTROLLER;
+            } else if (SAVE_DRAFT_BLOG.equals(action)) {
+                url = SAVE_DRAFT_BLOG_CONTROLLER;
+            } else if (LOGOUT.equals(action)) {
+                url = LOGOUT_CONTROLLER;
+            } else if (SEARCH_ACTIVITY_BY_NAME.equals(action)) {
+                url = SEARCH_ACTIVITY_BY_NAME_CONTROLLER;
+            } else if (BAN_OR_UNBAN.equals(action)) {
+                url = BAN_OR_UNBAN_CONTROLLER;
+            }  else {
                 request.setAttribute("ERROR_MESSAGE", "Function is not available!");
             }
         } catch (Exception e) {

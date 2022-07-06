@@ -106,6 +106,7 @@
                                                             <th class="border-0">Role Id</th>
                                                             <th class="border-0">Email</th>                                   
                                                             <th class="border-0">Status</th> 
+                                                            <th class="border-0">Action</th> 
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -122,8 +123,14 @@
                                                             <td><%= user.getEmail()%></td>
                                                             <td><%= user.isStatus()%></td>
                                                             <%
+                                                              if(user.isStatus() == true){
+%>
+                                                            <td><a href="MainController?action=Ban&userID=<%=user.getUserID()%>&oldStatus=<%= user.isStatus()%>">Ban</a></td>
+                                                            <% }else{ %>
+                                                            <td><a href="MainController?action=Ban&userID=<%=user.getUserID()%>&oldStatus=<%= user.isStatus()%>">UnBan</a></td>
+                                                            <%
                                                                     }
-                                                                }
+                                                                }}
                                                             %>
                                                         </tr>
                                                     </tbody>

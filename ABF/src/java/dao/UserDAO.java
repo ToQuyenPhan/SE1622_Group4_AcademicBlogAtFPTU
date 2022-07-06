@@ -25,6 +25,9 @@ public class UserDAO {
             + " FROM [User] WHERE email like ? AND password like ?";
     private static final String CREATE_USER = "INSERT INTO [User](password, fullName, roleID, email, image, numberOfBlogs, gender, dateOfBirth, address, contact, aboutme, status)"
             + " VALUES(?,?,2,?,?,0,null,null,null,null,null,1)";
+    private static final String EDIT_USER = "UPDATE [User] " 
+            + "set fullName=?, image=?, gender=?, dateOfBirth=?, address=?, contact=?, aboutme=? "
+            + "WHERE userID=?";
     private static final String CHECK_ROLE = "SELECT roleName FROM Role WHERE roleID = ?";
     private static final String CHECK_TO_UPDATE = "SELECT numberOfBlogs FROM [User] WHERE userID = ?";
     private static final String UPDATE = "UPDATE [User] SET numberOfBlogs = ? WHERE userID = ?";
@@ -32,6 +35,9 @@ public class UserDAO {
             + " FROM [User] ";
     private static final String FIND_USER_BY_ID = "SELECT  password, fullName, roleID,email, image, numberOfBlogs, gender, dateOfBirth, address, contact, aboutme, status\n"
             + "         FROM [User] WHERE UserID = ?";
+    private static final String UPDATE_STATUS = "UPDATE [User]\n"
+            + "  SET status = ? \n"
+            + "  Where userID = ?";
     
     public UserDTO checkLogin(String email, String password) throws SQLException {
         UserDTO user = null;
@@ -239,5 +245,40 @@ public class UserDAO {
         }
         return user;
     }
-
+    public static int editUser(int userID, String fullName, String image, String gender, String dateOfBirth, String address, String contact, String aboutme) throws SQLException{
+        int rs = 0;
+        Connection cn = null;
+        PreparedStatement ptm = null;
+        if (cn != null) {
+            ptm =  cn.prepareStatement(EDIT_USER);
+            ptm.setString(0, fullName);
+            ptm.setString(1, image);
+            ptm.setString(2, gender);
+            ptm.setString(3, dateOfBirth);
+            ptm.setString(4, address);
+            ptm.setString(5, contact);
+            ptm.setString(6, aboutme);
+            ptm.setInt(7, userID);
+            rs = ptm.executeUpdate();
+        }
+        cn.close();
+        return rs;
+    }
+    public static int updateStatusUser(int userID, String oldStatus) throws ClassNotFoundException, SQLException {
+        int result = 0;
+        Connection cn = null;
+        cn = DBUtils.getConnection();
+        if (cn != null) {
+            PreparedStatement pst = cn.prepareStatement(UPDATE_STATUS);
+            if (oldStatus.equalsIgnoreCase("true")) {
+                pst.setString(1, "0");
+            } else {
+                pst.setString(1, "1");
+            }
+            pst.setInt(2, userID);
+            result = pst.executeUpdate();
+        }
+        cn.close();
+        return result;
+    }
 }

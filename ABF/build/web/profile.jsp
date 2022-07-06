@@ -57,11 +57,11 @@
         <div class="content-profile-page">
           <h2>Date Of Birth: <%= dateOfBirth %></h2>
           <h2>Gender: <%= gender %></h2>
-          <h2>Email:<%= loginUser.getEmail() %></h2>
+          <h2>Email: <%= loginUser.getEmail() %></h2>
           <h2>Address: <%= address %></h2>
           <h2>Contact: <%= contact %></h2>
           <h2>About me: <%= aboutme %></h2>
-          <a href="index.html"><i class='fas fa-edit'></i></a>
+          <a href="editprofile.jsp"><i class='fas fa-edit'></i></a>
         </div>
       </div>
     <!-- Optional JavaScript -->

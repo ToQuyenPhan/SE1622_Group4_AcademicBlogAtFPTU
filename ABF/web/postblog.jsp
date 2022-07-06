@@ -104,7 +104,7 @@
                             <input type="hidden" name="userID" value="<%=loginUser.getUserID()%>" readonly="">
                             <div class="mb-4">
                                 <label for="Title"></label> Title </label>
-                                <input class="form-control" name="title" type="text" required="" minlength="10" maxlength="255">
+                            <input class="form-control" name="title" type="text" value="<%= request.getAttribute("TITLE") %>">
                                 ${requestScope.BLOG_ERROR.titleError}
 
                             </div>
@@ -126,11 +126,14 @@
                             </div>
                             <div class="mb-4">
                                 Details
-                                <textarea class="form-control" name="content" rows="6"  required="" minlength="50" maxlength="1000"></textarea>
+                                <textarea class="form-control" id="content" name="content" rows="6" value="<%= request.getAttribute("CONTENT") %>"><%=request.getAttribute("CONTENT")%>
+                                </textarea>
                                 ${requestScope.BLOG_ERROR.contentError}
                             </div>
                             <div class="mb-4">
-                                Image: ${requestScope.BLOG_ERROR.imageError}<input type="text" name="image" class="form-control" placeholder="image/photo1" pattern="image/.*"></br></br>
+                                <div class="main">
+                                    ----------------------------------
+                                </div>
                             </div>
                             <div class="text-right">
                                 <input type="submit" name="action" value="SaveDraftBlog"
@@ -153,7 +156,7 @@
                 </footer>
             </main>
         </div>
-
+        
         <script src="js/jquery.min.js"></script>
         <script src="js/templatemo-script.js"></script>
     </body>

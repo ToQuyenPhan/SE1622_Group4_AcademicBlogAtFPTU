@@ -26,8 +26,10 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "PostBlogController", urlPatterns = {"/PostBlogController"})
 public class PostBlogController extends HttpServlet {
+
     private static final String ERROR = "postblog.jsp";
     private static final String SUCCESS = "MainController?action=GetList";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -51,31 +53,31 @@ public class PostBlogController extends HttpServlet {
             String content = request.getParameter("content").trim();
             String date = sdf.format(dateFormat);
             String image = request.getParameter("image");
-            boolean checkValidation = false;
+            boolean checkValidation = true;
             BlogDAO dao = new BlogDAO();
             if (title.length() < 10 || title.length() > 50) {
                 blogError.setTitleError("Title must be in [10,50]!");
-                checkValidation = true;
+                checkValidation = false;
             }
             if (content.length() < 50) {
                 blogError.setContentError("Content must be greater than 50!");
-                checkValidation = true;
+                checkValidation = false;
             }
-            if (!checkValidation) {
+            if (checkValidation) {
                 boolean check = dao.postBlog(userID, subjectID, title, content, date, image);
                 if (check) {
-                    url = SUCCESS;
+                    response.sendRedirect("MainController?action=GetList&noti=success");
                 }
             } else {
                 request.setAttribute("BLOG_ERROR", blogError);
                 request.setAttribute("TITLE", title);
                 request.setAttribute("CONTENT", content);
+                request.getRequestDispatcher(ERROR).forward(request, response);
             }
 
         } catch (Exception e) {
             log("Error at Post Blog Controller: " + e.toString());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+
         }
     }
 
