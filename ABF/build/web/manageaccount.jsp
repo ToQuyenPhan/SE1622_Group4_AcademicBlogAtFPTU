@@ -119,18 +119,36 @@
                                                         <tr>
                                                             <td><%= count++%></td>
                                                             <td><%= user.getFullName()%></td>
-                                                            <td><%= user.getRoleID()%></td>
-                                                            <td><%= user.getEmail()%></td>
-                                                            <td><%= user.isStatus()%></td>
                                                             <%
-                                                              if(user.isStatus() == true){
-%>
+                                                                if (user.getRoleID() == 1) {
+                                                            %>
+                                                            <td>Admin</td>
+                                                            <%
+                                                            } else if (user.getRoleID() == 2) {
+                                                            %>
+                                                            <td>Student</td>
+                                                            <%
+                                                                } else {
+                                                                %>
+                                                                <td>Mentor</td>
+                                                                <%
+                                                                }
+                                                            %>        
+
+                                                            <td><%= user.getEmail()%></td>                                                          
+                                                            
+                                                            <%
+                                                                if (user.isStatus() == true) {
+                                                            %>
+                                                            <td>Actice</td>
                                                             <td><a href="MainController?action=Ban&userID=<%=user.getUserID()%>&oldStatus=<%= user.isStatus()%>">Ban</a></td>
-                                                            <% }else{ %>
+                                                            <% } else {%>
+                                                            <td>InActice</td>
                                                             <td><a href="MainController?action=Ban&userID=<%=user.getUserID()%>&oldStatus=<%= user.isStatus()%>">UnBan</a></td>
                                                             <%
+                                                                        }
                                                                     }
-                                                                }}
+                                                                }
                                                             %>
                                                         </tr>
                                                     </tbody>

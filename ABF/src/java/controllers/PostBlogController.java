@@ -55,8 +55,8 @@ public class PostBlogController extends HttpServlet {
             String image = request.getParameter("image");
             boolean checkValidation = true;
             BlogDAO dao = new BlogDAO();
-            if (title.length() < 10 || title.length() > 50) {
-                blogError.setTitleError("Title must be in [10,50]!");
+            if (title.length() < 10 || title.length() > 100) {
+                blogError.setTitleError("Title must be in [10,100]!");
                 checkValidation = false;
             }
             if (content.length() < 50) {
