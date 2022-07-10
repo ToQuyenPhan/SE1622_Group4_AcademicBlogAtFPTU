@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "SearchController", urlPatterns = {"/SearchController"})
 public class SearchController extends HttpServlet {
     private static final String ERROR = "homepage.jsp";
-    private static final String SUCCESS = "homepage.jsp";
+    private static final String SUCCESS = "searchpage.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
