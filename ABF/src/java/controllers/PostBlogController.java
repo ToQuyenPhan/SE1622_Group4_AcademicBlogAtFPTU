@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import com.cloudinary.Cloudinary;
 import dao.BlogDAO;
 import dao.UserDAO;
 import dto.BlogDTO;
@@ -56,7 +57,8 @@ public class PostBlogController extends HttpServlet {
         BlogError blogError = new BlogError();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date dateFormat = new Date();
-
+        Cloudinary cloudinary = new Cloudinary();
+        
         String applicationPath = getServletContext().getRealPath("");
         String uploadPath = applicationPath + File.separator + UPLOAD_DIR;
 

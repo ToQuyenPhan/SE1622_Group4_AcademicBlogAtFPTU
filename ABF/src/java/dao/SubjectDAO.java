@@ -20,6 +20,7 @@ import utils.DBUtils;
 public class SubjectDAO {
     private static final String GET_SUBJECT = "SELECT subjectID, subjectName,majorID,status FROM Subject WHERE status = 1";
     private static final String DELETE_SUBJECT = "UPDATE Subject SET status = 0 WHERE subjectID = ?";
+    private static final String CREATE_SUBJECT = "INSERT INTO Subject ( subjectName, majorID, status)" + "VALUES(?,?,1)";
     
     public static ArrayList<SubjectDTO> getSubject(){
         ArrayList<SubjectDTO> list = new ArrayList<>();
@@ -60,6 +61,30 @@ public class SubjectDAO {
             if (rs != null) {
                 rs.close();
             }
+            if (psm != null) {
+                psm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+    public boolean createSubject(String subjectName, int majorID) throws SQLException{
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement psm = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                psm = conn.prepareStatement(CREATE_SUBJECT);
+                psm.setString(1, subjectName);
+                psm.setInt(2, majorID);
+                check = psm.executeUpdate() > 0 ? true : false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
             if (psm != null) {
                 psm.close();
             }

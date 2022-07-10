@@ -1,11 +1,12 @@
-    /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package controllers;
 
-import dao.UserDAO;
+import dao.MajorDAO;
+import dao.SubjectDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -18,36 +19,37 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author hotan
  */
-@WebServlet(name = "EditUserController", urlPatterns = {"/EditUserController"})
-public class EditUserController extends HttpServlet {
+@WebServlet(name = "CreateSubjectController", urlPatterns = {"/CreateSubjectController"})
+public class CreateSubjectController extends HttpServlet {
 
-    private static final String ERROR = "error.jsp";
-    private static final String SUCCESS = "homepage.jsp";
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    private static final String ERROR = "subject.jsp";
+    private static final String SUCCESS = "createsubject.jsp";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            int userID = Integer.parseInt(request.getParameter("userID"));
-            String fullName = request.getParameter("fullName");
-            String image = request.getParameter("image");
-            String gender = request.getParameter("gender");
-            String dateOfBirth = request.getParameter("dateOfBirth");
-            String address = request.getParameter("address");
-            String contact = request.getParameter("contact");
-            String aboutme = request.getParameter("aboutme");
-            boolean checkValidation = true;
-            if (checkValidation) {
-            int checkEdit = UserDAO.editUser(userID, fullName, image, gender, dateOfBirth, address, contact, aboutme);
-                if (checkEdit != 0) {
-                    url = SUCCESS;
-                } else {
-                    url = ERROR;
-                }
+            String subjectName = request.getParameter("subjectName");
+            int majorID = Integer.parseInt(request.getParameter("majorID"));
+            
+            SubjectDAO dao = new SubjectDAO();
+            boolean check = dao.createSubject(subjectName, majorID);
+            if (check) {
+                url = SUCCESS;
             }
         } catch (Exception e) {
-            log("Error at Edit User Controller: " + e.toString());
+            log("Error at Create Subject Controller: " + e.toString());
+
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

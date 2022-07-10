@@ -21,6 +21,7 @@ import utils.DBUtils;
 public class MajorDAO {
     private static final String GET_ALL_MAJORS = "SELECT majorID, majorName, status FROM Major WHERE status = 1";
      private static final String DELETE_MAJOR = "UPDATE Major SET status = 0 WHERE majorID = ?";
+     private static final String CREATE_MAJOR = "INSERT INTO Major (majorName, status)" + "VALUES(?,1)";
      
     public List<MajorDTO> getAllMajors() throws SQLException {
         List<MajorDTO> listAllMajors = new ArrayList<>();
@@ -73,6 +74,29 @@ public class MajorDAO {
             if (rs != null) {
                 rs.close();
             }
+            if (psm != null) {
+                psm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+    public boolean createMajor(String majorName) throws SQLException{
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement psm = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                psm = conn.prepareStatement(CREATE_MAJOR);
+                psm.setString(1, majorName);
+                check = psm.executeUpdate() > 0 ? true : false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
             if (psm != null) {
                 psm.close();
             }

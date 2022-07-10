@@ -104,7 +104,9 @@
                             <input type="hidden" name="userID" value="<%=loginUser.getUserID()%>" readonly="">
                             <div class="mb-4">
                                 <label for="Title"></label> Title </label>
-                                <input class="form-control" name="title" type="text" value="<%= request.getAttribute("TITLE")%>">
+                            
+                                <input class="form-control" name="title" type="text" value="<%=request.getAttribute("TITLE")%>">
+                                
                                 ${requestScope.BLOG_ERROR.titleError}
 
                             </div>
@@ -126,7 +128,8 @@
                             </div>
                             <div class="mb-4">
                                 Details
-                                <textarea class="form-control" id="content" name="content" rows="6" value="<%= request.getAttribute("CONTENT")%>"><%=request.getAttribute("CONTENT")%>
+                                <textarea class="form-control" id="content" name="content" rows="6" value="<%= request.getAttribute("CONTENT")%>">
+                                    <%=request.getAttribute("CONTENT")%>
                                 </textarea>
                                 ${requestScope.BLOG_ERROR.contentError}
                             </div>
