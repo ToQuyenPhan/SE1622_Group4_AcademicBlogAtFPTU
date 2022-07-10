@@ -2,6 +2,20 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="5"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/Ki5SE/SWP/New%20folder/SE1622_Group4_AcademicBlogAtFPTU/ABF/src/java/controllers/SystemSendEmailController.java</file>
+            <file>file:/D:/Ki5SE/SWP/New%20folder/SE1622_Group4_AcademicBlogAtFPTU/ABF/src/java/dao/RegistrationDAO.java</file>
+            <file>file:/D:/Ki5SE/SWP/New%20folder/SE1622_Group4_AcademicBlogAtFPTU/ABF/src/java/controllers/GetSubjectListController.java</file>
+            <file>file:/D:/Ki5SE/SWP/New%20folder/SE1622_Group4_AcademicBlogAtFPTU/ABF/src/java/dao/BlogDAO.java</file>
+            <file>file:/D:/Ki5SE/SWP/New%20folder/SE1622_Group4_AcademicBlogAtFPTU/ABF/src/java/dao/MajorDAO.java</file>
+            <file>file:/D:/Ki5SE/SWP/New%20folder/SE1622_Group4_AcademicBlogAtFPTU/ABF/src/java/dao/SubjectDAO.java</file>
+            <file>file:/D:/Ki5SE/SWP/New%20folder/SE1622_Group4_AcademicBlogAtFPTU/ABF/src/java/dao/CommentDAO.java</file>
+            <file>file:/D:/Ki5SE/SWP/New%20folder/SE1622_Group4_AcademicBlogAtFPTU/ABF/src/java/controllers/MentorRegisterController.java</file>
+            <file>file:/D:/Ki5SE/SWP/New%20folder/SE1622_Group4_AcademicBlogAtFPTU/ABF/src/java/controllers/RegistrationController.java</file>
+            <file>file:/D:/Ki5SE/SWP/New%20folder/SE1622_Group4_AcademicBlogAtFPTU/ABF/web/mentorregister.jsp</file>
+            <file>file:/D:/Ki5SE/SWP/New%20folder/SE1622_Group4_AcademicBlogAtFPTU/ABF/src/java/dao/ActivityDAO.java</file>
+            <file>file:/D:/Ki5SE/SWP/New%20folder/SE1622_Group4_AcademicBlogAtFPTU/ABF/src/java/controllers/EditMajorController.java</file>
+            <file>file:/D:/Ki5SE/SWP/New%20folder/SE1622_Group4_AcademicBlogAtFPTU/ABF/src/java/dao/FeedbackDAO.java</file>
+        </group>
     </open-files>
 </project-private>

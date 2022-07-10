@@ -111,9 +111,9 @@
                 %>
                 <div class="row tm-row activity-item major-item">
                     <div class="row">
-                        <h5 class="col-sm-8"><%= major.getMajorName()%></h5> 
+                        <a class="" href="MainController?action=GetSubjectList"><%= major.getMajorName()%></a>
                         <div class="col-sm-4 row">
-                            <a class="col-sm-5" href="MainController?action=GetSubjectList">Subjects</a>
+                            <a class="col-sm-5" href="#">Edit</a>
                             <a onclick="showPopUp(<%= index%>, <%= all%>)" class="col-sm-5">Deactivate</a>
                         </div>
                     </div>  

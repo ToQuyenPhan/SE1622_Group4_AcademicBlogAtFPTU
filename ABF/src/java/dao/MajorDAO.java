@@ -21,8 +21,9 @@ import utils.DBUtils;
 public class MajorDAO {
     private static final String GET_ALL_MAJORS = "SELECT majorID, majorName, status FROM Major WHERE status = 1";
      private static final String DELETE_MAJOR = "UPDATE Major SET status = 0 WHERE majorID = ?";
-     
-    public List<MajorDTO> getAllMajors() throws SQLException {
+     private static final String EDIT_MAJOR = "UPDATE Major SET majorName = ? WHERE majorID = ?";
+
+    public static List<MajorDTO> getAllMajors() throws SQLException {
         List<MajorDTO> listAllMajors = new ArrayList<>();
         Connection conn = null;
         PreparedStatement psm = null;
@@ -53,6 +54,21 @@ public class MajorDAO {
             }
         }
         return listAllMajors;
+    }
+    
+    public int editMajor(int majorID,  String majorName) throws SQLException, ClassNotFoundException {
+        int check = 0;
+        Connection conn = null;
+        PreparedStatement psm = null;
+        conn = DBUtils.getConnection();
+        if (conn != null) {
+            psm = conn.prepareStatement(EDIT_MAJOR);
+            psm.setString(1, majorName);
+            psm.setInt(2, majorID);
+            check = psm.executeUpdate();
+        }
+        conn.close();
+        return check;
     }
     
     public boolean deleteMajor(int majorID) throws SQLException{

@@ -6,16 +6,13 @@
 package controllers;
 
 import dao.BlogDAO;
-import dao.SubjectDAO;
 import dao.UserDAO;
 import dto.BlogDTO;
 import dto.BlogError;
-import dto.SubjectDTO;
 import dto.UserDTO;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -64,10 +61,6 @@ public class PostBlogController extends HttpServlet {
                 blogError.setContentError("Content must be greater than 50!");
                 checkValidation = true;
             }
-            if (subjectID == 0) {
-                blogError.setSubjectIDError("Please choose a subject!");
-                checkValidation = true;
-            }
             if (!checkValidation) {
                 boolean check = dao.postBlog(userID, subjectID, title, content, date, image);
                 if (check) {
@@ -75,9 +68,8 @@ public class PostBlogController extends HttpServlet {
                 }
             } else {
                 request.setAttribute("BLOG_ERROR", blogError);
-                request.setAttribute("TITLE", request.getParameter("title"));
-                request.setAttribute("CONTENT", request.getParameter("content"));
-                request.setAttribute("SUBJECT", subjectID);
+                request.setAttribute("TITLE", title);
+                request.setAttribute("CONTENT", content);
             }
 
         } catch (Exception e) {

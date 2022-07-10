@@ -5,7 +5,7 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="CSS/oldstyle.css">
+        <link rel="stylesheet" href="CSS/style.css">
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -28,8 +28,8 @@
                 <h1>Login</h1>
                 <div class="login-google-welcome-page">
                     <img src="image/104d91f71da1b56e29231059d85a1e93.jpg">
-                    <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8080/ABFRemake/LoginWithGoogleController&response_type=code
-                       &client_id=669532097260-le7mkf9q59qpmmrtjgshdhhhctab780g.apps.googleusercontent.com&approval_prompt=force">Sign in with @fpt.edu.vn</a>
+                    <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8080/ABF/MainController?action=LoginWithGoogle&response_type=code
+                       &client_id=454266315319-skcdadndavf804t478jc0igbfc9si76m.apps.googleusercontent.com&approval_prompt=force">Sign in with @fpt.edu.vn</a>
                 </div>
                 <div class="input-welcome-page">
                     <i class="fas fa-user-alt"></i>

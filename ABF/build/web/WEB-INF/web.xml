@@ -4,9 +4,49 @@
         <servlet-name>LoginWithGoogleController</servlet-name>
         <servlet-class>controllers.LoginWithGoogleController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditMajorController</servlet-name>
+        <servlet-class>controllers.EditMajorController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditSubjectController</servlet-name>
+        <servlet-class>controllers.EditSubjectController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MentorRegisterController</servlet-name>
+        <servlet-class>controllers.MentorRegisterController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RegistrationController</servlet-name>
+        <servlet-class>controllers.RegistrationController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SystemSendEmailController</servlet-name>
+        <servlet-class>controllers.SystemSendEmailController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginWithGoogleController</servlet-name>
         <url-pattern>/LoginWithGoogleController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditMajorController</servlet-name>
+        <url-pattern>/EditMajorController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditSubjectController</servlet-name>
+        <url-pattern>/EditSubjectController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MentorRegisterController</servlet-name>
+        <url-pattern>/MentorRegisterController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegistrationController</servlet-name>
+        <url-pattern>/RegistrationController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SystemSendEmailController</servlet-name>
+        <url-pattern>/SystemSendEmailController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

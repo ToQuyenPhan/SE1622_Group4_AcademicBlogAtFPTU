@@ -62,50 +62,46 @@
                 numberOfVotes = "";
             }
         %>
-        <nav class="nav" id="header">
-            <form action="MainController" method="POST">
-                <div class="nav-menu row">
-                    <div class="nav-brand col-sm-2">
-                        <a href="MainController?action=GetList" class="text-gray">Academic Blog</a>
-                    </div>
-                    <div class="toggle-collapse">
-                        <div class="toggle-icons">
-                            <i class="fas fa-bars"></i>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <ul class="nav-items">
-                            <li class="nav-link">
-                                <a href="MainController?action=GetList">Home</a>
-                            </li>
-                            <li class="nav-link">
-                                <a href="#">Majors</a>
-                            </li>
-                            <li class="nav-link">
-                                <a href="#">Subjects</a>
-                            </li>
-                            <li class="nav-link">
-                                <a href="#">Feedback</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="search-form-search">
-                            <input type="text" placeholder="Search..." name="search" type="text">
-                            <div class="search-search"><button type="submit" name="action" value="Search"><i class="fas fa-search"></i></button></div>
-                        </div>
-                    </div>
-                    <div class="new col-sm-1"><a href="MainController?action=GoToPostBlogPage"><i class="fas fa-pen"></i></a></div>
-
-                    <div class="profile text-gray col-sm-3">
-                        <div class="row">         
-                            <a><h6><%= loginUser.getFullName()%></h6></a>
+        <header class="tm-header" id="tm-header">
+            <div class="tm-header-wrapper">
+                <button class="navbar-toggler" type="button" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="tm-site-header">
+                    <a href="profile.jsp">
+                        <div class="mb-3 mx-auto tm-site-logo">
                             <img src="<%= image%>">
-                        </div>
-                    </div>
+
+                        </div>            
+                        <h2 class="text-center"><%= loginUser.getFullName()%></h2>
+                    </a>
                 </div>
-            </form>
-        </nav>
+                <nav class="tm-nav" id="tm-nav">            
+                    <ul>
+                        <li class="tm-nav-item"><a href="MainController?action=GetList" class="tm-nav-link">
+                                <i class="fas fa-home"></i>
+                                Blog Home
+                            </a></li>
+                        <li class="tm-nav-item"><a href="MainController?action=GetActivityList&userID=<%= loginUser.getUserID()%>" class="tm-nav-link">
+                                <i class="fas fa-tasks"></i>
+                                Activity
+                            </a></li>
+                        <li class="tm-nav-item"><a href="post.html" class="tm-nav-link">
+                                <i class="fas fa-users"></i>
+                                Majors
+                            </a></li>
+                        <li class="tm-nav-item"><a href="about.html" class="tm-nav-link">
+                                <i class="fas fa-users"></i>
+                                Subjects
+                            </a></li>
+                        <li class="tm-nav-item"><a href="MainController?action=GetFeedbackTypeList" class="tm-nav-link">
+                                <i class="far fa-comments"></i>
+                                Feedback
+                            </a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
         <div class="container-fluid">
             <main class="tm-main">
                 <div class="row tm-row">
@@ -203,7 +199,7 @@
                         %>
                         <div>
                             <h6>
-
+                                
                                 <%= comment.getContent()%>
                             </h6>
                         </div>
@@ -257,55 +253,6 @@
                 </div>
             </main>
         </div>
-        <footer class="footer">
-            <div class="container">
-                <div class="about-us" data-aos="fade-right" data-aos-delay="200">
-                    <h2>About us</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quia atque nemo ad modi officiis
-                        iure, autem nulla tenetur repellendus.</p>
-                </div>
-                <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
-                    <h2>Newsletter</h2>
-                    <p>Stay update with our latest</p>
-                    <div class="form-element">
-                        <input type="text" placeholder="Email"><span><i class="fas fa-chevron-right"></i></span>
-                    </div>
-                </div>
-                <div class="instagram" data-aos="fade-left" data-aos-delay="200">
-                    <h2>Instagram</h2>
-                    <div class="flex-row">
-                        <img src="./assets/instagram/thumb-card3.png" alt="insta1">
-                        <img src="./assets/instagram/thumb-card4.png" alt="insta2">
-                        <img src="./assets/instagram/thumb-card5.png" alt="insta3">
-                    </div>
-                    <div class="flex-row">
-                        <img src="./assets/instagram/thumb-card6.png" alt="insta4">
-                        <img src="./assets/instagram/thumb-card7.png" alt="insta5">
-                        <img src="./assets/instagram/thumb-card8.png" alt="insta6">
-                    </div>
-                </div>
-                <div class="follow" data-aos="fade-left" data-aos-delay="200">
-                    <h2>Follow us</h2>
-                    <p>Let us be Social</p>
-                    <div>
-                        <i class="fab fa-facebook-f"></i>
-                        <i class="fab fa-twitter"></i>
-                        <i class="fab fa-instagram"></i>
-                        <i class="fab fa-youtube"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="rights flex-row">
-                <h4 class="text-gray">
-                    Copyright ©2019 All rights reserved | made by
-                    <a href="www.youtube.com/c/dailytuition" target="_black">Daily Tuition <i class="fab fa-youtube"></i>
-                        Channel</a>
-                </h4>
-            </div>
-            <div class="move-up">
-                <span><a href="#header"><i class="fas fa-arrow-circle-up fa-2x"></i></a></span>
-            </div>
-        </footer>
         <script>
             var loc = window.location.href;
             window.location.href = loc + "#vote-part";

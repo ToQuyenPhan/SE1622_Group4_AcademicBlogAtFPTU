@@ -5,7 +5,9 @@
  */
 package controllers;
 
+import dao.MajorDAO;
 import dao.SubjectDAO;
+import dto.MajorDTO;
 import dto.SubjectDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -39,8 +41,10 @@ public class GetSubjectListController extends HttpServlet {
         String url = ERROR;
         try {
             List<SubjectDTO> listAllSubjects = SubjectDAO.getSubject();
+            List<MajorDTO> listmajor = MajorDAO.getAllMajors();
             if (listAllSubjects.size() > 0) {
                 request.setAttribute("LIST_ALL_SUBJECTS", listAllSubjects);
+                request.setAttribute("LIST_ALL_MAJORS", listmajor);
             }
             url = SUCCESS;
         } catch (Exception e) {

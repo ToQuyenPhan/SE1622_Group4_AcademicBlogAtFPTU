@@ -20,6 +20,9 @@ import utils.DBUtils;
 public class SubjectDAO {
     private static final String GET_SUBJECT = "SELECT subjectID, subjectName,majorID,status FROM Subject WHERE status = 1";
     private static final String DELETE_SUBJECT = "UPDATE Subject SET status = 0 WHERE subjectID = ?";
+    private static final String EDIT_SUBJECT = "SET subjectName = ?,\n"
+            + "majorID = ?\n"
+            + "WHERE subjectID = ?";
     
     public static ArrayList<SubjectDTO> getSubject(){
         ArrayList<SubjectDTO> list = new ArrayList<>();
@@ -41,6 +44,22 @@ public class SubjectDAO {
         }
         return list;   
         }
+    
+    public int editSubject(int subjectID, int majorID, String subjectName) throws SQLException, ClassNotFoundException {
+        int check = 0;
+        Connection conn = null;
+        PreparedStatement psm = null;
+        conn = DBUtils.getConnection();
+        if (conn != null) {
+            psm = conn.prepareStatement(EDIT_SUBJECT);
+            psm.setString(1, subjectName);
+            psm.setInt(2, majorID);
+            psm.setInt(3, subjectID);
+            check = psm.executeUpdate();
+        }
+        conn.close();
+        return check;
+    }
     
     public boolean deleteSubject(int subjectID) throws SQLException{
         boolean check = false;

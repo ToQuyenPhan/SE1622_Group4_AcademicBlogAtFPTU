@@ -104,6 +104,7 @@
                 </div>   
                 <%
                     List<SubjectDTO> listAllSubjects = (List<SubjectDTO>) request.getAttribute("LIST_ALL_SUBJECTS");
+                    List<MajorDTO> listAllMajors = (List<MajorDTO>) request.getAttribute("LIST_ALL_MAJORS");
                     if (listAllSubjects != null) {
                         if (listAllSubjects.size() > 0) {
                             int all = listAllSubjects.size();
@@ -112,20 +113,30 @@
                 %>
                 <div class="row tm-row activity-item major-item">
                     <div class="row">
-                        <h5 class="col-sm-8"><%= subject.getSubjectName() %></h5> 
-                        <div class="col-sm-4 row">
-                            <a class="col-sm-5" href="#">Students</a>
-                            <a onclick="showPopUp(<%= index%>, <%= all%>)" class="col-sm-5">Deactivate</a>
+                        <h5 class="col-sm-8"><%= subject.getSubjectName()%></h5> 
+                        <div class="col-sm-4 row">  
+                            <a id="popup-btn" class="col-sm-4">Edit</a>
+                            <div class="popup">
+                                <div class="popup-content">
+                                    <span class="close-btn">&times;</span>
+                                    <p2> Edit Subject</p2>
+                                    <p><input type="text" name="majorID" ></p>
+                                    <p><input type="text" name="subjectName" ></p>
+                                    <p><input type="submit" value="Edit"  ></p>
+                                </div>
+                            </div>
+                            <a onclick="showPopUp(<%= index%>, <%= all%>)" class="col-sm-4">Deactivate</a>
                         </div>
                     </div>  
                 </div> 
                 <div class="delete-activity-message-popup-confirm" id="<%= index%>">
                     <p>Are you sure to delete this activity?</p>
                     <div>
-                        <a href="MainController?action=DeleteSubject&subjectID=<%= subject.getSubjectID() %>">Deactivate</a>
+                        <a href="MainController?action=DeleteSubject&subjectID=<%= subject.getSubjectID()%>">Deactivate</a>
                         <a onclick="closePopUpConfirm(<%= index%>, <%= all%>)">Cancel</a>
                     </div>
                 </div>
+                   
                 <%
                             index++;
                         }
@@ -136,7 +147,7 @@
                 <%
                     }
                 %>
-
+                 
                 <div class="row tm-row tm-mt-100 tm-mb-75">
                     <div class="tm-prev-next-wrapper">
                         <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next disabled tm-mr-20">Prev</a>
@@ -201,6 +212,25 @@
             }
             function closePopUp() {
                 document.getElementById('delete-activity-message-popup').style.display = 'none';
+            }
+        </script>
+        <script>
+            let modalBtn = document.getElementById("popup-btn");
+            let modal = document.querySelector(".popup");
+            let closeBtn = document.querySelector(".close-btn");
+// Hiển thị popup khi nhấp chuột vào button
+            modalBtn.onclick = function () {
+                modal.style.display = "block"
+            }
+// Đóng popup khi ấn vào nút đóng
+            closeBtn.onclick = function () {
+                modal.style.display = "none"
+            }
+// Đóng khi nhấp chuột vào bất cứ khu vực nào trên màn hình
+            window.onclick = function (e) {
+                if (e.target == modal) {
+                    modal.style.display = "none"
+                }
             }
         </script>
         <script src="js/jquery.min.js"></script>
