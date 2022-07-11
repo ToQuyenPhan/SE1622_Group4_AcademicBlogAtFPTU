@@ -8,6 +8,7 @@ package controllers;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author To Quyen Phan
  */
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 10, // 10MB
+        maxRequestSize = 1024 * 1024 * 50)
 @WebServlet(name = "MainController", urlPatterns = {"/MainController"})
 public class MainController extends HttpServlet {
     private static final String ERROR = "error.jsp";
@@ -54,11 +58,10 @@ public class MainController extends HttpServlet {
     private static final String SAVE_DRAFT_BLOG = "SaveDraftBlog";
     private static final String LOGOUT = "Logout";
     private static final String SEARCH_ACTIVITY_BY_NAME = "PersonalSearch";
-    private static final String CANCEL = "Cancel";
     
     private static final String LOGIN_WITH_GOOGLE_CONTROLLER = "LoginWithGoogleController";
     private static final String LOGIN_CONTROLLER = "LoginController";
-    private static final String GET_BLOG_LIST_CONTROLLER = "GetBlogListController";
+    private static final String GET_LIST_CONTROLLER = "GetListController";
     private static final String GET_FEEDBACK_TYPE_LIST_CONTROLLER = "GetFeedbackTypeListController";
     private static final String SEND_FEEDBACK_CONTROLLER = "SendFeedbackController";
     private static final String SEARCH_CONTROLLER = "SearchController";
@@ -89,7 +92,6 @@ public class MainController extends HttpServlet {
     private static final String SAVE_DRAFT_BLOG_CONTROLLER = "SaveDraftBlogController";
     private static final String LOGOUT_CONTROLLER = "LogoutController";
     private static final String SEARCH_ACTIVITY_BY_NAME_CONTROLLER = "SearchActivitiesByNameController";
-    private static final String CANCEL_CONTROLLER = "CancelController";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -110,7 +112,7 @@ public class MainController extends HttpServlet {
             } else if(LOGIN.equals(action)){
                 url = LOGIN_CONTROLLER;    
             }else if (GETLIST.equals(action)) {
-                url = GET_BLOG_LIST_CONTROLLER;
+                url = GET_LIST_CONTROLLER;
             } else if (GETFEEDBACKTYPELIST.equals(action)) {
                 url = GET_FEEDBACK_TYPE_LIST_CONTROLLER;
             } else if (SEND.equals(action)) {
@@ -173,8 +175,6 @@ public class MainController extends HttpServlet {
                 url = LOGOUT_CONTROLLER;} 
             else if (SEARCH_ACTIVITY_BY_NAME.equals(action)) {
                 url = SEARCH_ACTIVITY_BY_NAME_CONTROLLER;} 
-            else if (CANCEL.equals(action)) {
-                url = CANCEL_CONTROLLER;} 
             else{
                 request.setAttribute("ERROR_MESSAGE", "Function is not available!");
             }
