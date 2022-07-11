@@ -316,7 +316,11 @@
                             <%
                                 if (listPopulartBlogs != null) {
                                     if (listPopulartBlogs.size() > 0) {
+                                        int index = 0;
                                         for (BlogDTO blog : listPopulartBlogs) {
+                                            if(index == 5){
+                                                break;
+                                            }
                             %>
                             <form>
                                 <div class="post-content" data-aos="flip-up" data-aos-delay="200">
@@ -335,6 +339,7 @@
                                 </div>
                             </form>
                             <%
+                                            index++;
                                         }
                                     }
                                 }

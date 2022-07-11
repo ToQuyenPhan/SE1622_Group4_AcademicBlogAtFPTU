@@ -4,6 +4,8 @@
     Author     : hotan
 --%>
 
+<%@page import="dao.SubjectDAO"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="dto.SubjectDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="dto.BlogError"%>
@@ -149,14 +151,16 @@
                                     }
                                 %>
                                 Subject <select class="form-control" name="subjectID">
-                                    <option value="0"> -none- </option>
-                                    <option value="3"> PRJ301 </option>
-                                    <option value="4"> SWP391 </option>
-                                    <option value="5"> SWT301 </option>
-                                    <option value="6"> JPD201 </option>
-                                    <option value="7"> SSL101 </option>
-                                    <option value="8"> ITE123 </option>
-                                    <option value="<%= subjectID%>" selected=""> <%= subjectName%> </option>
+                                    <%
+                                        ArrayList<SubjectDTO> listc = SubjectDAO.getSubject();
+                                        if (listc != null && !listc.isEmpty()) {
+                                            for (SubjectDTO c : listc) {
+                                    %>
+                                    <option value="<%=c.getSubjectID()%>"><%= c.getSubjectName()%> </option>
+                                    <%
+                                            }
+                                        }
+                                    %>
                                 </select> 
                                 <%
                                     String subjectError = blogError.getSubjectIDError();

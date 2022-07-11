@@ -8,6 +8,7 @@ package controllers;
 import dao.ActivityDAO;
 import dao.BlogDAO;
 import dao.CommentDAO;
+import dao.UserDAO;
 import dto.BlogDTO;
 import dto.CommentDTO;
 import dto.UserDTO;
@@ -64,6 +65,11 @@ public class BlogDetailController extends HttpServlet {
                     request.setAttribute("BLOG_DETAIL", blogDetail);
                     if(commentList.size() > 0){
                         request.setAttribute("COMMENT_LIST", commentList);
+                        UserDAO userDAO = new UserDAO();
+                        List<UserDTO> listAllUsers = userDAO.getAllUser();
+                        if(listAllUsers.size() > 0){
+                            request.setAttribute("USER_COMMENT_LIST", listAllUsers);
+                        }
                     }
                     url = SUCCESS;
                 }
