@@ -78,12 +78,6 @@
                                 <a href="#">Home</a>
                             </li>
                             <li class="nav-link">
-                                <a href="#">Majors</a>
-                            </li>
-                            <li class="nav-link">
-                                <a href="#">Subjects</a>
-                            </li>
-                            <li class="nav-link">
                                 <a href="MainController?action=GetFeedbackTypeList">Feedback</a>
                             </li>
                         </ul>
@@ -99,7 +93,7 @@
                     <div class="profile text-gray col-sm-3">
                         <div class="row">         
                             <a><h6><%= loginUser.getFullName()%></h6></a>
-                            <img src="<%= image%>">
+                            <img onclick="menuToggle();" src="<%= image%>">
                         </div>
                     </div>
                 </div>
@@ -116,9 +110,33 @@
 
             <section class="site-title">
                 <div class="site-background">
-                    <h3>Majors & Subjects</h3>
+                    <% 
+                        String roleName = "";
+                        if(loginUser.getRoleID() == 2){
+                            roleName = "Student";
+                        }else{
+                            roleName = "Mentor";
+                        }
+                    %>
+                    <h2>Welcome <%= roleName %> <%= loginUser.getFullName() %>!</h2>
                     <h1>Amazing Place on Sharing Experiences</h1>
                     <a href="#main-part"><button class="btn">Explore</button></a>
+                    <div class="menu">
+                        <ul>
+                            <li>
+                                <a href="profile.jsp">My profile</a>
+                            </li>
+                            <li>
+                                <a href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
+                            </li>
+                            <li>
+                                <a href="MainController?action=GetActivityList&userID=<%= loginUser.getUserID()%>">Activity</a>
+                            </li>
+                            <li>
+                                <a href="MainController?action=Logout">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </section>
 
@@ -193,12 +211,16 @@
 //                                                    long elapsedSeconds = different / secondsInMilli;
 %> 
                             <div class="blog-content col-sm-3">
+                                <form action="MainController" method="POST">
                                 <img src="<%= blog.getImage()%>" alt="post-<%= index%>">
                                 <div class="blog-title">
                                     <h3><%= title%></h3>
-                                    <button class="btn btn-blog"><%= majorName%></button>
+                                    <input type="hidden" name="majorID" value="<%= majorID %>"/>
+                                    <input type="hidden" name="majorName" value="<%= majorName %>"/>
+                                    <button type="submit" name="action" value="SearchMajor" class="btn btn-blog"><%= majorName%></button>
                                     <span><%= blog.getDate()%></span>
                                 </div>
+                                </form>
                             </div>
                             <%
                                                     index++;
@@ -301,7 +323,7 @@
                                                 }
                                 %>
                                 <li class="list-items" data-aos="fade-left" data-aos-delay="100">
-                                    <a href="#"><%= major.getMajorName()%></a>
+                                    <a href="MainController?action=SearchMajor&majorID=<%= major.getMajorID() %>&majorName=<%= major.getMajorName() %>"><%= major.getMajorName()%></a>
                                     <span>(<%= numberOfBlogs%>)</span>
                                 </li>
                                 <%
@@ -318,7 +340,7 @@
                                     if (listPopulartBlogs.size() > 0) {
                                         int index = 0;
                                         for (BlogDTO blog : listPopulartBlogs) {
-                                            if(index == 5){
+                                            if (index == 5) {
                                                 break;
                                             }
                             %>
@@ -345,13 +367,13 @@
                                 }
                             %>
                         </div>
-                        <div class="newsletter" data-aos="fade-up" data-aos-delay="300">
+<!--                        <div class="newsletter" data-aos="fade-up" data-aos-delay="300">
                             <h2>Newsletter</h2>
                             <div class="form-element">
                                 <input type="text" class="input-element" placeholder="Email">
                                 <button class="btn form-btn">Subscribe</button>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="popular-tags">
                             <h2>Subjects</h2>
                             <div class="tags flex-row">
@@ -445,6 +467,13 @@
 
         <!-- Custom Javascript file -->
         <script src="./js/main.js"></script>
+
+        <script>
+                                function menuToggle() {
+                                    const toggleMenu = document.querySelector(".menu");
+                                    toggleMenu.classList.toggle("active2");
+                                }
+        </script>
     </body>
 
 </html>

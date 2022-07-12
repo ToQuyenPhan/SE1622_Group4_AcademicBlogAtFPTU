@@ -141,7 +141,7 @@
         <section class="py-5">
             <div class="container py-4">
                 <div class="row text-center">
-                    <div class="col-lg-8 mx-auto"><a class="category-link mb-3 d-inline-block" href="#!"><%= majorName%></a>
+                    <div class="col-lg-8 mx-auto"><a style="background-color: #104f55; color: white; padding: 0.5rem;"  class="category-link mb-3 d-inline-block" href="#!"><%= majorName%></a>
                         <h1><%= blogDetail.getTitle()%></h1>
                         <ul class="list-inline mb-5">
                             <li class="list-inline-item mx-2 text-uppercase text-muted reset-anchor">BY <%= blogDetail.getFullName()%></li>
@@ -152,12 +152,51 @@
                 <div class="row gy-5">
                     <div class="col-lg-12">
                         <p class="lead drop-caps mb-5"><%= content%></p>
-                        <%
+                        
+                        <!--<h2>Heading level two</h2>
+                        <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <div class="row">
+                          <div class="col-lg-6 mb-4"><a class="glightbox product-view" href="img/post-demo-1.jpg" data-gallery="gallery" data-glightbox="Image one"><img class="img-fluid img-thumbnail" src="img/post-demo-1.jpg" alt="..."></a></div>
+                          <div class="col-lg-6 mb-4"><a class="glightbox product-view" href="img/post-demo-2.jpg" data-gallery="gallery" data-glightbox="Image two"><img class="img-fluid img-thumbnail" src="img/post-demo-2.jpg" alt=""></a></div>
+                        </div>
+                        <p class="text-muted mb-4">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <h3>Heading level three</h3>
+                        <ul class="list-bullets mb-5">
+                          <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
+                          <li>Inventore magni sed error dignissimos repudiandae.</li>
+                          <li>Aperiam cum, nisi sed aliquam soluta amet molestiae.</li>
+                          <li>Consequatur sequi dolore, doloribus officia Nihil fugit.</li>
+                        </ul>
+                        <figure class="bg-light p-4 p-lg-5 text-center mb-5">
+                          <blockquote class="blockquote">
+                            <p class="h4 mb-5">Design is the fundamental soul of a human-made creation that ends up expressing itself in successive outer layers of the product or service.</p>
+                          </blockquote>
+                          <figcaption class="blockquote-footer">
+                            <cite class="fst-normal" title="Source Title">Steve Jobs</cite>
+                          </figcaption>
+                        </figure>
+                        <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+                        <!-- Post tags-->
+                        <div class="d-flex align-items-center flex-column flex-sm-row mb-4 p-4 bg-light">
+                            <h3 class="h4 mb-3 mb-sm-0">Tags</h3>
+                            <%
+                                String subjectName = "";
+                                for (SubjectDTO subject : listSubject) {
+                                    if (blogDetail.getSubjectID() == subject.getSubjectID()) {
+                                        subjectName = subject.getSubjectName();
+                                    }
+                                }
+                            %>
+                            <ul class="list-inline mb-0 ms-0 ms-sm-3">
+                                <li class="list-inline-item my-1 me-2"><a class="sidebar-tag-link" href="#!"><%= subjectName%></a></li>
+                            </ul>
+                        </div>
+                            <%
                             if ("".equals(numberOfVotes)) {
                         %>
-                        <div class="form-inline number-blog-detail row">
+                        <div id="vote-part" class="form-inline number-blog-detail row">
                             <div class="col-sm-6">
-                                <a href="MainController?action=Vote&blogID=<%= blogDetail.getBlogID()%>&numberOfVotes=<%= blogDetail.getNumberOfVotes()%>&userID=<%= loginUser.getUserID()%>">
+                                <a style="text-decoration: none;" href="MainController?action=Vote&blogID=<%= blogDetail.getBlogID()%>&numberOfVotes=<%= blogDetail.getNumberOfVotes()%>&userID=<%= loginUser.getUserID()%>">
                                     <%
                                         if ("unvote".equals(voteValue)) {
                                     %>
@@ -199,44 +238,6 @@
                         <%
                             }
                         %>  
-                        <!--<h2>Heading level two</h2>
-                        <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        <div class="row">
-                          <div class="col-lg-6 mb-4"><a class="glightbox product-view" href="img/post-demo-1.jpg" data-gallery="gallery" data-glightbox="Image one"><img class="img-fluid img-thumbnail" src="img/post-demo-1.jpg" alt="..."></a></div>
-                          <div class="col-lg-6 mb-4"><a class="glightbox product-view" href="img/post-demo-2.jpg" data-gallery="gallery" data-glightbox="Image two"><img class="img-fluid img-thumbnail" src="img/post-demo-2.jpg" alt=""></a></div>
-                        </div>
-                        <p class="text-muted mb-4">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        <h3>Heading level three</h3>
-                        <ul class="list-bullets mb-5">
-                          <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
-                          <li>Inventore magni sed error dignissimos repudiandae.</li>
-                          <li>Aperiam cum, nisi sed aliquam soluta amet molestiae.</li>
-                          <li>Consequatur sequi dolore, doloribus officia Nihil fugit.</li>
-                        </ul>
-                        <figure class="bg-light p-4 p-lg-5 text-center mb-5">
-                          <blockquote class="blockquote">
-                            <p class="h4 mb-5">Design is the fundamental soul of a human-made creation that ends up expressing itself in successive outer layers of the product or service.</p>
-                          </blockquote>
-                          <figcaption class="blockquote-footer">
-                            <cite class="fst-normal" title="Source Title">Steve Jobs</cite>
-                          </figcaption>
-                        </figure>
-                        <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
-                        <!-- Post tags-->
-                        <div class="d-flex align-items-center flex-column flex-sm-row mb-4 p-4 bg-light">
-                            <h3 class="h4 mb-3 mb-sm-0">Tags</h3>
-                            <%
-                                String subjectName = "";
-                                for (SubjectDTO subject : listSubject) {
-                                    if (blogDetail.getSubjectID() == subject.getSubjectID()) {
-                                        subjectName = subject.getSubjectName();
-                                    }
-                                }
-                            %>
-                            <ul class="list-inline mb-0 ms-0 ms-sm-3">
-                                <li class="list-inline-item my-1 me-2"><a class="sidebar-tag-link" href="#!"><%= subjectName%></a></li>
-                            </ul>
-                        </div>
                         <!-- Post share-->
                         <!-- <div class="d-flex align-items-center flex-column flex-sm-row mb-5 p-4 bg-light">
                              <h3 class="h4 mb-3 mb-sm-0">Share this post</h3>
@@ -248,8 +249,8 @@
                          </div>
                         <!-- Leave comment-->
                         <h3 class="h4 mb-4">Leave a comment</h3>
-                        <form action="MainController" method="POST" class="mb-5">
-                            <input type="text" name="content" style="width: 45rem;height: 40px" ></br>
+                        <form class="comment-form" action="MainController" method="POST" class="mb-5">
+                            <input type="text" name="content" style="width: 100%;height: 40px" ></br>
                             <!--<%
                                 String notify_comment = (String) request.getAttribute("notifie_comment");
                                 if (notify_comment == null) {
@@ -278,7 +279,7 @@
                                                 }
                                             }
                                             String userImage = userComment.getImage();
-                                            if (userImage == null) {
+                                            if (userImage == null || "".equals(userImage)) {
                                                 userImage = "image/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png";
                                             }
                             %>
@@ -433,10 +434,10 @@
                                 <span><a href="#header"><i class="fas fa-arrow-circle-up fa-2x"></i></a></span>
                             </div>
                         </footer>
-                        <script>
+<!--                        <script>
                             var loc = window.location.href;
                             window.location.href = loc + "#vote-part";
-                        </script>
+                        </script>-->
                         <script src="js/jquery.min.js"></script>
                         <script src="js/templatemo-script.js"></script>
                         </body>

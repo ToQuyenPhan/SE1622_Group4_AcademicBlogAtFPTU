@@ -1,10 +1,16 @@
 <%-- 
-    Document   : personalpage
-    Created on : Jun 13, 2022, 3:09:15 PM
-    Author     : DELL
+    Document   : homepage
+    Created on : May 30, 2022, 7:18:09 PM
+    Author     : To Quyen Phan
 --%>
 
 
+<%@page import="java.util.Calendar"%>
+<%@page import="java.util.concurrent.TimeUnit"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="dto.MajorDTO"%>
+<%@page import="dto.SubjectDTO"%>
 <%@page import="dto.BlogDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="dto.UserDTO"%>
@@ -14,24 +20,31 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Academic Blog</title>
-        <link rel="stylesheet" href="fontawesome/css/all.min.css"> <!-- https://fontawesome.com/ -->
-        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet"> <!-- https://fonts.google.com/ -->
-        <link href="CSS/bootstrap.min.css" rel="stylesheet">
-        <link href="css/templatemo-xtra-blog.css" rel="stylesheet">
-        <link rel="stylesheet" href="CSS/style.css">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Personal Page</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-        <!--
-            
-        TemplateMo 553 Xtra Blog
-        
-        https://templatemo.com/tm-553-xtra-blog
-        
-        -->
+
+        <!-- Font Awesome Icons -->
+        <!--<link rel="stylesheet" href="CSS/all.css">
+    
+    
+        <!-- --------- Owl-Carousel ------------------->
+        <!--<link rel="stylesheet" href="CSS/owl.carousel.min.css">
+        <link rel="stylesheet" href="CSS/owl.theme.default.min.css">
+    
+        <!-- ------------ AOS Library ------------------------- -->
+        <!--<link rel="stylesheet" href="CSS/aos.css">
+    
+        <!-- Custom Style   -->
+        <link rel="stylesheet" href="CSS/style.css">
+
     </head>
-    <body class="body-homepage">
+
+    <body>
+
+        <!-- ----------------------------  Navigation ---------------------------------------------- -->
         <%
             //Hiển thị Full Name của user
             UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
@@ -47,217 +60,303 @@
                 image = "image/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png";
             }
         %>
-        <header class="tm-header" id="tm-header">
-            <div class="tm-header-wrapper">
-                <button class="navbar-toggler" type="button" aria-label="Toggle navigation">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="tm-site-header">
-                    <a href="profile.jsp">
-                        <div class="mb-3 mx-auto tm-site-logo">
+        <nav class="nav nav-new" id="header">
+            <form action="MainController" method="POST">
+                <div class="nav-menu row">
+                    <div class="nav-brand col-sm-2">
+                        <a href="MainController?action=GetList" class="text-gray">Academic Blog</a>
+                    </div>
+                    <div class="toggle-collapse">
+                        <div class="toggle-icons">
+                            <i class="fas fa-bars"></i>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <ul class="nav-items">
+                            <li class="nav-link">
+                                <a href="MainController?action=GetList">Home</a>
+                            </li>
+                            <li class="nav-link">
+                                <a href="#">Majors</a>
+                            </li>
+                            <li class="nav-link">
+                                <a href="#">Subjects</a>
+                            </li>
+                            <li class="nav-link">
+                                <a href="#">Feedback</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="search-form-search">
+                            <input type="text" placeholder="Search..." name="search" type="text">
+                            <div class="search-search"><button type="submit" name="action" value="Search"><i class="fas fa-search"></i></button></div>
+                        </div>
+                    </div>
+                    <div class="new col-sm-1"><a href="MainController?action=GoToPostBlogPage"><i class="fas fa-pen"></i></a></div>
+
+                    <div class="profile text-gray col-sm-3">
+                        <div class="row">         
+                            <a><h6><%= loginUser.getFullName()%></h6></a>
                             <img src="<%= image%>">
-
-                        </div>            
-                        <h2 class="text-center"><%= loginUser.getFullName()%></h2>
-                    </a>
+                        </div>
+                    </div>
                 </div>
-                <nav class="tm-nav" id="tm-nav">            
-                    <ul>
-                        <li class="tm-nav-item"><a href="MainController?action=GetList" class="tm-nav-link">
-                                <i class="fas fa-home"></i>
-                                Blog Home
-                            </a></li>
-                        <li class="tm-nav-item"><a href="MainController?action=GetActivityList&userID=<%= loginUser.getUserID() %>" class="tm-nav-link">
-                                <i class="fas fa-tasks"></i>
-                                Activity
-                            </a></li>
-                        <li class="tm-nav-item "><a href="MainController?action=GetPersonalDraftList&userID=<%= loginUser.getUserID() %>" class="tm-nav-link">
-                                <i class="fas fa-home"></i>
-                                Draft Blogs
-                            </a></li>   
-                        <li class="tm-nav-item"><a href="post.html" class="tm-nav-link">
-                                <i class="fas fa-users"></i>
-                                Majors
-                            </a></li>
-                        <li class="tm-nav-item"><a href="about.html" class="tm-nav-link">
-                                <i class="fas fa-users"></i>
-                                Subjects
-                            </a></li>
-                        <li class="tm-nav-item"><a href="MainController?action=GetFeedbackTypeList" class="tm-nav-link">
-                                <i class="far fa-comments"></i>
-                                Feedback
-                            </a></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
+            </form>
+        </nav>
 
-        <div class="container-fluid">
-            <main class="tm-main">
-                <!-- Search form -->
-                <div class="row tm-row">
-                    <div class="col-12 row">
-                        <form class="form-inline tm-mb-80 tm-search-form col-sm-9 row" action="MainController">                
-                            <input class="form-control tm-search-input col-sm-9" name="searchName" type="text" placeholder="Search..." aria-label="Search" value="<%= search%>">
-                            <button class="tm-search-button col-sm-1" type="submit" name="action" value="PersonalSearch">
-                                <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
-                            </button>                                
-                        </form>
-                          
-                        <a href="postblog.jsp" class="tm-nav-link col-sm-3">
-                            <i class="fas fa-pen"></i>
-                            New Post
-                        </a>
-                    </div>
-                            
-                    <div class="form-sort">
-                        <%
-                            String selectedOption = (String) request.getAttribute("OPTION");
-                            if (selectedOption == null) {
-                                selectedOption = "None";
-                            }
-                        %>
-                        <form action="MainController">
-                            Sort By: <select class="sort-by-date" name="sortBy">
-                                <%
-                                    if (selectedOption.equals("Date")) {
-                                %>
-                                <option value="vote">Vote</option>
-                                <option value="none">None</option>
-                                <%
-                                } else if (selectedOption.equals("Vote")) {
-                                %>
-                                <option value="vote">Date</option>
-                                <option value="none">None</option>
-                                <%
-                                } else {
-                                %>
-                                <option value="date">Date</option>
-                                <option value="vote">Vote</option>
-                                <%
-                                    }
-                                %>
-                                <option value="<%= selectedOption.toLowerCase()%>" selected=""><%= selectedOption%></option>
-                            </select>
-                            <%
-                                String selectedOrderOption = (String) request.getAttribute("ORDER_OPTION");
-                                if (selectedOrderOption == null) {
-                                    selectedOrderOption = "None";
-                                }
-                            %>
-                            Sort Order: <select class="sort-by-vote" name="sortOrder">
-                                <%
-                                    if (selectedOrderOption.equals("Ascending")) {
-                                %>
-                                <option value="descending">Descending</option>
-                                <option value="none">None</option>
-                                <%
-                                } else if (selectedOrderOption.equals("Descending")) {
-                                %>
-                                <option value="ascending">Ascending</option>
-                                <option value="none">None</option>
-                                <%
-                                } else {
-                                %>
-                                <option value="ascending">Ascending</option>
-                                <option value="descending">Descending</option>
-                                <%
-                                    }
-                                %>
-                                <option value="<%= selectedOrderOption.toLowerCase()%>" selected=""><%= selectedOrderOption%></option>
-                            </select>
-                            <input type="hidden" name="search" value="<%= search%>">
-                            <input class="sort-button" type="submit" name="action" value="Sort">
-                        </form>
-                    </div>
-                </div>            
-                <div class="row tm-row">
+        <!-- ------------x---------------  Navigation --------------------------x------------------- -->
+
+        <!----------------------------- Main Site Section ------------------------------>
+
+        <main>
+
+            <!------------------------ Site Title ---------------------->
+
+            <!------------x----------- Site Title ----------x----------->
+
+            <!-- --------------------- Blog Carousel ----------------- -->
+
+
+            <!-- ----------x---------- Blog Carousel --------x-------- -->
+
+            <!-- ---------------------- Site Content -------------------------->
+
+            <section class="site-blog-content">
                     <%
                         List<BlogDTO> listAllBlogs = (List<BlogDTO>) request.getAttribute("LIST_ALL_PERSONAL_BLOGS");
-                        if (listAllBlogs != null) { //chỉ hiển thị khi người dùng đã đăng nhập
-                            if (listAllBlogs.size() > 0) {
-                                for (BlogDTO blog : listAllBlogs) {
-                                    if (loginUser.getUserID() == blog.getUserID()) {
-                    %> 
-                    <article class="col-12 col-md-6 tm-post">
-                        <hr class="tm-hr-primary">
-                        <a href="MainController?action=ViewBlogDetails&blogID=<%= blog.getBlogID()%>&userID=<%= blog.getUserID()%>" class="effect-lily tm-post-link tm-pt-60">
+                    %>
+                <div class="site-content">
+
+                    <div class="posts">
+                        <%
+                            List<BlogDTO> listPopulartBlogs = (List<BlogDTO>) session.getAttribute("LIST_POPULAR_BLOGS");
+                            List<MajorDTO> listMajor = (List<MajorDTO>) session.getAttribute("LIST_MAJOR");
+                            List<SubjectDTO> listSubject = (List<SubjectDTO>) session.getAttribute("LIST_SUBJECT");
+                            if (listAllBlogs != null) {
+                                if (listAllBlogs.size() > 0) {
+                                    int index = 0;
+                                    for (BlogDTO blog : listAllBlogs) {
+                                        if (index == 4) {
+                                            break;
+                                        }
+                                        String content = "";
+                                        String remain = "";
+                        %>
+                        <form action="MainController"method="POST">
+                            <div class="post-content" data-aos="zoom-in" data-aos-delay="200">
+                                <div class="post-image">
+                                    <div>
+                                        <img src="<%= blog.getImage()%>" class="img" alt="blog1">
+                                    </div>
+                                    <div class="post-info flex-row">
+                                        <span><i class="fas fa-user text-gray"></i>&nbsp;&nbsp;<%= blog.getFullName()%></span>
+                                        <span><i class="fas fa-calendar-alt text-gray"></i>&nbsp;&nbsp;<%= blog.getDate()%></span>
+                                        <span><%= blog.getNumberOfComments()%> Comments</span>
+                                    </div>
+                                </div>
+                                <div class="post-title">
+                                    <a href="MainController?action=ViewBlogDetails&blogID=<%= blog.getBlogID()%>"><%= blog.getTitle()%></a>
+                                    <%
+                                        if (blog.getContent().length() > 138) {
+                                            content = blog.getContent().substring(0, 138) + "<br>";
+                                            remain = blog.getContent().substring(138, 273) + "...";
+                                    %>
+                                    <p><%= content%><%= remain%></p>
+                                    <%
+                                    } else {
+                                        content = blog.getContent();
+
+                                    %>
+                                    <p><%= content%></p>
+                                    <%
+                                        }
+                                    %>
+                                    <input type="hidden" name="blogID" value="<%= blog.getBlogID()%>"/>
+                                    <button type="submit" value="ViewBlogDetails" name="action" class="btn post-btn">Read More &nbsp; <i class="fas fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                        <%
+                                        index++;
+                                    }
+                                }
+                            }
+                        %>
+                        <hr>
+                        <div class="pagination flex-row">
+                            <a href="#"><i class="fas fa-chevron-left"></i></a>
+                            <a href="#" class="pages">1</a>
+                            <a href="#" class="pages">2</a>
+                            <a href="#" class="pages">3</a>
+                            <a href="#"><i class="fas fa-chevron-right"></i></a>
+                        </div>
+                    </div>
+                    <aside class="sidebar">
+                        <div class="category">
+                            <h2>Majors</h2>
+                            <ul class="category-list">
+                                <%
+                                    if (listMajor != null) {
+                                        if (listMajor.size() > 0) {
+                                            for (MajorDTO major : listMajor) {
+                                                int numberOfBlogs = 0;
+                                                int subjectID = 0;
+                                                for (SubjectDTO subject : listSubject) {
+                                                    if (major.getMajorID() == subject.getMajorID()) {
+                                                        subjectID = subject.getSubjectID();
+                                                    }
+                                                    for (BlogDTO blog : listAllBlogs) {
+                                                        if (blog.getSubjectID() == subjectID) {
+                                                            numberOfBlogs++;
+                                                        }
+                                                    }
+                                                }
+                                %>
+                                <li class="list-items" data-aos="fade-left" data-aos-delay="100">
+                                    <a href="#"><%= major.getMajorName()%></a>
+                                    <span>(<%= numberOfBlogs%>)</span>
+                                </li>
+                                <%
+                                            }
+                                        }
+                                    }
+                                %>
+                            </ul>
+                        </div>
+                        <div class="popular-post">
+                            <h2>Popular Post</h2>
                             <%
-                                if (blog.getImage() != null) {
+                                if (listPopulartBlogs != null) {
+                                    if (listPopulartBlogs.size() > 0) {
+                                        for (BlogDTO blog : listPopulartBlogs) {
                             %>
-                            <div class="tm-post-link-inner">
-                                <img src="<%= blog.getImage()%>" alt="Image" class="img-fluid">                            
+                            <div class="post-content" data-aos="flip-up" data-aos-delay="200">
+                                <div class="post-image">
+                                    <div>
+                                        <img src="<%= blog.getImage()%>" class="img" alt="blog1">
+                                    </div>
+                                    <div class="post-info flex-row">
+                                        <span><i class="fas fa-calendar-alt text-gray"></i>&nbsp;&nbsp;<%= blog.getDate()%></span>
+                                        <span><%= blog.getNumberOfVotes()%> Votes</span>
+                                    </div>
+                                </div>
+                                <div class="post-title">
+                                    <a href="#"><%= blog.getTitle()%></a>
+                                </div>
                             </div>
                             <%
+                                        }
+                                    }
                                 }
                             %>
-                            <h2 class="tm-pt-30 tm-color-primary tm-post-title"><%= blog.getTitle()%></h2>
-                        </a>                    
-                        <p class="tm-pt-30">
-                            <%= blog.getContent()%>
-                        </p>
-                        <div class="d-flex justify-content-between tm-pt-45">
-                            <span class="tm-color-primary">By <%= blog.getFullName()%></span>
-                            <span class="tm-color-primary"><%= blog.getDate()%></span>
                         </div>
-                        <hr>
-                        <div class="d-flex justify-content-between">
-                            <span><%= blog.getNumberOfComments()%></span>
-                            <span><%= blog.getNumberOfVotes()%> votes</span>
+                        <div class="newsletter" data-aos="fade-up" data-aos-delay="300">
+                            <h2>Newsletter</h2>
+                            <div class="form-element">
+                                <input type="text" class="input-element" placeholder="Email">
+                                <button class="btn form-btn">Subscribe</button>
+                            </div>
                         </div>
-                    </article>
-                    <%          }
-                            }
-                        }
-                    } else {
-                        String message = (String) request.getAttribute("MESSAGE");
-                        if (message == null) {
-                            message = "";
-                        }
-                    %>
-                    <div class="search-home-page justify-content-center">
+                        <div class="popular-tags">
+                            <h2>Subjects</h2>
+                            <div class="tags flex-row">
+                                <%
+                                    if (listSubject != null) {
+                                        if (listSubject.size() > 0) {
+                                            for (SubjectDTO subject : listSubject) {
 
-                        <h1><%= message%></h1>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>   
-                    </div>
-                    <%
-                        }
-                    %>
+                                %>
+                                <span class="tag" data-aos="flip-up" data-aos-delay="100"><%= subject.getSubjectName()%></span>
+                                <%
+                                            }
+                                        }
+                                    }
+                                %>
+                            </div>
+                        </div>
+                    </aside>
                 </div>
-                <div class="row tm-row tm-mt-100 tm-mb-75">
-                    <div class="tm-prev-next-wrapper">
-                        <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next disabled tm-mr-20">Prev</a>
-                        <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next">Next</a>
+            </section>
+
+            <!-- -----------x---------- Site Content -------------x------------>
+
+        </main>
+
+        <!---------------x------------- Main Site Section ---------------x-------------->
+
+
+        <!-- --------------------------- Footer ---------------------------------------- -->
+
+        <footer class="footer">
+            <div class="container">
+                <div class="about-us" data-aos="fade-right" data-aos-delay="200">
+                    <h2>About us</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quia atque nemo ad modi officiis
+                        iure, autem nulla tenetur repellendus.</p>
+                </div>
+                <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
+                    <h2>Newsletter</h2>
+                    <p>Stay update with our latest</p>
+                    <div class="form-element">
+                        <input type="text" placeholder="Email"><span><i class="fas fa-chevron-right"></i></span>
                     </div>
-                    <div class="tm-paging-wrapper">
-                        <span class="d-inline-block mr-3">Page</span>
-                        <nav class="tm-paging-nav d-inline-block">
-                            <ul>
-                                <li class="tm-paging-item active">
-                                    <a href="#" class="mb-2 tm-btn tm-paging-link">1</a>
-                                </li>
-                                <li class="tm-paging-item">
-                                    <a href="#" class="mb-2 tm-btn tm-paging-link">2</a>
-                                </li>
-                                <li class="tm-paging-item">
-                                    <a href="#" class="mb-2 tm-btn tm-paging-link">3</a>
-                                </li>
-                                <li class="tm-paging-item">
-                                    <a href="#" class="mb-2 tm-btn tm-paging-link">4</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>                
-                </div>            
-                <footer class="row tm-row">
-                </footer>
-            </main>
-        </div>
-        <script src="js/jquery.min.js"></script>
-        <script src="js/templatemo-script.js"></script>
+                </div>
+                <div class="instagram" data-aos="fade-left" data-aos-delay="200">
+                    <h2>Instagram</h2>
+                    <div class="flex-row">
+                        <img src="./assets/instagram/thumb-card3.png" alt="insta1">
+                        <img src="./assets/instagram/thumb-card4.png" alt="insta2">
+                        <img src="./assets/instagram/thumb-card5.png" alt="insta3">
+                    </div>
+                    <div class="flex-row">
+                        <img src="./assets/instagram/thumb-card6.png" alt="insta4">
+                        <img src="./assets/instagram/thumb-card7.png" alt="insta5">
+                        <img src="./assets/instagram/thumb-card8.png" alt="insta6">
+                    </div>
+                </div>
+                <div class="follow" data-aos="fade-left" data-aos-delay="200">
+                    <h2>Follow us</h2>
+                    <p>Let us be Social</p>
+                    <div>
+                        <i class="fab fa-facebook-f"></i>
+                        <i class="fab fa-twitter"></i>
+                        <i class="fab fa-instagram"></i>
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="rights flex-row">
+                <h4 class="text-gray">
+                    Copyright ©2019 All rights reserved | made by
+                    <a href="www.youtube.com/c/dailytuition" target="_black">Daily Tuition <i class="fab fa-youtube"></i>
+                        Channel</a>
+                </h4>
+            </div>
+            <div class="move-up">
+                <span><a href="#header"><i class="fas fa-arrow-circle-up fa-2x"></i></a></span>
+            </div>
+        </footer>
+
+        <!-- -------------x------------- Footer --------------------x------------------- -->
+
+        <!-- Jquery Library file -->
+        <script src="./js/Jquery3.4.1.min.js"></script>
+
+        <!-- --------- Owl-Carousel js ------------------->
+        <script src="./js/owl.carousel.min.js"></script>
+
+        <!-- ------------ AOS js Library  ------------------------- -->
+        <script src="./js/aos.js"></script>
+
+        <!-- Custom Javascript file -->
+        <script src="./js/main.js"></script>
+        <script>
+            function menuToggle() {
+                const toggleMenu = document.querySelector(".menu");
+                toggleMenu.classList.toggle("active2");
+            }
+        </script>
     </body>
+
 </html>

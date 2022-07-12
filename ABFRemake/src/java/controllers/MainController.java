@@ -55,6 +55,7 @@ public class MainController extends HttpServlet {
     private static final String LOGOUT = "Logout";
     private static final String SEARCH_ACTIVITY_BY_NAME = "PersonalSearch";
     private static final String CANCEL = "Cancel";
+    private static final String SEARCH_MAJOR = "SearchMajor";
     
     private static final String LOGIN_WITH_GOOGLE_CONTROLLER = "LoginWithGoogleController";
     private static final String LOGIN_CONTROLLER = "LoginController";
@@ -90,6 +91,7 @@ public class MainController extends HttpServlet {
     private static final String LOGOUT_CONTROLLER = "LogoutController";
     private static final String SEARCH_ACTIVITY_BY_NAME_CONTROLLER = "SearchActivitiesByNameController";
     private static final String CANCEL_CONTROLLER = "CancelController";
+    private static final String SEARCH_BY_MAJOR_CONTROLLER = "SearchByMajorController";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -175,6 +177,8 @@ public class MainController extends HttpServlet {
                 url = SEARCH_ACTIVITY_BY_NAME_CONTROLLER;} 
             else if (CANCEL.equals(action)) {
                 url = CANCEL_CONTROLLER;} 
+            else if (SEARCH_MAJOR.equals(action)) {
+                url = SEARCH_BY_MAJOR_CONTROLLER;} 
             else{
                 request.setAttribute("ERROR_MESSAGE", "Function is not available!");
             }

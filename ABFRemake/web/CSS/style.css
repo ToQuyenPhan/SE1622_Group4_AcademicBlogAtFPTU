@@ -156,6 +156,7 @@ p{
 
 .nav .nav-menu .nav-brand a{
     color: black;
+    padding-left: 1rem;
 }
 
 .nav .nav-items .nav-link:hover a{
@@ -1089,6 +1090,118 @@ footer.footer .move-up span:hover{
     background-color: white;
     border: 2px solid #104f55;
     color: #104f55;
+}
+
+/*Blog Detail*/
+.fa-vote-yea{
+    font-size: 2rem;
+    margin-left: 2rem;
+}
+
+#vote-part{
+    margin-bottom: 1rem;
+}
+
+
+.comment-form{
+    text-align: right;
+}
+
+.comment-form input[type="submit"]{
+    margin-top: 1rem;
+    background-color: #104f55;
+    color: white;
+    padding: 0.5rem;
+}
+
+.category-link:hover{
+    text-decoration: none;
+}
+
+.profile {
+/*  position: fixed;
+  top: 20px;
+  right: 30px;*/
+}
+
+.menu {
+  position: absolute;
+  top: 0px;
+  right: 8rem;
+  padding: 0px 20px;
+  background: #fff;
+  width: 200px;
+  box-sizing: 0 5px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  transition: 0.5s;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.menu.active2 {
+  top: 10px;
+  visibility: visible;
+  opacity: 1;
+}
+
+.menu::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  right: 28px;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  transform: rotate(45deg);
+}
+
+/*.profile .menu h3 {
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  padding: 20px 0;
+  font-weight: 500;
+  color: #555;
+  line-height: 1.5em;
+}*/
+
+/*.profile .menu h3 span {
+  font-size: 14px;
+  color: #cecece;
+  font-weight: 300;
+}*/
+.menu ul{
+    padding: 0;
+}
+
+.menu ul li {
+  list-style: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+}
+
+.menu ul li {
+  width: 100%;
+  opacity: 0.5;
+  transition: 0.5s;
+}
+
+.menu ul li:hover {
+  opacity: 1;
+}
+
+.menu ul li a {
+  display: inline-block;
+  width: 100%;
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  transition: 0.5s;
+}
+
+.menu ul li:hover a {
+  color: #104f55;
 }
 //.owl-carousel .owl-dot,.owl-carousel .owl-nav .owl-next,.owl-carousel .owl-nav .owl-prev{
 //    cursor: pointer;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.owl-carousel .owl-nav button.owl-next,.owl-carousel .owl-nav button.owl-prev,.owl-carousel button.owl-dot{background:0 0;color:inherit;border:none;padding:0!important;font:inherit}.owl-carousel.owl-loading{opacity:0;display:block}.owl-carousel.owl-hidden{opacity:0}.owl-carousel.owl-refresh .owl-item{visibility:hidden}.owl-carousel.owl-drag .owl-item{-ms-touch-action:pan-y;touch-action:pan-y;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.owl-carousel.owl-grab{cursor:move;cursor:grab}.owl-carousel.owl-rtl{direction:rtl}.owl-carousel.owl-rtl .owl-item{float:right}.owl-carousel .animated{animation-duration:1s;animation-fill-mode:both}.owl-carousel .owl-animated-in{z-index:0}.owl-carousel .owl-animated-out{z-index:1}.owl-carousel .fadeOut{animation-name:fadeOut}@keyframes fadeOut{0%{opacity:1}100%{opacity:0}}.owl-height{transition:height .5s ease-in-out}.owl-carousel .owl-item .owl-lazy{opacity:0;transition:opacity .4s ease}.owl-carousel .owl-item .owl-lazy:not([src]),.owl-carousel .owl-item .owl-lazy[src^=""]{max-height:0}.owl-carousel .owl-item img.owl-lazy{transform-style:preserve-3d}.owl-carousel .owl-video-wrapper{position:relative;height:100%;background:#000}.owl-carousel .owl-video-play-icon{position:absolute;height:80px;width:80px;left:50%;top:50%;margin-left:-40px;margin-top:-40px;background:url(owl.video.play.png) no-repeat;cursor:pointer;z-index:1;-webkit-backface-visibility:hidden;transition:transform .1s ease}.owl-carousel .owl-video-play-icon:hover{-ms-transform:scale(1.3,1.3);transform:scale(1.3,1.3)}.owl-carousel .owl-video-playing .owl-video-play-icon,.owl-carousel .owl-video-playing .owl-video-tn{display:none}.owl-carousel .owl-video-tn{opacity:0;height:100%;background-position:center center;background-repeat:no-repeat;background-size:contain;transition:opacity .4s ease}.owl-carousel .owl-video-frame{position:relative;z-index:1;height:100%;width:100%}

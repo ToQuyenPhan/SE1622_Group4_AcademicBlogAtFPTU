@@ -77,12 +77,6 @@
                                 <a href="MainController?action=GetList">Home</a>
                             </li>
                             <li class="nav-link">
-                                <a href="#">Majors</a>
-                            </li>
-                            <li class="nav-link">
-                                <a href="#">Subjects</a>
-                            </li>
-                            <li class="nav-link">
                                 <a href="#">Feedback</a>
                             </li>
                         </ul>
@@ -98,7 +92,7 @@
                     <div class="profile text-gray col-sm-3">
                         <div class="row">         
                             <a><h6><%= loginUser.getFullName()%></h6></a>
-                            <img src="<%= image%>">
+                            <img onclick="menuToggle();" src="<%= image%>">
                         </div>
                     </div>
                 </div>
@@ -126,8 +120,15 @@
                 <div>
                     <%
                         List<BlogDTO> listAllBlogs = (List<BlogDTO>) request.getAttribute("LIST_ALL_BLOGS");
+                        String majorName = request.getParameter("majorName");
+                        String searchInfor = "";
+                        if (majorName == null) {
+                            searchInfor = search;
+                        } else {
+                            searchInfor = majorName;
+                        }
                     %>
-                    <h3><%= listAllBlogs.size() %> results for: <%= request.getParameter("search")%></h3>
+                    <h3><%= listAllBlogs.size()%> results for: <%= searchInfor%></h3>
                 </div>
                 <div class="site-content">
 
@@ -226,6 +227,22 @@
                                     }
                                 %>
                             </ul>
+                            <div style="top: 5rem;" class="menu">
+                                <ul>
+                                    <li>
+                                        <a style="text-align: center;" href="profile.jsp">My profile</a>
+                                    </li>
+                                    <li>
+                                        <a style="text-align: center;" href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
+                                    </li>
+                                    <li>
+                                        <a style="text-align: center;" href="MainController?action=GetActivityList&userID=<%= loginUser.getUserID()%>">Activity</a>
+                                    </li>
+                                    <li>
+                                        <a style="text-align: center;" href="MainController?action=Logout">Logout</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="popular-post">
                             <h2>Popular Post</h2>
@@ -354,6 +371,12 @@
 
         <!-- Custom Javascript file -->
         <script src="./js/main.js"></script>
+        <script>
+                                function menuToggle() {
+                                    const toggleMenu = document.querySelector(".menu");
+                                    toggleMenu.classList.toggle("active2");
+                                }
+        </script>
     </body>
 
 </html>
