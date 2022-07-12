@@ -53,7 +53,7 @@ public class PostBlogController extends HttpServlet {
             String title = request.getParameter("title").trim();
             String content = request.getParameter("content").trim();
             String date = sdf.format(dateFormat);
-            String image = request.getParameter("image");
+            String image = "image/"+request.getParameter("image");
             boolean checkValidation = false;
             BlogDAO dao = new BlogDAO();
             if (title.length() < 10 || title.length() > 50) {
@@ -71,20 +71,19 @@ public class PostBlogController extends HttpServlet {
             if (!checkValidation) {
                 boolean check = dao.postBlog(userID, subjectID, title, content, date, image);
                 if (check) {
-                    url = SUCCESS;
+                    response.sendRedirect("MainController?action=GetList&noti=success");
                 }
             } else {
                 request.setAttribute("BLOG_ERROR", blogError);
                 request.setAttribute("TITLE", request.getParameter("title"));
                 request.setAttribute("CONTENT", request.getParameter("content"));
                 request.setAttribute("SUBJECT", subjectID);
+                request.getRequestDispatcher(ERROR).forward(request, response);
             }
 
         } catch (Exception e) {
             log("Error at Post Blog Controller: " + e.toString());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
-        }
+        } 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
