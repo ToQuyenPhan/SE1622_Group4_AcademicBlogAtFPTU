@@ -35,6 +35,9 @@ public class UserDAO {
     private static final String UPDATE_STATUS = "UPDATE [User]\n"
             + "  SET status = ? \n"
             + "  Where userID = ?";
+    private static final String EDIT_USER = "UPDATE [User] " 
+            + "set fullName=?, image=?, gender=?, dateOfBirth=?, address=?, contact=?, aboutme=? "
+            + "WHERE userID=?";
     
     public UserDTO checkLogin(String email, String password) throws SQLException {
         UserDTO user = null;
@@ -259,5 +262,25 @@ public class UserDAO {
         }
         cn.close();
         return result;
+    }
+    
+    public static int editUser(int userID, String fullName, String image, String gender, String dateOfBirth, String address, String contact, String aboutme) throws SQLException{
+        int rs = 0;
+        Connection cn = null;
+        PreparedStatement ptm = null;
+        if (cn != null) {
+            ptm =  cn.prepareStatement(EDIT_USER);
+            ptm.setString(0, fullName);
+            ptm.setString(1, image);
+            ptm.setString(2, gender);
+            ptm.setString(3, dateOfBirth);
+            ptm.setString(4, address);
+            ptm.setString(5, contact);
+            ptm.setString(6, aboutme);
+            ptm.setInt(7, userID);
+            rs = ptm.executeUpdate();
+        }
+        cn.close();
+        return rs;
     }
 }

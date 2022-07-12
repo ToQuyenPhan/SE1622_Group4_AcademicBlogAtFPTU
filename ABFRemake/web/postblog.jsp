@@ -161,7 +161,7 @@
                                 <h6><%= contentError%></h6>
                             </div>
                             <div class="mb-4">
-                                <input type="file" id="avatar" name="image" accept="image/x-png,image/gif,image/jpeg"/>
+                                <input type="file" id="avatar" name="image" accept="image/x-png,image/gif,image/jpeg"/>                        
                             </div>
                             <div class="text-right post-blog-form">
                                 <input type="hidden" name="position" value="<%= position%>"/>

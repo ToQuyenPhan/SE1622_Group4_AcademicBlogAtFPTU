@@ -54,10 +54,13 @@ public class PostBlogController extends HttpServlet {
             String content = request.getParameter("content").trim();
             String date = sdf.format(dateFormat);
             String image = "image/"+request.getParameter("image");
+            if (image.length() == 6) {
+                image = "image/image.png";
+            }
             boolean checkValidation = false;
             BlogDAO dao = new BlogDAO();
             if (title.length() < 10 || title.length() > 50) {
-                blogError.setTitleError("Title must be in [10,50]!");
+                blogError.setTitleError("Title must be in [10,100]!");
                 checkValidation = true;
             }
             if (content.length() < 50) {
