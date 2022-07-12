@@ -99,14 +99,14 @@
                 <div class="row tm-row">
                     <div class="col-12">
                         <hr class="tm-hr-primary tm-mb-45">
-                        <form action="MainController" method="POST" enctype="multipart/form-data">
+                        <form action="MainController" method="POST">
                             <h2 class="tm-color-primary tm-post-title mb-4">Your Post</h2>
                             <input type="hidden" name="userID" value="<%=loginUser.getUserID()%>" readonly="">
                             <div class="mb-4">
                                 <label for="Title"></label> Title </label>
-                            
-                                <input class="form-control" name="title" type="text" value="<%=request.getAttribute("TITLE")%>">
-                                
+
+                                <input class="form-control" name="title" type="text" value="<%= (request.getAttribute("TITLE") == null) ? "" : request.getAttribute("TITLE")%>">
+
                                 ${requestScope.BLOG_ERROR.titleError}
 
                             </div>
@@ -128,15 +128,14 @@
                             </div>
                             <div class="mb-4">
                                 Details
-                                <textarea class="form-control" id="content" name="content" rows="6" value="<%= request.getAttribute("CONTENT")%>">
+                                <textarea class="form-control" id="content" name="content" rows="6" value="<%= (request.getAttribute("TITLE") == null) ? "" : request.getAttribute("TITLE")%>">
                                     <%=request.getAttribute("CONTENT")%>
                                 </textarea>
                                 ${requestScope.BLOG_ERROR.contentError}
                             </div>
                             <div class="mb-4">
                                 <div class="main">
-                                    <label class="file-upload"> Image Link: </label></br>
-                                    <input type="file" name="file" id="file">
+                                    <input type="file" id="avatar" name="image" accept="image/x-png,image/gif,image/jpeg"/>
                                 </div>
                             </div>
                             <div class="text-right">
@@ -160,7 +159,23 @@
                 </footer>
             </main>
         </div>
-
+        <script type="text/javascript">
+            $("#avatar").change(function () {
+                var file = $(this)[0].files[0];
+                console.log(file.type);
+                var patterImage = new RegExp("image/*");
+                if (!patterImage.test(file.type)) {
+                    alert("Please choose image");
+                } else {
+                    var fileReader = new FileReader();
+                    fileReader.readAsDataURL(file);
+                    fileReader.onload = function (e) {
+                        $("#img-avatar").attr("src", e.target.result);
+                    }
+                }
+            });
+        </script>
+        <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>                  
         <script src="js/jquery.min.js"></script>
         <script src="js/templatemo-script.js"></script>
     </body>

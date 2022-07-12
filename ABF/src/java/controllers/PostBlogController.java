@@ -5,41 +5,30 @@
  */
 package controllers;
 
-import com.cloudinary.Cloudinary;
 import dao.BlogDAO;
 import dao.UserDAO;
 import dto.BlogDTO;
 import dto.BlogError;
 import dto.UserDTO;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
 
 /**
  *
  * @author To Quyen Phan
  */
-@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
-        maxFileSize = 1024 * 1024 * 10, // 10MB
-        maxRequestSize = 1024 * 1024 * 50)
 @WebServlet(name = "PostBlogController", urlPatterns = {"/PostBlogController"})
 public class PostBlogController extends HttpServlet {
 
     private static final String ERROR = "postblog.jsp";
     private static final String SUCCESS = "MainController?action=GetList";
-
-    public static final String UPLOAD_DIR = "uploads";//local save image
-    public String dbFileName = "";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -57,32 +46,13 @@ public class PostBlogController extends HttpServlet {
         BlogError blogError = new BlogError();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date dateFormat = new Date();
-        Cloudinary cloudinary = new Cloudinary();
-        
-        String applicationPath = getServletContext().getRealPath("");
-        String uploadPath = applicationPath + File.separator + UPLOAD_DIR;
-
         try {
             int userID = Integer.parseInt(request.getParameter("userID"));
             int subjectID = Integer.parseInt(request.getParameter("subjectID"));
             String title = request.getParameter("title").trim();
             String content = request.getParameter("content").trim();
             String date = sdf.format(dateFormat);
-            String image = request.getParameter("image");
-
-            Part part = request.getPart("file");//
-            String fileName = extractFileName(part);//file name
-
-            File fileUploadDirectory = new File(uploadPath);
-            if (!fileUploadDirectory.exists()) {
-                fileUploadDirectory.mkdirs();
-            }
-            
-            String savePath = uploadPath + File.separator + fileName;
-            part.write(savePath + File.separator);
-            File fileSaveDir1 = new File(savePath);
-            part.write(savePath + File.separator);
-
+            String image = "image/"+request.getParameter("image");
             boolean checkValidation = true;
             BlogDAO dao = new BlogDAO();
             if (title.length() < 10 || title.length() > 100) {
@@ -94,7 +64,7 @@ public class PostBlogController extends HttpServlet {
                 checkValidation = false;
             }
             if (checkValidation) {
-                boolean check = dao.postBlog(userID, subjectID, title, content, date, savePath);
+                boolean check = dao.postBlog(userID, subjectID, title, content, date, image);
                 if (check) {
                     response.sendRedirect("MainController?action=GetList&noti=success");
                 }
@@ -109,17 +79,6 @@ public class PostBlogController extends HttpServlet {
             log("Error at Post Blog Controller: " + e.toString());
 
         }
-    }
-
-    private String extractFileName(Part part) {//This method will print the file name.
-        String contentDisp = part.getHeader("content-disposition");
-        String[] items = contentDisp.split(";");
-        for (String s : items) {
-            if (s.trim().startsWith("filename")) {
-                return s.substring(s.indexOf("=") + 2, s.length() - 1);
-            }
-        }
-        return "";
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
