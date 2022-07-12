@@ -159,8 +159,8 @@
                                     <a href="MainController?action=ViewBlogDetails&blogID=<%= blog.getBlogID()%>"><%= blog.getTitle()%></a>
                                     <%
                                         if (blog.getContent().length() > 138) {
-                                            content = blog.getContent().substring(0, 138) + "<br>";
-                                            remain = blog.getContent().substring(138, 273) + "...";
+                                            content = blog.getContent().substring(0, 125) + "<br>";
+                                            remain = blog.getContent().substring(125, 247) + "...";
                                     %>
                                     <p><%= content%><%= remain%></p>
                                     <%

@@ -72,12 +72,6 @@
                                 <a href="MainController?action=GetList">Home</a>
                             </li>
                             <li class="nav-link">
-                                <a href="#">Majors</a>
-                            </li>
-                            <li class="nav-link">
-                                <a href="#">Subjects</a>
-                            </li>
-                            <li class="nav-link">
                                 <a href="#">Feedback</a>
                             </li>
                         </ul>
@@ -88,10 +82,6 @@
                             <div class="search-search"><button type="submit" name="action" value="Search"><i class="fas fa-search"></i></button></div>
                         </div>
                     </div>
-                    <div class="new col-sm-1"><a href="#"><i class="fas fa-pen"></i></a>
-                        <span class="tooltiptext">Tooltip text</span>
-                    </div>
-
                     <div class="profile text-gray col-sm-3">
                         <div class="row">         
                             <a><h6><%= loginUser.getFullName()%></h6></a>
@@ -108,7 +98,7 @@
                 <div class="row tm-row">
                     <div class="col-12">
                         <hr class="tm-hr-primary tm-mb-45">
-                        <form action="MainController" method="POST">
+                        <form action="MainController" method="POST" enctype="multipart/form-data">
                             <h2 class="tm-color-primary tm-post-title mb-4">Your Post</h2>
                             <input type="hidden" name="userID" value="<%=loginUser.getUserID()%>" readonly="">
 

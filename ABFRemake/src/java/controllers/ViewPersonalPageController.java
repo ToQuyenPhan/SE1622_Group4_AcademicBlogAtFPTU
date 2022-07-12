@@ -45,44 +45,45 @@ public class ViewPersonalPageController extends HttpServlet {
             int userID = Integer.parseInt(request.getParameter("userID"));
             List<BlogDTO> listAllBlogs = dao.getAllPersonalBlogs(userID);//Lấy hết các blog
             if (listAllBlogs.size() > 0) {
-                String value = request.getParameter("sortBy");
-                String orderValue = request.getParameter("sortOrder");
-                if ("date".equals(value)) {
-                    if("descending".equals(orderValue)){
-                        Collections.sort(listAllBlogs, BlogDTO.compareDate);
-                        request.setAttribute("ORDER_OPTION", "Descending");
-                    }else if("ascending".equals(orderValue)){
-                        Collections.sort(listAllBlogs, BlogDTO.compareDate);
-                        Collections.reverse(listAllBlogs);
-                        request.setAttribute("ORDER_OPTION", "Ascending");
-                    }else{
-                        request.setAttribute("ORDER_OPTION", "None");
-                    }
-                    request.setAttribute("OPTION", "Date");
-                } else if("vote".equals(value)) {
-                    if("descending".equals(orderValue)){
-                        Collections.sort(listAllBlogs, new Comparator<BlogDTO>() {
-                            @Override
-                            public int compare(BlogDTO o1, BlogDTO o2) {
-                                return o2.getNumberOfVotes() - o1.getNumberOfVotes();
-                            }
-                        });
-                        request.setAttribute("ORDER_OPTION", "Descending");
-                    }else if("ascending".equals(orderValue)){
-                        Collections.sort(listAllBlogs, new Comparator<BlogDTO>() {
-                            @Override
-                            public int compare(BlogDTO o1, BlogDTO o2) {
-                                return o1.getNumberOfVotes() - o2.getNumberOfVotes();
-                            }
-                        });
-                        request.setAttribute("ORDER_OPTION", "Ascending");
-                    }else{
-                        request.setAttribute("ORDER_OPTION", "None");
-                    }
-                    request.setAttribute("OPTION", "Vote");
-                }else{
-                    request.setAttribute("OPTION", "None");
-                }
+//                String value = request.getParameter("sortBy");
+//                String orderValue = request.getParameter("sortOrder");
+//                if ("date".equals(value)) {
+//                    if("descending".equals(orderValue)){
+//                        Collections.sort(listAllBlogs, BlogDTO.compareDate);
+//                        request.setAttribute("ORDER_OPTION", "Descending");
+//                    }else if("ascending".equals(orderValue)){
+//                        Collections.sort(listAllBlogs, BlogDTO.compareDate);
+//                        Collections.reverse(listAllBlogs);
+//                        request.setAttribute("ORDER_OPTION", "Ascending");
+//                    }else{
+//                        request.setAttribute("ORDER_OPTION", "None");
+//                    }
+//                    request.setAttribute("OPTION", "Date");
+//                } else if("vote".equals(value)) {
+//                    if("descending".equals(orderValue)){
+//                        Collections.sort(listAllBlogs, new Comparator<BlogDTO>() {
+//                            @Override
+//                            public int compare(BlogDTO o1, BlogDTO o2) {
+//                                return o2.getNumberOfVotes() - o1.getNumberOfVotes();
+//                            }
+//                        });
+//                        request.setAttribute("ORDER_OPTION", "Descending");
+//                    }else if("ascending".equals(orderValue)){
+//                        Collections.sort(listAllBlogs, new Comparator<BlogDTO>() {
+//                            @Override
+//                            public int compare(BlogDTO o1, BlogDTO o2) {
+//                                return o1.getNumberOfVotes() - o2.getNumberOfVotes();
+//                            }
+//                        });
+//                        request.setAttribute("ORDER_OPTION", "Ascending");
+//                    }else{
+//                        request.setAttribute("ORDER_OPTION", "None");
+//                    }
+//                    request.setAttribute("OPTION", "Vote");
+//                }else{
+//                    request.setAttribute("OPTION", "None");
+//                }
+                Collections.sort(listAllBlogs, BlogDTO.compareDate);
                 request.setAttribute("LIST_ALL_PERSONAL_BLOGS", listAllBlogs);
             }
             url = SUCCESS;
