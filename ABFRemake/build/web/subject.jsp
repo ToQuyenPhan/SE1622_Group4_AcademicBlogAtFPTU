@@ -30,7 +30,6 @@
         
         https://templatemo.com/tm-553-xtra-blog
         
-        
         -->
     </head>
     <body class="body-homepage">
