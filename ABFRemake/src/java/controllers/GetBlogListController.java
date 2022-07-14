@@ -101,7 +101,7 @@ public class GetBlogListController extends HttpServlet implements Serializable {
 //                } else {
 //                    request.setAttribute("OPTION", "None");
 //                }
-                request.setAttribute("LIST_ALL_BLOGS", listAllBlogs);
+                session.setAttribute("LIST_ALL_BLOGS", listAllBlogs);
                 request.setAttribute("LIST_NEWEST_BLOGS", listNewestBlogs);
                 session.setAttribute("LIST_POPULAR_BLOGS", listPopularBlogs);
                 session.setAttribute("LIST_MAJOR", listMajor);

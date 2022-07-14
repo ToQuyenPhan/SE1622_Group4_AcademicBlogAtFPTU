@@ -158,7 +158,7 @@
                         </div>
                         <div class="owl-carousel owl-theme blog-post row">
                             <%
-                                List<BlogDTO> listAllBlogs = (List<BlogDTO>) request.getAttribute("LIST_ALL_BLOGS");
+                                List<BlogDTO> listAllBlogs = (List<BlogDTO>) session.getAttribute("LIST_ALL_BLOGS");
                                 List<BlogDTO> listNewestBlogs = (List<BlogDTO>) request.getAttribute("LIST_NEWEST_BLOGS");
                                 List<BlogDTO> listPopulartBlogs = (List<BlogDTO>) session.getAttribute("LIST_POPULAR_BLOGS");
                                 List<MajorDTO> listMajor = (List<MajorDTO>) session.getAttribute("LIST_MAJOR");

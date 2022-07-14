@@ -34,7 +34,7 @@ public class SearchController extends HttpServlet {
             List<BlogDTO> listAllBlogs = dao.searchByTitle(search);
             if(listAllBlogs.size()>0) {
                 Collections.sort(listAllBlogs, BlogDTO.compareDate);
-                request.setAttribute("LIST_ALL_BLOGS", listAllBlogs);
+                request.setAttribute("LIST_SEARCH_BLOGS", listAllBlogs);
             }else{
                 request.setAttribute("MESSAGE", "Empty!");
             }
