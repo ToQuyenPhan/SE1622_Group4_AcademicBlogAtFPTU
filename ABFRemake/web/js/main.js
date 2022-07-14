@@ -21,7 +21,7 @@ $(document).ready(function () {
     /** click event on toggle menu */
     $toggleCollapse.click(function () {
         $nav.toggleClass('collapse');
-    })
+    });
 
     // owl-crousel for blog
     $('.owl-carousel').owlCarousel({

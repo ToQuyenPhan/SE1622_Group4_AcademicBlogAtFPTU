@@ -63,21 +63,24 @@
         <nav class="nav" id="header">
             <form action="MainController" method="POST">
                 <div class="nav-menu row">
-                    <div class="nav-brand col-sm-2">
+                    <div class="nav-brand">
                         <a href="MainController?action=GetList" class="text-gray">Academic Blog</a>
                     </div>
-                    <div class="toggle-collapse">
+                    <div onclick="openNav();" class="toggle-collapse">
                         <div class="toggle-icons">
                             <i class="fas fa-bars"></i>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="">
                         <ul class="nav-items">
                             <li class="nav-link">
                                 <a href="MainController?action=GetList">Home</a>
                             </li>
                             <li class="nav-link">
-                                <a href="#">Feedback</a>
+                                <a href="MainController?action=GetFeedbackTypeList">Feedback</a>
+                            </li>
+                            <li class="nav-link non-display">
+                                <a href="MainController?action=GoToPostBlogPage&position=homepage.jsp">New Blog</a>
                             </li>
                         </ul>
                     </div>
@@ -434,13 +437,6 @@
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quia atque nemo ad modi officiis
                                         iure, autem nulla tenetur repellendus.</p>
                                 </div>
-                                <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
-                                    <h2>Newsletter</h2>
-                                    <p>Stay update with our latest</p>
-                                    <div class="form-element">
-                                        <input type="text" placeholder="Email"><span><i class="fas fa-chevron-right"></i></span>
-                                    </div>
-                                </div>
                                 <div class="instagram" data-aos="fade-left" data-aos-delay="200">
                                     <h2>Instagram</h2>
                                     <div class="flex-row">
@@ -486,6 +482,14 @@
                                 function menuToggle() {
                                     const toggleMenu = document.querySelector(".menu");
                                     toggleMenu.classList.toggle("active2");
+                                }
+                                function openNav() {
+                                    if (document.getElementById('header').style.height === '19rem') {
+                                        document.getElementById('header').style.height = '4rem'
+                                    } else {
+                                        document.getElementById('header').style.height = '19rem'
+                                    }
+
                                 }
                         </script> 
                         </body>

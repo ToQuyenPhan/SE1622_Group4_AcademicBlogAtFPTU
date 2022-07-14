@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author To Quyen Phan
  */
-@WebServlet(name = "SearchByMajorController", urlPatterns = {"/SearchByMajorController"})
-public class SearchByMajorController extends HttpServlet {
+@WebServlet(name = "SearchBySubjectController", urlPatterns = {"/SearchBySubjectController"})
+public class SearchBySubjectController extends HttpServlet {
     private static final String ERROR = "MainController?GetList";
     private static final String SUCCESS = "searchpage.jsp";
     /**
@@ -39,9 +39,9 @@ public class SearchByMajorController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            int majorID = Integer.parseInt(request.getParameter("majorID"));
+            int subjectID = Integer.parseInt(request.getParameter("subjectID"));
             BlogDAO dao = new BlogDAO();
-            List<BlogDTO> listAllBlogs = dao.searchByMajor(majorID);
+            List<BlogDTO> listAllBlogs = dao.searchBySubject(subjectID);
             if(listAllBlogs.size()>0) {
                 Collections.sort(listAllBlogs, BlogDTO.compareDate);
                 request.setAttribute("LIST_SEARCH_BLOGS", listAllBlogs);
@@ -50,7 +50,7 @@ public class SearchByMajorController extends HttpServlet {
             }
             url = SUCCESS;
         } catch (Exception e) {
-            log("Error at Search By Major Controller: " + e.toString());
+            log("Error at Search By Subject Controller: " + e.toString());
         }finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

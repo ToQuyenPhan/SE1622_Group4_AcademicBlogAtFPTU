@@ -15,7 +15,7 @@
         <div class="body-welcome-page">
             <div class="header-welcome-page row">
                 <div class="col-12 col-sm-3">
-                    <img src="image/FPTU__3_-removebg-preview2png.png">
+                    <img id="img" src="image/FPTU__3_-removebg-preview2png.png">
                 </div>
                 <div class="col-12 col-sm-9">
                     <input class="input-welcome-page" onclick="openForm(1)" type="button" id="login" value="Login">

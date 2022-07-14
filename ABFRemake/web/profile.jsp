@@ -61,7 +61,7 @@
           <h2>Address: <%= address %></h2>
           <h2>Contact: <%= contact %></h2>
           <h2>About me: <%= aboutme %></h2>
-          <a href="index.html"><i class='fas fa-edit'></i></a>
+          <!--<a href="index.html"><i class='fas fa-edit'></i></a>-->
         </div>
       </div>
     <!-- Optional JavaScript -->

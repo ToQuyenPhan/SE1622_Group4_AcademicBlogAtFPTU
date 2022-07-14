@@ -409,7 +409,7 @@ body{
     height: 3rem;
     padding: 0.5rem;
 }
-  
+
 .dropdown input:focus, button:focus {
     border: 2px solid #2659ff;
 }
@@ -603,7 +603,7 @@ hr {
 .tm-header {
     background-color: #0CC;
     color: white;
-    
+
     position: fixed;
     top: 0;
     left: 0;
@@ -691,7 +691,7 @@ hr {
 
 .tm-nav-item:hover .tm-nav-link,
 .tm-nav-item.active .tm-nav-link
- {
+{
     color: #0CC;
     background-color: white;
     text-decoration: none;
@@ -778,7 +778,7 @@ ul {
 .tm-post-link {
     display: block;
     position: relative;
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .tm-post-link-inner {
@@ -788,28 +788,28 @@ ul {
 
 .tm-post-link img {
     position: relative;
-	display: block;
-	min-height: 100%;
-	max-width: 100%;
-	opacity: 0.8;
+    display: block;
+    min-height: 100%;
+    max-width: 100%;
+    opacity: 0.8;
 }
 
 .effect-lily img {
-	max-width: none;
-	width: -webkit-calc(100% + 50px);
-	width: calc(100% + 50px);
-	opacity: 0.7;
-	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
-	transition: opacity 0.35s, transform 0.35s;
-	-webkit-transform: translate3d(-40px,0, 0);
-	transform: translate3d(-40px,0,0);
+    max-width: none;
+    width: -webkit-calc(100% + 50px);
+    width: calc(100% + 50px);
+    opacity: 0.7;
+    -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+    transition: opacity 0.35s, transform 0.35s;
+    -webkit-transform: translate3d(-40px,0, 0);
+    transform: translate3d(-40px,0,0);
 }
 
 .effect-lily:hover img { opacity: 1; }
 
 .effect-lily:hover img {
     -webkit-transform: translate3d(0,0,0);
-	transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
 }
 
 .tm-post { margin-bottom: 75px; }
@@ -847,7 +847,7 @@ ul {
     padding: 8px 43px;
     border: none;
 }
-    
+
 .tm-btn-small { padding: 8px 33px; }
 
 .tm-btn-primary:hover {
@@ -1121,6 +1121,15 @@ a:hover figcaption { color: #056767; }
     }
 
     .tm-copyright { text-align: left; }
+    
+    .container-profile-page{
+        padding: 2rem 1rem;
+    }
+    
+    .container-profile-page .wrapper-profile-page img{
+        width: 10rem;
+        height: 10rem;
+    }
 }
 
 @media (max-width: 1199px) and (min-width: 992px) {
@@ -1384,21 +1393,21 @@ a:hover figcaption { color: #056767; }
     margin-bottom: 2rem;
 }
 #delete-activity-message-popup{
-	text-align: center;
-        width: 30rem;
-	height: 5rem;
-	background: white;
-	box-sizing: border-box; /* for inside padding */
-	padding: 2rem;
+    text-align: center;
+    width: 30rem;
+    height: 5rem;
+    background: white;
+    box-sizing: border-box; /* for inside padding */
+    padding: 2rem;
 
-	/* for center */
-	position:absolute;
-	top:50%;
-	left:50%;
-	transform: translate(-50%,-50%);
-        border-radius: 0.5rem;
-        box-shadow: 0.1rem 0.1rem 0.2rem rgba(166, 166, 166, 0.25);
-        z-index: 1;
+    /* for center */
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    border-radius: 0.5rem;
+    box-shadow: 0.1rem 0.1rem 0.2rem rgba(166, 166, 166, 0.25);
+    z-index: 1;
 }
 #delete-activity-message-popup button{
     position: absolute;
@@ -1420,21 +1429,21 @@ a:hover figcaption { color: #056767; }
     font-size: 1.3rem;
 }
 .delete-activity-message-popup-confirm{
-        width: 40rem;
-	height: 10rem;
-	background: white;
-	box-sizing: border-box; /* for inside padding */
-	padding: 2rem;
+    width: 40rem;
+    height: 10rem;
+    background: white;
+    box-sizing: border-box; /* for inside padding */
+    padding: 2rem;
 
-	/* for center */
-	position:absolute;
-	top:50%;
-	left:50%;
-	transform: translate(-50%,-50%);
-        border-radius: 0.5rem;
-        box-shadow: 0.1rem 0.1rem 0.2rem rgba(166, 166, 166, 0.25);
-        z-index: 1;
-        display: none;
+    /* for center */
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    border-radius: 0.5rem;
+    box-shadow: 0.1rem 0.1rem 0.2rem rgba(166, 166, 166, 0.25);
+    z-index: 1;
+    display: none;
 }
 .delete-activity-message-popup-confirm p{
     color: black;
@@ -1545,4 +1554,29 @@ a:hover figcaption { color: #056767; }
 .major-item div a:last-child{
     margin-top: 0.5rem;
     color: white;
+}
+
+@media only screen and (max-width: 900px) {
+    #login{
+        width: 30%;
+        margin: 0;
+        margin-right: 2rem;
+        margin-top: 2rem;
+    }
+    #img{
+        margin-top: 1rem;
+    }
+    .header-welcome-page{
+        height: 20%;
+    }
+    @keyframes login {
+        0% {margin-right: 0; margin-top: 2rem;}
+        100% {margin-right: 2rem; top: 2rem}
+    }
+    .content-welcome-page {
+        width: 80%;
+    }
+    #popupForm{
+        width: 60%;
+    }
 }

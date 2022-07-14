@@ -61,18 +61,18 @@
                 image = "image/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png";
             }
         %>
-        <nav class="nav" id="header">
+        <nav class="nav approve-page" id="header">
             <form action="MainController" method="POST">
                 <div class="nav-menu row">
-                    <div class="nav-brand col-sm-2">
+                    <div class="nav-brand ">
                         <a href="#" class="text-gray">Academic Blog</a>
                     </div>
-                    <div class="toggle-collapse">
+                    <div class="approve-page toggle-collapse">
                         <div class="toggle-icons">
-                            <i class="fas fa-bars"></i>
+                            <i onclick="openNav();" class="fas fa-bars"></i>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="nav-link-items">
                         <ul class="nav-items">
                             <li class="nav-link active">
                                 <a href="#">Home</a>
@@ -80,12 +80,15 @@
                             <li class="nav-link">
                                 <a href="MainController?action=GetFeedbackTypeList">Feedback</a>
                             </li>
+                            <li class="nav-link non-display">
+                                <a href="MainController?action=GoToPostBlogPage&position=homepage.jsp">New Blog</a>
+                            </li>
                         </ul>
                     </div>
-                    <div class="col-sm-3">
-                        <div class="search-form">
+                    <div class="search-div col-sm-3">
+                        <div class="search-form-search">
                             <input type="text" placeholder="Search..." name="search" type="text">
-                            <div class="search"><button type="submit" name="action" value="Search"><i class="fas fa-search"></i></button></div>
+                            <div class="search-search"><button type="submit" name="action" value="Search"><i class="fas fa-search"></i></button></div>
                         </div>
                     </div>
                     <div class="new col-sm-1"><a href="MainController?action=GoToPostBlogPage&position=homepage.jsp"><i class="fas fa-pen"></i></a></div>
@@ -152,7 +155,7 @@
 
             <section id="main-part">
                 <div class="blog">
-                    <div>
+                    <div class="">
                         <div>
                             <h1>Newest</h1>
                         </div>
@@ -214,7 +217,7 @@
 //                                                    different = different % minutesInMilli;
 //
 //                                                    long elapsedSeconds = different / secondsInMilli;
-                            %> 
+%> 
                             <div class="blog-content col-sm-3">
                                 <form action="MainController" method="POST">
                                     <img src="<%= blog.getImage()%>" alt="post-<%= index%>">
@@ -311,8 +314,8 @@
                         <div class="category">
                             <h2>Majors</h2>
                             <ul class="category-list">
-                                <%                                    
-                                if (listMajor != null) {
+                                <%
+                                    if (listMajor != null) {
                                         if (listMajor.size() > 0) {
                                             for (MajorDTO major : listMajor) {
                                                 int numberOfBlogs = 0;
@@ -417,13 +420,6 @@
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quia atque nemo ad modi officiis
                         iure, autem nulla tenetur repellendus.</p>
                 </div>
-                <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
-                    <h2>Newsletter</h2>
-                    <p>Stay update with our latest</p>
-                    <div class="form-element">
-                        <input type="text" placeholder="Email"><span><i class="fas fa-chevron-right"></i></span>
-                    </div>
-                </div>
                 <div class="instagram" data-aos="fade-left" data-aos-delay="200">
                     <h2>Instagram</h2>
                     <div class="flex-row">
@@ -472,13 +468,23 @@
         <script src="./js/aos.js"></script>
 
         <!-- Custom Javascript file -->
-        <script src="./js/main.js"></script>
+        <script src="js/main.js"></script>
 
         <script>
                                 function menuToggle() {
                                     const toggleMenu = document.querySelector(".menu");
                                     toggleMenu.classList.toggle("active2");
                                 }
+                                
+                                function openNav(){
+                                    if(document.getElementById('header').style.height === '20rem'){
+                                        document.getElementById('header').style.height = '4rem'
+                                    }else{
+                                        document.getElementById('header').style.height = '20rem'
+                                    }
+                                    
+                                }
+                              
         </script>
     </body>
 

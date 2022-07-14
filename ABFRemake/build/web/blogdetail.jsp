@@ -67,21 +67,24 @@
         <nav class="nav" id="header">
             <form action="MainController" method="POST">
                 <div class="nav-menu row">
-                    <div class="nav-brand col-sm-2">
+                    <div class="nav-brand">
                         <a href="MainController?action=GetList" class="text-gray">Academic Blog</a>
                     </div>
-                    <div class="toggle-collapse">
+                    <div onclick="openNav();" class="toggle-collapse">
                         <div class="toggle-icons">
                             <i class="fas fa-bars"></i>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="">
                         <ul class="nav-items">
                             <li class="nav-link">
                                 <a href="MainController?action=GetList">Home</a>
                             </li>
                             <li class="nav-link">
-                                <a href="#">Feedback</a>
+                                <a href="MainController?action=GetFeedbackTypeList">Feedback</a>
+                            </li>
+                            <li class="nav-link non-display">
+                                <a href="MainController?action=GoToPostBlogPage&position=homepage.jsp">New Blog</a>
                             </li>
                         </ul>
                     </div>
@@ -135,7 +138,7 @@
         <section class="py-5">
             <div class="container py-4">
                 <div class="row text-center">
-                    <div class="col-lg-8 mx-auto"><a style="background-color: #104f55; color: white; padding: 0.5rem;"  class="category-link mb-3 d-inline-block" href="MainController?action=SearchMajor&majorID=<%= majorID %>&majorName=<%= majorName %>"><%= majorName%></a>
+                    <div class="col-lg-8 mx-auto"><a style="background-color: #104f55; color: white; padding: 0.5rem;"  class="category-link mb-3 d-inline-block" href="MainController?action=SearchMajor&majorID=<%= majorID%>&majorName=<%= majorName%>"><%= majorName%></a>
                         <h1><%= blogDetail.getTitle()%></h1>
                         <ul class="list-inline mb-5">
                             <li class="list-inline-item mx-2 text-uppercase text-muted reset-anchor">BY <%= blogDetail.getFullName()%></li>
@@ -182,7 +185,7 @@
                                 }
                             %>
                             <ul class="list-inline mb-0 ms-0 ms-sm-3">
-                                <li class="list-inline-item my-1 me-2"><a class="sidebar-tag-link" href="#!"><%= subjectName%></a></li>
+                                <li class="list-inline-item my-1 me-2"><a class="sidebar-tag-link" href="MainController?action=SearchSubject&subjectID=<%= blogDetail.getSubjectID() %>&subjectName=<%= subjectName %>"><%= subjectName%></a></li>
                             </ul>
                         </div>
                         <%
@@ -403,13 +406,6 @@
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quia atque nemo ad modi officiis
                                         iure, autem nulla tenetur repellendus.</p>
                                 </div>
-                                <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
-                                    <h2>Newsletter</h2>
-                                    <p>Stay update with our latest</p>
-                                    <div class="form-element">
-                                        <input type="text" placeholder="Email"><span><i class="fas fa-chevron-right"></i></span>
-                                    </div>
-                                </div>
                                 <div class="instagram" data-aos="fade-left" data-aos-delay="200">
                                     <h2>Instagram</h2>
                                     <div class="flex-row">
@@ -452,10 +448,18 @@
                         <script src="js/jquery.min.js"></script>
                         <script src="js/templatemo-script.js"></script>
                         <script>
-                            function menuToggle() {
-                                const toggleMenu = document.querySelector(".menu");
-                                toggleMenu.classList.toggle("active2");
-                            }
+                                function menuToggle() {
+                                    const toggleMenu = document.querySelector(".menu");
+                                    toggleMenu.classList.toggle("active2");
+                                }
+                                function openNav() {
+                                    if (document.getElementById('header').style.height === '19rem') {
+                                        document.getElementById('header').style.height = '4rem'
+                                    } else {
+                                        document.getElementById('header').style.height = '19rem'
+                                    }
+
+                                }
                         </script>   
                         </body>
 

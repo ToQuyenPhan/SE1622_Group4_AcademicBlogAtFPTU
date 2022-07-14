@@ -72,7 +72,7 @@
                                 <a href="MainController?action=GetList">Home</a>
                             </li>
                             <li class="nav-link">
-                                <a href="#">Feedback</a>
+                                <a href="MainController?action=GetFeedbackTypeList">Feedback</a>
                             </li>
                         </ul>
                     </div>
@@ -165,8 +165,8 @@
                                 <input type="hidden" name="position" value="<%= position%>"/>
                                 <input type="submit" name="action" value="Cancel"
                                        <button class="tm-btn tm-btn-primary tm-btn-small"></button>
-                                <input type="submit" name="action" value="SaveDraftBlog"
-                                       <button class="tm-btn tm-btn-primary tm-btn-small"></button>
+                                <!--<input type="submit" name="action" value="SaveDraftBlog"
+                                       <button class="tm-btn tm-btn-primary tm-btn-small"></button>-->
 
                                 <input type="submit" name="action" value="Post"
                                        <button class="tm-btn tm-btn-primary tm-btn-small"></button>  
