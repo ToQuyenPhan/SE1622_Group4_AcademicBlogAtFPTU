@@ -117,35 +117,36 @@
             <!-- ---------------------- Site Content -------------------------->
 
             <section class="site-blog-content">
+
+                <%
+                    List<BlogDTO> listAllBlogs = (List<BlogDTO>) request.getAttribute("LIST_ALL_BLOGS");
+                    List<BlogDTO> listPopulartBlogs = (List<BlogDTO>) session.getAttribute("LIST_POPULAR_BLOGS");
+                    List<MajorDTO> listMajor = (List<MajorDTO>) session.getAttribute("LIST_MAJOR");
+                    List<SubjectDTO> listSubject = (List<SubjectDTO>) session.getAttribute("LIST_SUBJECT");
+                    String majorName = request.getParameter("majorName");
+                    String searchInfor = "";
+                    if (majorName == null) {
+                        searchInfor = search;
+                    } else {
+                        searchInfor = majorName;
+                    }
+                    if (listAllBlogs != null) {
+                        if (listAllBlogs.size() > 0) {
+                %>
                 <div>
-                    <%
-                        List<BlogDTO> listAllBlogs = (List<BlogDTO>) request.getAttribute("LIST_ALL_BLOGS");
-                        String majorName = request.getParameter("majorName");
-                        String searchInfor = "";
-                        if (majorName == null) {
-                            searchInfor = search;
-                        } else {
-                            searchInfor = majorName;
-                        }
-                    %>
                     <h3><%= listAllBlogs.size()%> results for: <%= searchInfor%></h3>
                 </div>
                 <div class="site-content">
-
                     <div class="posts">
                         <%
-                            List<BlogDTO> listPopulartBlogs = (List<BlogDTO>) session.getAttribute("LIST_POPULAR_BLOGS");
-                            List<MajorDTO> listMajor = (List<MajorDTO>) session.getAttribute("LIST_MAJOR");
-                            List<SubjectDTO> listSubject = (List<SubjectDTO>) session.getAttribute("LIST_SUBJECT");
-                            if (listAllBlogs != null) {
-                                if (listAllBlogs.size() > 0) {
-                                    int index = 0;
-                                    for (BlogDTO blog : listAllBlogs) {
-                                        if (index == 4) {
-                                            break;
-                                        }
-                                        String content = "";
-                                        String remain = "";
+
+                            int index = 0;
+                            for (BlogDTO blog : listAllBlogs) {
+                                if (index == 4) {
+                                    break;
+                                }
+                                String content = "";
+                                String remain = "";
                         %>
                         <form action="MainController"method="POST">
                             <div class="post-content" data-aos="zoom-in" data-aos-delay="200">
@@ -182,9 +183,7 @@
                             </div>
                         </form>
                         <%
-                                        index++;
-                                    }
-                                }
+                                index++;
                             }
                         %>
                         <hr>
@@ -196,12 +195,30 @@
                             <a href="#"><i class="fas fa-chevron-right"></i></a>
                         </div>
                     </div>
+                    <%
+                        }
+                    } else {
+                        String message = (String) request.getAttribute("MESSAGE");
+                        if (message == null) {
+                            message = "";
+                        }
+                    %>
+                    <div class="site-content">
+                        <div class="posts">
+                            <div class="post-content">
+                                <h1><%= message%></h1>
+                            </div>
+                        </div>
+                    </div>
+                    <%
+                        }
+
+                    %>
                     <aside class="sidebar">
                         <div class="category">
                             <h2>Majors</h2>
                             <ul class="category-list">
-                                <%
-                                    if (listMajor != null) {
+                                <%                                    if (listMajor != null) {
                                         if (listMajor.size() > 0) {
                                             for (MajorDTO major : listMajor) {
                                                 int numberOfBlogs = 0;
@@ -210,11 +227,11 @@
                                                     if (major.getMajorID() == subject.getMajorID()) {
                                                         subjectID = subject.getSubjectID();
                                                     }
-                                                    for (BlogDTO blog : listAllBlogs) {
-                                                        if (blog.getSubjectID() == subjectID) {
-                                                            numberOfBlogs++;
-                                                        }
-                                                    }
+//                                                    for (BlogDTO blog : listAllBlogs) {
+//                                                        if (blog.getSubjectID() == subjectID) {
+//                                                            numberOfBlogs++;
+//                                                        }
+//                                                    }
                                                 }
                                 %>
                                 <li class="list-items" data-aos="fade-left" data-aos-delay="100">
@@ -235,9 +252,15 @@
                                     <li>
                                         <a style="text-align: center;" href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
                                     </li>
+                                    <%
+                                        if (loginUser.getRoleID() == 3) {
+                                    %>
                                     <li>
-                                        <a style="text-align: center;" href="MainController?action=GetActivityList&userID=<%= loginUser.getUserID()%>">Activity</a>
+                                        <a style="text-align: center;" href="MainController?action=GetApproveList">Approve List</a>
                                     </li>
+                                    <%
+                                        }
+                                    %>
                                     <li>
                                         <a style="text-align: center;" href="MainController?action=Logout">Logout</a>
                                     </li>
@@ -270,13 +293,6 @@
                                     }
                                 }
                             %>
-                        </div>
-                        <div class="newsletter" data-aos="fade-up" data-aos-delay="300">
-                            <h2>Newsletter</h2>
-                            <div class="form-element">
-                                <input type="text" class="input-element" placeholder="Email">
-                                <button class="btn form-btn">Subscribe</button>
-                            </div>
                         </div>
                         <div class="popular-tags">
                             <h2>Subjects</h2>

@@ -13,7 +13,6 @@ import dto.MajorDTO;
 import dto.SubjectDTO;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -62,46 +61,46 @@ public class GetBlogListController extends HttpServlet implements Serializable {
             List<MajorDTO> listMajor = majorDAO.getAllMajors();//Lay ten major
             List<SubjectDTO> listSubject = SubjectDAO.getSubject();
             Collections.sort(listNewestBlogs, BlogDTO.compareDate);
+            HttpSession session = request.getSession();
             if (listAllBlogs.size() > 0) {
-                String value = request.getParameter("sortBy");
-                String orderValue = request.getParameter("sortOrder");
-                if ("date".equals(value)) {//Nếu người dùng chọn sort by date
-                    if ("descending".equals(orderValue)) {//Sắp xếp theo giảm dần
-                        Collections.sort(listAllBlogs, BlogDTO.compareDate);
-                        request.setAttribute("ORDER_OPTION", "Descending");
-                    } else if ("ascending".equals(orderValue)) {//Sắp xếp tang dần
-                        Collections.sort(listAllBlogs, BlogDTO.compareDate);
-                        Collections.reverse(listAllBlogs);
-                        request.setAttribute("ORDER_OPTION", "Ascending");
-                    } else {
-                        request.setAttribute("ORDER_OPTION", "None");
-                    }
-                    request.setAttribute("OPTION", "Date");
-                } else if ("vote".equals(value)) {//Nếu người dùng chọn sort by vote
-                    if ("descending".equals(orderValue)) {//Sắp xếp giảm dần
-                        Collections.sort(listAllBlogs, new Comparator<BlogDTO>() {
-                            @Override
-                            public int compare(BlogDTO o1, BlogDTO o2) {
-                                return o2.getNumberOfVotes() - o1.getNumberOfVotes();
-                            }
-                        });
-                        request.setAttribute("ORDER_OPTION", "Descending");
-                    } else if ("ascending".equals(orderValue)) {//Sắp xếp tăng dần
-                        Collections.sort(listAllBlogs, new Comparator<BlogDTO>() {
-                            @Override
-                            public int compare(BlogDTO o1, BlogDTO o2) {
-                                return o1.getNumberOfVotes() - o2.getNumberOfVotes();
-                            }
-                        });
-                        request.setAttribute("ORDER_OPTION", "Ascending");
-                    } else {
-                        request.setAttribute("ORDER_OPTION", "None");
-                    }
-                    request.setAttribute("OPTION", "Vote");
-                } else {
-                    request.setAttribute("OPTION", "None");
-                }
-                HttpSession session = request.getSession();
+//                String value = request.getParameter("sortBy");
+//                String orderValue = request.getParameter("sortOrder");
+//                if ("date".equals(value)) {//Nếu người dùng chọn sort by date
+//                    if ("descending".equals(orderValue)) {//Sắp xếp theo giảm dần
+//                        Collections.sort(listAllBlogs, BlogDTO.compareDate);
+//                        request.setAttribute("ORDER_OPTION", "Descending");
+//                    } else if ("ascending".equals(orderValue)) {//Sắp xếp tang dần
+//                        Collections.sort(listAllBlogs, BlogDTO.compareDate);
+//                        Collections.reverse(listAllBlogs);
+//                        request.setAttribute("ORDER_OPTION", "Ascending");
+//                    } else {
+//                        request.setAttribute("ORDER_OPTION", "None");
+//                    }
+//                    request.setAttribute("OPTION", "Date");
+//                } else if ("vote".equals(value)) {//Nếu người dùng chọn sort by vote
+//                    if ("descending".equals(orderValue)) {//Sắp xếp giảm dần
+//                        Collections.sort(listAllBlogs, new Comparator<BlogDTO>() {
+//                            @Override
+//                            public int compare(BlogDTO o1, BlogDTO o2) {
+//                                return o2.getNumberOfVotes() - o1.getNumberOfVotes();
+//                            }
+//                        });
+//                        request.setAttribute("ORDER_OPTION", "Descending");
+//                    } else if ("ascending".equals(orderValue)) {//Sắp xếp tăng dần
+//                        Collections.sort(listAllBlogs, new Comparator<BlogDTO>() {
+//                            @Override
+//                            public int compare(BlogDTO o1, BlogDTO o2) {
+//                                return o1.getNumberOfVotes() - o2.getNumberOfVotes();
+//                            }
+//                        });
+//                        request.setAttribute("ORDER_OPTION", "Ascending");
+//                    } else {
+//                        request.setAttribute("ORDER_OPTION", "None");
+//                    }
+//                    request.setAttribute("OPTION", "Vote");
+//                } else {
+//                    request.setAttribute("OPTION", "None");
+//                }
                 request.setAttribute("LIST_ALL_BLOGS", listAllBlogs);
                 request.setAttribute("LIST_NEWEST_BLOGS", listNewestBlogs);
                 session.setAttribute("LIST_POPULAR_BLOGS", listPopularBlogs);

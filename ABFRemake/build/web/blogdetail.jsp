@@ -81,12 +81,6 @@
                                 <a href="MainController?action=GetList">Home</a>
                             </li>
                             <li class="nav-link">
-                                <a href="#">Majors</a>
-                            </li>
-                            <li class="nav-link">
-                                <a href="#">Subjects</a>
-                            </li>
-                            <li class="nav-link">
                                 <a href="#">Feedback</a>
                             </li>
                         </ul>
@@ -102,7 +96,7 @@
                     <div class="profile text-gray col-sm-3">
                         <div class="row">         
                             <a><h6><%= loginUser.getFullName()%></h6></a>
-                            <img src="<%= image%>">
+                            <img onclick="menuToggle();" src="<%= image%>">
                         </div>
                     </div>
                 </div>
@@ -134,14 +128,14 @@
 
                 } else if (content.length() > 250 && content.length() <= 375) {
                     content = blogDetail.getContent().substring(0, 125) + "<br>"
-                            + blogDetail.getContent().substring(125, 250) + "<br>" 
+                            + blogDetail.getContent().substring(125, 250) + "<br>"
                             + blogDetail.getContent().substring(250, blogDetail.getContent().length());
                 }
         %>
         <section class="py-5">
             <div class="container py-4">
                 <div class="row text-center">
-                    <div class="col-lg-8 mx-auto"><a style="background-color: #104f55; color: white; padding: 0.5rem;"  class="category-link mb-3 d-inline-block" href="#!"><%= majorName%></a>
+                    <div class="col-lg-8 mx-auto"><a style="background-color: #104f55; color: white; padding: 0.5rem;"  class="category-link mb-3 d-inline-block" href="MainController?action=SearchMajor&majorID=<%= majorID %>&majorName=<%= majorName %>"><%= majorName%></a>
                         <h1><%= blogDetail.getTitle()%></h1>
                         <ul class="list-inline mb-5">
                             <li class="list-inline-item mx-2 text-uppercase text-muted reset-anchor">BY <%= blogDetail.getFullName()%></li>
@@ -152,7 +146,7 @@
                 <div class="row gy-5">
                     <div class="col-lg-12">
                         <p class="lead drop-caps mb-5"><%= content%></p>
-                        
+
                         <!--<h2>Heading level two</h2>
                         <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                         <div class="row">
@@ -191,8 +185,9 @@
                                 <li class="list-inline-item my-1 me-2"><a class="sidebar-tag-link" href="#!"><%= subjectName%></a></li>
                             </ul>
                         </div>
-                            <%
-                            if ("".equals(numberOfVotes)) {
+                        <%
+                            if (blogDetail.getStatus().equals("approved")) {
+                                if ("".equals(numberOfVotes)) {
                         %>
                         <div id="vote-part" class="form-inline number-blog-detail row">
                             <div class="col-sm-6">
@@ -251,13 +246,6 @@
                         <h3 class="h4 mb-4">Leave a comment</h3>
                         <form class="comment-form" action="MainController" method="POST" class="mb-5">
                             <input type="text" name="content" style="width: 100%;height: 40px" ></br>
-                            <!--<%
-                                String notify_comment = (String) request.getAttribute("notifie_comment");
-                                if (notify_comment == null) {
-                                    notify_comment = "";
-                                }
-                            %>
-                            <%= notify_comment%>-->
                             <input type="hidden" name="userID" value="<%=loginUser.getUserID()%>">                                 
                             <input type="hidden" name="blogID" value="<%=blogDetail.getBlogID()%>">
                             <input type="hidden" name="subjectID" value="<%=blogDetail.getSubjectID()%>">
@@ -307,10 +295,33 @@
                                 </ul>-->
                             </li>
                             <%
+                                            }
                                         }
                                     }
                                 }
                             %>
+                        </ul>
+                    </div>
+                    <div style="top: 5rem;" class="menu">
+                        <ul>
+                            <li>
+                                <a style="text-align: center;" href="profile.jsp">My profile</a>
+                            </li>
+                            <li>
+                                <a style="text-align: center;" href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
+                            </li>
+                            <%
+                                if (loginUser.getRoleID() == 3) {
+                            %>
+                            <li>
+                                <a style="text-align: center;" href="MainController?action=GetApproveList">Approve List</a>
+                            </li>
+                            <%
+                                }
+                            %>
+                            <li>
+                                <a style="text-align: center;" href="MainController?action=Logout">Logout</a>
+                            </li>
                         </ul>
                     </div>
                     <!-- Blog sidebar-->
@@ -434,12 +445,18 @@
                                 <span><a href="#header"><i class="fas fa-arrow-circle-up fa-2x"></i></a></span>
                             </div>
                         </footer>
-<!--                        <script>
-                            var loc = window.location.href;
-                            window.location.href = loc + "#vote-part";
-                        </script>-->
+                        <!--                        <script>
+                                                    var loc = window.location.href;
+                                                    window.location.href = loc + "#vote-part";
+                                                </script>-->
                         <script src="js/jquery.min.js"></script>
                         <script src="js/templatemo-script.js"></script>
+                        <script>
+                            function menuToggle() {
+                                const toggleMenu = document.querySelector(".menu");
+                                toggleMenu.classList.toggle("active2");
+                            }
+                        </script>   
                         </body>
 
                         </html>

@@ -82,6 +82,7 @@
                             <div class="search-search"><button type="submit" name="action" value="Search"><i class="fas fa-search"></i></button></div>
                         </div>
                     </div>
+                    <div class="new col-sm-1"><a href="MainController?action=GoToPostBlogPage&position=homepage.jsp"><i class="fas fa-pen"></i></a></div>
                     <div class="profile text-gray col-sm-3">
                         <div class="row">         
                             <a><h6><%= loginUser.getFullName()%></h6></a>
@@ -119,28 +120,8 @@
                             </div>
 
                             <div class="mb-4">
-                                <!--
-                                <p class="tm-mb-40">Subject<input type="text" name="subjectID" required=""></p></br>
-                                -->
-                                <%
-                                    List<SubjectDTO> listAllSubjects = (List<SubjectDTO>) session.getAttribute("LIST_SUBJECT");
-                                    String strSubjectID = (String) request.getAttribute("SUBJECT");
-                                    int subjectID = 0;
-                                    String subjectName = "";
-                                    if (strSubjectID != null) {
-                                        subjectID = Integer.parseInt(strSubjectID);
-                                    } else {
-                                        subjectID = 0;
-                                        subjectName = "-none-";
-                                    }
-                                    for (SubjectDTO subject : listAllSubjects) {
-                                        if (subjectID == subject.getSubjectID()) {
-                                            subjectName = subject.getSubjectName();
-                                            break;
-                                        }
-                                    }
-                                %>
-                                Subject <select class="form-control" name="subjectID">
+                                Subject
+                                <select name="subjectID" class="form-control" >
                                     <%
                                         ArrayList<SubjectDTO> listc = SubjectDAO.getSubject();
                                         if (listc != null && !listc.isEmpty()) {
@@ -151,14 +132,7 @@
                                             }
                                         }
                                     %>
-                                </select> 
-                                <%
-                                    String subjectError = blogError.getSubjectIDError();
-                                    if (subjectError == null) {
-                                        subjectError = "";
-                                    }
-                                %>
-                                <h6><%= subjectError%></h6>
+                                </select>
                             </div>
                             <div class="mb-4">
                                 <%
@@ -167,7 +141,7 @@
                                         content = "";
                                     }
                                 %>
-                                Details<textarea class="form-control" name="content" rows="6"></textarea>
+                                Details<textarea class="form-control" name="content" rows="6"><%= content %></textarea>
                                 <%
                                     String contentError = blogError.getContentError();
                                     if (contentError == null) {
@@ -177,86 +151,79 @@
                                 <h6><%= contentError%></h6>
                             </div>
                             <div class="mb-4">
-                                <!--
-                                Image: ${requestScope.BLOG_ERROR.imageError}<input type="text" name="image" required=""></br></br>
-                                -->
+                                <%
+                                    String imageError = blogError.getImageError();
+                                    if (imageError == null) {
+                                        imageError = "";
+                                    }
+                                %>
                                 <form method="post" action="MainController" enctype="multipart/form-data">
-                                    Image<input class="form-control" name="file" type="file"></br>
-                                    <!--
-                                    <input type="submit" value="Upload" name="action"
-                                           <button class="tm-btn tm-btn-primary tm-btn-small"></button>
-                                    <%
-                                        String imageError = blogError.getImageError();
-                                        if (imageError == null) {
-                                            imageError = "";
-                                        }
-                                    %>
-                                    <%= imageError%>
-                                        </form>-->
-                                    </div>
-                                    <div class="text-right post-blog-form">
-                                        <input type="hidden" name="position" value="<%= position%>"/>
-                                        <input type="submit" name="action" value="Cancel"
-                                               <button class="tm-btn tm-btn-primary tm-btn-small"></button>
-                                        <input type="submit" name="action" value="SaveDraftBlog"
-                                               <button class="tm-btn tm-btn-primary tm-btn-small"></button>
-
-                                        <input type="submit" name="action" value="Post"
-                                               <button class="tm-btn tm-btn-primary tm-btn-small"></button>  
-                                    </div>
-                                </form>
-
+                                    Image<input class="form-control" name="file" type="file">
+                                <h6><%= imageError%></h6>
                             </div>
+                            <div class="text-right post-blog-form">
+                                <input type="hidden" name="position" value="<%= position%>"/>
+                                <input type="submit" name="action" value="Cancel"
+                                       <button class="tm-btn tm-btn-primary tm-btn-small"></button>
+                                <input type="submit" name="action" value="SaveDraftBlog"
+                                       <button class="tm-btn tm-btn-primary tm-btn-small"></button>
+
+                                <input type="submit" name="action" value="Post"
+                                       <button class="tm-btn tm-btn-primary tm-btn-small"></button>  
+                            </div>
+                        </form>
+
                     </div>
-                    <footer class="footer">
-                        <div class="container">
-                            <div class="about-us" data-aos="fade-right" data-aos-delay="200">
-                                <h2>About us</h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quia atque nemo ad modi officiis
-                                    iure, autem nulla tenetur repellendus.</p>
-                            </div>
-                            <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
-                                <h2>Newsletter</h2>
-                                <p>Stay update with our latest</p>
-                                <div class="form-element">
-                                    <input type="text" placeholder="Email"><span><i class="fas fa-chevron-right"></i></span>
-                                </div>
-                            </div>
-                            <div class="instagram" data-aos="fade-left" data-aos-delay="200">
-                                <h2>Instagram</h2>
-                                <div class="flex-row">
-                                    <img src="./assets/instagram/thumb-card3.png" alt="insta1">
-                                    <img src="./assets/instagram/thumb-card4.png" alt="insta2">
-                                    <img src="./assets/instagram/thumb-card5.png" alt="insta3">
-                                </div>
-                                <div class="flex-row">
-                                    <img src="./assets/instagram/thumb-card6.png" alt="insta4">
-                                    <img src="./assets/instagram/thumb-card7.png" alt="insta5">
-                                    <img src="./assets/instagram/thumb-card8.png" alt="insta6">
-                                </div>
-                            </div>
-                            <div class="follow" data-aos="fade-left" data-aos-delay="200">
-                                <h2>Follow us</h2>
-                                <p>Let us be Social</p>
-                                <div>
-                                    <i class="fab fa-facebook-f"></i>
-                                    <i class="fab fa-twitter"></i>
-                                    <i class="fab fa-instagram"></i>
-                                    <i class="fab fa-youtube"></i>
-                                </div>
+                </div>
+                <footer class="footer">
+                    <div class="container">
+                        <div class="about-us" data-aos="fade-right" data-aos-delay="200">
+                            <h2>About us</h2>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quia atque nemo ad modi officiis
+                                iure, autem nulla tenetur repellendus.</p>
+                        </div>
+                        <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
+                            <h2>Newsletter</h2>
+                            <p>Stay update with our latest</p>
+                            <div class="form-element">
+                                <input type="text" placeholder="Email"><span><i class="fas fa-chevron-right"></i></span>
                             </div>
                         </div>
-                        <div class="rights flex-row">
-                            <h4 class="text-gray">
-                                Copyright ©2019 All rights reserved | made by
-                                <a href="www.youtube.com/c/dailytuition" target="_black">Daily Tuition <i class="fab fa-youtube"></i>
-                                    Channel</a>
-                            </h4>
+                        <div class="instagram" data-aos="fade-left" data-aos-delay="200">
+                            <h2>Instagram</h2>
+                            <div class="flex-row">
+                                <img src="./assets/instagram/thumb-card3.png" alt="insta1">
+                                <img src="./assets/instagram/thumb-card4.png" alt="insta2">
+                                <img src="./assets/instagram/thumb-card5.png" alt="insta3">
+                            </div>
+                            <div class="flex-row">
+                                <img src="./assets/instagram/thumb-card6.png" alt="insta4">
+                                <img src="./assets/instagram/thumb-card7.png" alt="insta5">
+                                <img src="./assets/instagram/thumb-card8.png" alt="insta6">
+                            </div>
                         </div>
-                        <div class="move-up">
-                            <span><a href="#header"><i class="fas fa-arrow-circle-up fa-2x"></i></a></span>
+                        <div class="follow" data-aos="fade-left" data-aos-delay="200">
+                            <h2>Follow us</h2>
+                            <p>Let us be Social</p>
+                            <div>
+                                <i class="fab fa-facebook-f"></i>
+                                <i class="fab fa-twitter"></i>
+                                <i class="fab fa-instagram"></i>
+                                <i class="fab fa-youtube"></i>
+                            </div>
                         </div>
-                    </footer>
+                    </div>
+                    <div class="rights flex-row">
+                        <h4 class="text-gray">
+                            Copyright ©2019 All rights reserved | made by
+                            <a href="www.youtube.com/c/dailytuition" target="_black">Daily Tuition <i class="fab fa-youtube"></i>
+                                Channel</a>
+                        </h4>
+                    </div>
+                    <div class="move-up">
+                        <span><a href="#header"><i class="fas fa-arrow-circle-up fa-2x"></i></a></span>
+                    </div>
+                </footer>
             </main>
         </div>
 

@@ -98,7 +98,7 @@
                     <div class="profile text-gray col-sm-3">
                         <div class="row">         
                             <a><h6><%= loginUser.getFullName()%></h6></a>
-                            <img src="<%= image%>">
+                            <img onclick="menuToggle();" src="<%= image%>">
                         </div>
                     </div>
                 </div>
@@ -123,9 +123,9 @@
             <!-- ---------------------- Site Content -------------------------->
 
             <section class="site-blog-content">
-                    <%
-                        List<BlogDTO> listAllBlogs = (List<BlogDTO>) request.getAttribute("LIST_ALL_PERSONAL_BLOGS");
-                    %>
+                <%
+                    List<BlogDTO> listAllBlogs = (List<BlogDTO>) request.getAttribute("LIST_ALL_PERSONAL_BLOGS");
+                %>
                 <div class="site-content">
 
                     <div class="posts">
@@ -223,11 +223,36 @@
                                     }
                                 %>
                             </ul>
+                            <div style="top: 5rem;" class="menu">
+                                <ul>
+                                    <li>
+                                        <a style="text-align: center;" href="profile.jsp">My profile</a>
+                                    </li>
+                                    <li>
+                                        <a style="text-align: center;" href="#">Blog List</a>
+                                    </li>
+                                    <%
+                                        if (loginUser.getRoleID() == 3) {
+                                    %>
+                                    <li>
+                                        <a style="text-align: center;" href="MainController?action=GetApproveList">Approve List</a>
+                                    </li>
+                                    <%
+                                            }
+                                    %>
+                                    <li>
+                                        <a style="text-align: center;" href="MainController?action=Logout">Logout</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="popular-post">
                             <h2>Popular Post</h2>
                             <%
-                                if (listPopulartBlogs != null) {
+                                if (listPopulartBlogs
+
+                                
+                                    != null) {
                                     if (listPopulartBlogs.size() > 0) {
                                         for (BlogDTO blog : listPopulartBlogs) {
                             %>
@@ -262,7 +287,10 @@
                             <h2>Subjects</h2>
                             <div class="tags flex-row">
                                 <%
-                                    if (listSubject != null) {
+                                    if (listSubject
+
+                                    
+                                        != null) {
                                         if (listSubject.size() > 0) {
                                             for (SubjectDTO subject : listSubject) {
 
@@ -352,10 +380,10 @@
         <!-- Custom Javascript file -->
         <script src="./js/main.js"></script>
         <script>
-            function menuToggle() {
-                const toggleMenu = document.querySelector(".menu");
-                toggleMenu.classList.toggle("active2");
-            }
+                                function menuToggle() {
+                                    const toggleMenu = document.querySelector(".menu");
+                                    toggleMenu.classList.toggle("active2");
+                                }
         </script>
     </body>
 

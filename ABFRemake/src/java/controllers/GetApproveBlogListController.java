@@ -9,9 +9,7 @@ import dao.BlogDAO;
 import dto.BlogDTO;
 import dto.UserDTO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -48,21 +46,22 @@ public class GetApproveBlogListController extends HttpServlet {
             int userID = loginUser.getUserID();
             List<BlogDTO> listApproveBlogs = dao.getAllApproveBlogs(userID);//Lấy hết các blog
             if (listApproveBlogs.size() > 0) {
-                String value = request.getParameter("sortBy");
-                String orderValue = request.getParameter("sortOrder");
-                if ("date".equals(value)) {//Nếu người dùng chọn sort by date
-                    if("descending".equals(orderValue)){//Sắp xếp theo giảm dần
-                        Collections.sort(listApproveBlogs, BlogDTO.compareDate);
-                        request.setAttribute("ORDER_OPTION", "Descending");
-                    }else if("ascending".equals(orderValue)){//Sắp xếp giảm dần
-                        Collections.sort(listApproveBlogs, BlogDTO.compareDate);
-                        Collections.reverse(listApproveBlogs);
-                        request.setAttribute("ORDER_OPTION", "Ascending");
-                    }else{
-                        request.setAttribute("ORDER_OPTION", "None");
-                    }
-                    request.setAttribute("OPTION", "Date");
-                } 
+//                String value = request.getParameter("sortBy");
+//                String orderValue = request.getParameter("sortOrder");
+//                if ("date".equals(value)) {//Nếu người dùng chọn sort by date
+//                    if("descending".equals(orderValue)){//Sắp xếp theo giảm dần
+//                        Collections.sort(listApproveBlogs, BlogDTO.compareDate);
+//                        request.setAttribute("ORDER_OPTION", "Descending");
+//                    }else if("ascending".equals(orderValue)){//Sắp xếp giảm dần
+//                        Collections.sort(listApproveBlogs, BlogDTO.compareDate);
+//                        Collections.reverse(listApproveBlogs);
+//                        request.setAttribute("ORDER_OPTION", "Ascending");
+//                    }else{
+//                        request.setAttribute("ORDER_OPTION", "None");
+//                    }
+//                    request.setAttribute("OPTION", "Date");
+//                } 
+                Collections.sort(listApproveBlogs, BlogDTO.compareDate);
                 request.setAttribute("LIST_ALL_BLOGS", listApproveBlogs);
             }
             url = SUCCESS;

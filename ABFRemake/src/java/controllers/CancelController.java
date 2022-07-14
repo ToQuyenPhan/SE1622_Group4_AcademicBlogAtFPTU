@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import dto.UserDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -22,6 +24,7 @@ public class CancelController extends HttpServlet {
 
     private static final String ERROR = "error.jsp";
     private static final String HOMEPAGE = "homepage.jsp";
+    private static final String APPROVEBLOG = "approveblog.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,6 +44,12 @@ public class CancelController extends HttpServlet {
             if (position != null) {
                 if(HOMEPAGE.equals(position)){
                     url = "MainController?action=GetList";
+                }
+                if(APPROVEBLOG.equals(position)){
+                    HttpSession session = request.getSession();
+                    UserDTO loginUser = (UserDTO)session.getAttribute("LOGIN_USER");
+                    String userID = String.valueOf(loginUser.getUserID());
+                    url = "MainController?action=GetApproveList";
                 }
             }
         } catch (Exception e) {

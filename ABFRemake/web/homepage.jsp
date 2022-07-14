@@ -110,15 +110,15 @@
 
             <section class="site-title">
                 <div class="site-background">
-                    <% 
+                    <%
                         String roleName = "";
-                        if(loginUser.getRoleID() == 2){
+                        if (loginUser.getRoleID() == 2) {
                             roleName = "Student";
-                        }else{
+                        } else {
                             roleName = "Mentor";
                         }
                     %>
-                    <h2>Welcome <%= roleName %> <%= loginUser.getFullName() %>!</h2>
+                    <h2>Welcome <%= roleName%> <%= loginUser.getFullName()%>!</h2>
                     <h1>Amazing Place on Sharing Experiences</h1>
                     <a href="#main-part"><button class="btn">Explore</button></a>
                     <div class="menu">
@@ -129,9 +129,15 @@
                             <li>
                                 <a href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
                             </li>
+                            <%
+                                if (loginUser.getRoleID() == 3) {
+                            %>
                             <li>
-                                <a href="MainController?action=GetActivityList&userID=<%= loginUser.getUserID()%>">Activity</a>
+                                <a href="MainController?action=GetApproveList">Approve List</a>
                             </li>
+                            <%
+                                }
+                            %>
                             <li>
                                 <a href="MainController?action=Logout">Logout</a>
                             </li>
@@ -152,7 +158,6 @@
                         </div>
                         <div class="owl-carousel owl-theme blog-post row">
                             <%
-
                                 List<BlogDTO> listAllBlogs = (List<BlogDTO>) request.getAttribute("LIST_ALL_BLOGS");
                                 List<BlogDTO> listNewestBlogs = (List<BlogDTO>) request.getAttribute("LIST_NEWEST_BLOGS");
                                 List<BlogDTO> listPopulartBlogs = (List<BlogDTO>) session.getAttribute("LIST_POPULAR_BLOGS");
@@ -209,17 +214,17 @@
 //                                                    different = different % minutesInMilli;
 //
 //                                                    long elapsedSeconds = different / secondsInMilli;
-%> 
+                            %> 
                             <div class="blog-content col-sm-3">
                                 <form action="MainController" method="POST">
-                                <img src="<%= blog.getImage()%>" alt="post-<%= index%>">
-                                <div class="blog-title">
-                                    <h3><%= title%></h3>
-                                    <input type="hidden" name="majorID" value="<%= majorID %>"/>
-                                    <input type="hidden" name="majorName" value="<%= majorName %>"/>
-                                    <button type="submit" name="action" value="SearchMajor" class="btn btn-blog"><%= majorName%></button>
-                                    <span><%= blog.getDate()%></span>
-                                </div>
+                                    <img src="<%= blog.getImage()%>" alt="post-<%= index%>">
+                                    <div class="blog-title">
+                                        <h3><%= title%></h3>
+                                        <input type="hidden" name="majorID" value="<%= majorID%>"/>
+                                        <input type="hidden" name="majorName" value="<%= majorName%>"/>
+                                        <button type="submit" name="action" value="SearchMajor" class="btn btn-blog"><%= majorName%></button>
+                                        <span><%= blog.getDate()%></span>
+                                    </div>
                                 </form>
                             </div>
                             <%
@@ -306,7 +311,8 @@
                         <div class="category">
                             <h2>Majors</h2>
                             <ul class="category-list">
-                                <%                                    if (listMajor != null) {
+                                <%                                    
+                                if (listMajor != null) {
                                         if (listMajor.size() > 0) {
                                             for (MajorDTO major : listMajor) {
                                                 int numberOfBlogs = 0;
@@ -323,7 +329,7 @@
                                                 }
                                 %>
                                 <li class="list-items" data-aos="fade-left" data-aos-delay="100">
-                                    <a href="MainController?action=SearchMajor&majorID=<%= major.getMajorID() %>&majorName=<%= major.getMajorName() %>"><%= major.getMajorName()%></a>
+                                    <a href="MainController?action=SearchMajor&majorID=<%= major.getMajorID()%>&majorName=<%= major.getMajorName()%>"><%= major.getMajorName()%></a>
                                     <span>(<%= numberOfBlogs%>)</span>
                                 </li>
                                 <%
@@ -367,13 +373,13 @@
                                 }
                             %>
                         </div>
-<!--                        <div class="newsletter" data-aos="fade-up" data-aos-delay="300">
-                            <h2>Newsletter</h2>
-                            <div class="form-element">
-                                <input type="text" class="input-element" placeholder="Email">
-                                <button class="btn form-btn">Subscribe</button>
-                            </div>
-                        </div>-->
+                        <!--                        <div class="newsletter" data-aos="fade-up" data-aos-delay="300">
+                                                    <h2>Newsletter</h2>
+                                                    <div class="form-element">
+                                                        <input type="text" class="input-element" placeholder="Email">
+                                                        <button class="btn form-btn">Subscribe</button>
+                                                    </div>
+                                                </div>-->
                         <div class="popular-tags">
                             <h2>Subjects</h2>
                             <div class="tags flex-row">

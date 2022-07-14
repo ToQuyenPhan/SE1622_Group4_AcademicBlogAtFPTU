@@ -28,10 +28,12 @@ import javax.servlet.http.Part;
         maxRequestSize = 1024 * 1024 * 50)
 @WebServlet(name = "PostBlogController", urlPatterns = {"/PostBlogController"})
 public class PostBlogController extends HttpServlet {
+
     private static final String ERROR = "postblog.jsp";
     private static final String SUCCESS = "MainController?action=GetList";
     public static final String UPLOAD_DIR = "uploads";//local save image
     public String dbFileName = "";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -48,29 +50,34 @@ public class PostBlogController extends HttpServlet {
         BlogError blogError = new BlogError();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date dateFormat = new Date();
-        
+
         String applicationPath = getServletContext().getRealPath("");
         String uploadPath = applicationPath + File.separator + UPLOAD_DIR;
-        
+
         try {
             int userID = Integer.parseInt(request.getParameter("userID"));
             int subjectID = Integer.parseInt(request.getParameter("subjectID"));
             String title = request.getParameter("title").trim();
             String content = request.getParameter("content").trim();
             String date = sdf.format(dateFormat);
-            Part part = request.getPart("file");//
-            String fileName = extractFileName(part);//file name
-            String image = UPLOAD_DIR + File.separator + fileName;
-            File fileUploadDirectory = new File(uploadPath);
-            if (!fileUploadDirectory.exists()) {
-                fileUploadDirectory.mkdirs();
-            }
-            
-            String savePath = uploadPath + File.separator + fileName;
-            part.write(savePath + File.separator);
-            File fileSaveDir1 = new File(savePath);
-            part.write(savePath + File.separator);
             boolean checkValidation = false;
+            Part part = request.getPart("file");
+            String image = "";
+            String fileName = extractFileName(part);//file name
+            if ("".equals(fileName)) {
+                blogError.setImageError("Please choose an image!");
+                checkValidation = true;
+            } else {
+                image = UPLOAD_DIR + File.separator + fileName;
+                File fileUploadDirectory = new File(uploadPath);
+                if (!fileUploadDirectory.exists()) {
+                    fileUploadDirectory.mkdirs();
+                }
+                String savePath = uploadPath + File.separator + fileName;
+                part.write(savePath + File.separator);
+                File fileSaveDir1 = new File(savePath);
+                part.write(savePath + File.separator);
+            }
             BlogDAO dao = new BlogDAO();
             if (title.length() < 10 || title.length() > 50) {
                 blogError.setTitleError("Title must be in [10,50]!");
@@ -80,7 +87,7 @@ public class PostBlogController extends HttpServlet {
                 blogError.setContentError("Content must be greater than 50!");
                 checkValidation = true;
             }
-            
+
             if (!checkValidation) {
                 boolean check = dao.postBlog(userID, subjectID, title, content, date, image);
                 if (check) {
@@ -97,7 +104,7 @@ public class PostBlogController extends HttpServlet {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
-    
+
     private String extractFileName(Part part) {//This method will print the file name.
         String contentDisp = part.getHeader("content-disposition");
         String[] items = contentDisp.split(";");
