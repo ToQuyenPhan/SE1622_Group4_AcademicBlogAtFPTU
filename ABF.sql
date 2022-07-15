@@ -149,6 +149,9 @@ insert into Role(roleName) values('Mentor')
 insert into [User](password,fullName,roleID,email,image,numberOfBlogs,gender,dateOfBirth,
 address,contact,aboutme,status) values ('123','Phan Thi To Quyen', 1, 'quyenlh01@gmail.com',
 null, 0,null, null,null,null,null, 1)
+insert into [User](password,fullName,roleID,email,image,numberOfBlogs,gender,dateOfBirth,
+address,contact,aboutme,status) values ('123','Phan Thi To Quyen', 2, 'quyenlh012@gmail.com',
+null, 0,null, null,null,null,null, 1)
 
 --Bảng FeedbackType--
 insert into FeedbackType(feedbackName) values('About System')
