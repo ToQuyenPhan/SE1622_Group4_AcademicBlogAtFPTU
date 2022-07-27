@@ -138,6 +138,9 @@
                             <li>
                                 <a href="MainController?action=GetApproveList">Approve List</a>
                             </li>
+                            <li>
+                                <a href="MainController?action=GetApproveList">Vote Rating</a>
+                            </li>
                             <%
                                 }
                             %>
