@@ -163,7 +163,7 @@
                                     <div class="post-info flex-row">
                                         <span><i class="fas fa-user text-gray"></i>&nbsp;&nbsp;<%= blog.getFullName()%></span>
                                         <span><i class="fas fa-calendar-alt text-gray"></i>&nbsp;&nbsp;<%= blog.getDate()%></span>
-                                        <span><%= blog.getNumberOfComments()%> Comments</span>
+<!--                                        <span><%= blog.getNumberOfComments()%> Comments</span>-->
                                     </div>
                                 </div>
                                 <div class="post-title">
@@ -193,13 +193,13 @@
                             }
                         %>
                         <hr>
-                        <div class="pagination flex-row">
+<!--                        <div class="pagination flex-row">
                             <a href="#"><i class="fas fa-chevron-left"></i></a>
                             <a href="#" class="pages">1</a>
                             <a href="#" class="pages">2</a>
                             <a href="#" class="pages">3</a>
                             <a href="#"><i class="fas fa-chevron-right"></i></a>
-                        </div>
+                        </div>-->
                     </div>
                     <%
                         }
@@ -243,7 +243,7 @@
                                                     }
                                     %>
                                     <li class="list-items" data-aos="fade-left" data-aos-delay="100">
-                                        <a href="#"><%= major.getMajorName()%></a>
+                                        <a href="MainController?action=SearchMajor&majorID=<%= major.getMajorID()%>&majorName=<%= major.getMajorName()%>"><%= major.getMajorName()%></a>
                                         <span>(<%= numberOfBlogs%>)</span>
                                     </li>
                                     <%

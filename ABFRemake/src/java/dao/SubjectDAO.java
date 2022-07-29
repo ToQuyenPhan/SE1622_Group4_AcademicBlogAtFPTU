@@ -20,6 +20,7 @@ import utils.DBUtils;
 public class SubjectDAO {
     private static final String GET_SUBJECT = "SELECT subjectID, subjectName,majorID,status FROM Subject WHERE status = 1";
     private static final String DELETE_SUBJECT = "UPDATE Subject SET status = 0 WHERE subjectID = ?";
+    private static final String SEARCH_SUBJECT_BY_NAME = "SELECT subjectID, subjectName,majorID,status FROM Subject WHERE subjectName LIKE ? AND status = 1";
     
     public static ArrayList<SubjectDTO> getSubject(){
         ArrayList<SubjectDTO> list = new ArrayList<>();
@@ -69,4 +70,39 @@ public class SubjectDAO {
         }
         return check;
     }
+    
+    public static ArrayList<SubjectDTO> searchSubjectByName(String searchName) throws SQLException{
+        ArrayList<SubjectDTO> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement psm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                psm = conn.prepareStatement(SEARCH_SUBJECT_BY_NAME);
+                psm.setString(1, "%" +searchName+ "%");
+                rs = psm.executeQuery();
+                while (rs != null && rs.next()) {
+                    int subjectID = rs.getInt("subjectID");
+                    String subjectName = rs.getString("subjectName");
+                    int majorID = rs.getInt("majorID");
+                    String status = rs.getString("status");
+                    SubjectDTO c= new SubjectDTO(subjectID,majorID, subjectName,status);
+                    list.add(c);
+                }}
+            } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (psm != null) {
+                psm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;   
+        }
 }

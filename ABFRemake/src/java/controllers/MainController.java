@@ -63,6 +63,10 @@ public class MainController extends HttpServlet {
     private static final String CANCEL = "Cancel";
     private static final String SEARCH_MAJOR = "SearchMajor";
     private static final String SEARCH_SUBJECT = "SearchSubject";
+    private static final String SEARCH_FEEDBACK_BY_NAME = "SearchFeedbackByName";
+    private static final String SEARCH_MAJOR_BY_NAME = "SearchMajorByName";
+    private static final String SEARCH_SUBJECT_BY_NAME = "SearchSubjectByName";
+    private static final String UPDATE_STATUS_USER = "UpdateStatusUser";
 
     private static final String LOGIN_WITH_GOOGLE_CONTROLLER = "LoginWithGoogleController";
     private static final String LOGIN_CONTROLLER = "LoginController";
@@ -100,6 +104,10 @@ public class MainController extends HttpServlet {
     private static final String CANCEL_CONTROLLER = "CancelController";
     private static final String SEARCH_BY_MAJOR_CONTROLLER = "SearchByMajorController";
     private static final String SEARCH_BY_SUBJECT_CONTROLLER = "SearchBySubjectController";
+    private static final String SEARCH_FEEDBACK_BY_NAME_CONTROLLER = "SearchFeedbackByNameController";
+    private static final String SEARCH_MAJOR_BY_NAME_CONTROLLER = "SearchMajorByNameController";
+    private static final String SEARCH_SUBJECT_BY_NAME_CONTROLLER = "SearchSubjectByNameController";
+    private static final String BAN_OR_UNBAN_CONTROLLER = "BanOrUnBanUserController";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -165,12 +173,24 @@ public class MainController extends HttpServlet {
             } else if (DELETE_SUBJECT.equals(action)) {
                 url = DELETE_SUBJECT_CONTROLLER;
             } else if (VIEW_APPROVE_BLOG_DETAIL.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
                 url = APPROVE_BLOG_DETAIL_CONTROLLER;
             } else if (APPROVE_BLOG.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
                 url = APPROVE_BLOG_CONTROLLER;
             } else if (REJECT_BLOG.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
                 url = REJECT_BLOG_CONTROLLER;
             } else if (FEEDBACK_LIST.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
                 url = FEEDBACK_LIST_CONTROLLER;
             } else if (FEEDBACK_DETAIL.equals(action)) {
                 url = FEEDBACK_DETAIL_CONTROLLER;
@@ -182,6 +202,9 @@ public class MainController extends HttpServlet {
                 }
                 url = POST_BLOG_PAGE;
             } else if (VIEW_PERSONAL_PAGE.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
                 url = VIEW_PERSONAL_PAGE_CONTROLLER;
             } else if (SAVE_DRAFT_BLOG.equals(action)) {
                 url = SAVE_DRAFT_BLOG_CONTROLLER;
@@ -192,9 +215,35 @@ public class MainController extends HttpServlet {
             } else if (CANCEL.equals(action)) {
                 url = CANCEL_CONTROLLER;
             } else if (SEARCH_MAJOR.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
                 url = SEARCH_BY_MAJOR_CONTROLLER;
             } else if (SEARCH_SUBJECT.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
                 url = SEARCH_BY_SUBJECT_CONTROLLER;
+            } else if (SEARCH_FEEDBACK_BY_NAME.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
+                url = SEARCH_FEEDBACK_BY_NAME_CONTROLLER;
+            } else if (SEARCH_MAJOR_BY_NAME.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
+                url = SEARCH_MAJOR_BY_NAME_CONTROLLER;
+            } else if (SEARCH_SUBJECT_BY_NAME.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
+                url = SEARCH_SUBJECT_BY_NAME_CONTROLLER;
+            } else if (UPDATE_STATUS_USER.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
+                url = BAN_OR_UNBAN_CONTROLLER;
             } else {
                 request.setAttribute("ERROR_MESSAGE", "Function is not available!");
             }

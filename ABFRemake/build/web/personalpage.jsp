@@ -139,6 +139,12 @@
                                 }
                                 String content = "";
                                 String remain = "";
+                                String status = "";
+                                if(blog.getStatus().equals("approved")){
+                                    status = "Approved";
+                                }else if(blog.getStatus().equals("waiting")){
+                                    status = "Waiting For Approval";
+                                }
                         %>
                         <form action="MainController"method="POST">
                             <div class="post-content" data-aos="zoom-in" data-aos-delay="200">
@@ -149,7 +155,7 @@
                                     <div class="post-info flex-row">
                                         <span><i class="fas fa-user text-gray"></i>&nbsp;&nbsp;<%= blog.getFullName()%></span>
                                         <span><i class="fas fa-calendar-alt text-gray"></i>&nbsp;&nbsp;<%= blog.getDate()%></span>
-                                        <span><%= blog.getNumberOfComments()%> Comments</span>
+                                        <span><%= status %></span>
                                     </div>
                                 </div>
                                 <div class="post-title">
@@ -181,13 +187,13 @@
 
                         %>
                         <hr>
-                        <div class="pagination flex-row">
+<!--                        <div class="pagination flex-row">
                             <a href="#"><i class="fas fa-chevron-left"></i></a>
                             <a href="#" class="pages">1</a>
                             <a href="#" class="pages">2</a>
                             <a href="#" class="pages">3</a>
                             <a href="#"><i class="fas fa-chevron-right"></i></a>
-                        </div>
+                        </div>-->
                     </div>
                     <%                    } else {
                     %>
@@ -204,7 +210,7 @@
                         <%
                             }
                         %>
-                        <aside class="sidebar">
+<!--                        <aside class="sidebar">
                             <div class="category">
                                 <h2>Majors</h2>
                                 <ul class="category-list">
@@ -308,7 +314,7 @@
                                     %>
                                 </div>
                             </div>
-                        </aside>
+                        </aside>-->
                     </div>
             </section>
 

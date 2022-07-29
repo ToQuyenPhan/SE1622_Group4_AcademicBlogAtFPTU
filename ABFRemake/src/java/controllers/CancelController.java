@@ -25,6 +25,7 @@ public class CancelController extends HttpServlet {
     private static final String ERROR = "error.jsp";
     private static final String HOMEPAGE = "homepage.jsp";
     private static final String APPROVEBLOG = "approveblog.jsp";
+    private static final String EDITBLOG = "editblog.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,14 +43,15 @@ public class CancelController extends HttpServlet {
         try {
             String position = request.getParameter("position");
             if (position != null) {
-                if(HOMEPAGE.equals(position)){
-                    url = "MainController?action=GetList";
-                }
-                if(APPROVEBLOG.equals(position)){
-                    HttpSession session = request.getSession();
+                HttpSession session = request.getSession();
                     UserDTO loginUser = (UserDTO)session.getAttribute("LOGIN_USER");
                     String userID = String.valueOf(loginUser.getUserID());
+                if(HOMEPAGE.equals(position)){
+                    url = "MainController?action=GetList";
+                }else if(APPROVEBLOG.equals(position)){ 
                     url = "MainController?action=GetApproveList";
+                }else if(EDITBLOG.equals(position)){ 
+                    url = "MainController?action=ViewBlogDetails";
                 }
             }
         } catch (Exception e) {

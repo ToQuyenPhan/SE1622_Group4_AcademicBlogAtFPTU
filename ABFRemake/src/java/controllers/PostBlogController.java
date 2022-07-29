@@ -31,7 +31,7 @@ import javax.servlet.http.Part;
 public class PostBlogController extends HttpServlet {
 
     private static final String ERROR = "postblog.jsp";
-    private static final String SUCCESS = "MainController?action=GetList";
+    private static final String SUCCESS = "MainController?action=ViewPersonalPage";
     public static final String UPLOAD_DIR = "uploads";//local save image
     public String dbFileName = "";
 

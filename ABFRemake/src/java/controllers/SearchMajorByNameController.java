@@ -5,30 +5,25 @@
  */
 package controllers;
 
-import dao.UserDAO;
-import dto.UserDTO;
+import dao.MajorDAO;
+import dto.MajorDTO;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author To Quyen Phan
+ * @author DELL
  */
-@WebServlet(name = "LoginController", urlPatterns = {"/LoginController"})
-public class LoginController extends HttpServlet {
-
-    private static final String ERROR = "error.jsp";
-    private static final String ADMIN = "Admin";
-    private static final String STUDENT = "Student";
-    private static final String MENTOR = "Mentor";
-    private static final String ADMIN_PAGE = "manageaccount.jsp";
-    private static final String USER_CONTROLLER = "MainController?action=GetList";
-
+@WebServlet(name = "SearchMajorByNameController", urlPatterns = {"/SearchMajorByNameController"})
+public class SearchMajorByNameController extends HttpServlet {
+    private static final String ERROR = "major.jsp";
+    private static final String SUCCESS = "major.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,38 +36,17 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
+         String url = ERROR;
         try {
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            UserDAO dao = new UserDAO();
-            UserDTO loginUser = dao.checkLogin(email, password);
-            if (loginUser != null) {
-                if (loginUser.isStatus()) {//Kiểm tra xem tài khoản còn hoạt động ko
-                    HttpSession session = request.getSession();
-                    session.setAttribute("LOGIN_USER", loginUser);
-                    String roleName = dao.checkRole(loginUser.getRoleID());
-                    if (ADMIN.equals(roleName)) {
-                        url = ADMIN_PAGE;
-                    } else {
-                        if (STUDENT.equals(roleName)){
-                                url = USER_CONTROLLER;
-                                session.setAttribute("ROLE", STUDENT);
-                            }if(MENTOR.equals(roleName)){
-                                url = USER_CONTROLLER;
-                                session.setAttribute("ROLE", MENTOR);
-                            } else {//Nhắc nhở nhẹ nhàng
-                                request.setAttribute("ERROR", "Your role is invalid!");
-                            }
-                    }
-                } else {//Nhắc nhở nhẹ nhàng
-                    request.setAttribute("ERROR", "Your account is no longer active!");
-                }
-            } else {
-                request.setAttribute("ERROR", "Invalid email or password!");
+            MajorDAO dao = new MajorDAO();
+            String search = request.getParameter("searchName");
+            List<MajorDTO> listAllMajors = dao.searchMajorByName(search);//Lấy hết các blog
+            if (listAllMajors.size() > 0) {
+                request.setAttribute("LIST_ALL_MAJORS", listAllMajors);
             }
+            url = SUCCESS;
         } catch (Exception e) {
-            log("Error at Login Controller: " + e.toString());
+            log("Error at Get List Controller: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

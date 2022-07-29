@@ -58,15 +58,15 @@
         <nav class="nav" id="header">
             <form action="MainController" method="POST">
                 <div class="nav-menu row">
-                    <div class="nav-brand col-sm-2">
+                    <div class="nav-brand">
                         <a href="MainController?action=GetList" class="text-gray">Academic Blog</a>
                     </div>
-                    <div class="toggle-collapse">
+                    <div onclick="openNav();" class="toggle-collapse">
                         <div class="toggle-icons">
                             <i class="fas fa-bars"></i>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="">
                         <ul class="nav-items">
                             <li class="nav-link">
                                 <a href="MainController?action=GetList">Home</a>
@@ -76,17 +76,11 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-sm-3">
-                        <div class="search-form-search">
-                            <input type="text" placeholder="Search..." name="search" type="text">
-                            <div class="search-search"><button type="submit" name="action" value="Search"><i class="fas fa-search"></i></button></div>
-                        </div>
-                    </div>
-                    <div class="new col-sm-1"><a href="MainController?action=GoToPostBlogPage&position=homepage.jsp"><i class="fas fa-pen"></i></a></div>
+                    <div class="new col-sm-3"><a href="#"><i class="fas fa-pen"></i></a></div>
                     <div class="profile text-gray col-sm-3">
                         <div class="row">         
                             <a><h6><%= loginUser.getFullName()%></h6></a>
-                            <img src="<%= image%>">
+                            <img onclick="menuToggle();" src="<%= image%>">
                         </div>
                     </div>
                 </div>
@@ -95,9 +89,30 @@
         <div>
             <main class="tm-main">
                 <!-- Search form -->
-
                 <div class="row tm-row">
                     <div class="col-12">
+                        <div class="menu">
+                            <ul>
+                                <li>
+                                    <a href="profile.jsp">My profile</a>
+                                </li>
+                                <li>
+                                    <a href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
+                                </li>
+                                <%
+                                    if (loginUser.getRoleID() == 3) {
+                                %>
+                                <li>
+                                    <a href="MainController?action=GetApproveList">Approve List</a>
+                                </li>
+                                <%
+                                    }
+                                %>
+                                <li>
+                                    <a href="MainController?action=Logout">Logout</a>
+                                </li>
+                            </ul>
+                        </div>
                         <hr class="tm-hr-primary tm-mb-45">
                         <form action="MainController" method="POST" enctype="multipart/form-data">
                             <h2 class="tm-color-primary tm-post-title mb-4">Your Post</h2>
@@ -141,7 +156,7 @@
                                         content = "";
                                     }
                                 %>
-                                Details<textarea class="form-control" name="content" rows="6"><%= content %></textarea>
+                                Details<textarea class="form-control" name="content" rows="6"><%= content%></textarea>
                                 <%
                                     String contentError = blogError.getContentError();
                                     if (contentError == null) {
@@ -159,7 +174,7 @@
                                 %>
                                 <form method="post" action="MainController" enctype="multipart/form-data">
                                     Image<input class="form-control" name="file" type="file">
-                                <h6><%= imageError%></h6>
+                                    <h6><%= imageError%></h6>
                             </div>
                             <div class="text-right post-blog-form">
                                 <input type="hidden" name="position" value="<%= position%>"/>
@@ -182,13 +197,13 @@
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quia atque nemo ad modi officiis
                                 iure, autem nulla tenetur repellendus.</p>
                         </div>
-                        <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
+<!--                        <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
                             <h2>Newsletter</h2>
                             <p>Stay update with our latest</p>
                             <div class="form-element">
                                 <input type="text" placeholder="Email"><span><i class="fas fa-chevron-right"></i></span>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="instagram" data-aos="fade-left" data-aos-delay="200">
                             <h2>Instagram</h2>
                             <div class="flex-row">
@@ -229,5 +244,21 @@
 
         <script src="js/jquery.min.js"></script>
         <script src="js/templatemo-script.js"></script>
+        <script>
+                                function menuToggle() {
+                                    const toggleMenu = document.querySelector(".menu");
+                                    toggleMenu.classList.toggle("active2");
+                                }
+
+                                function openNav() {
+                                    if (document.getElementById('header').style.height === '15rem') {
+                                        document.getElementById('header').style.height = '4rem'
+                                    } else {
+                                        document.getElementById('header').style.height = '15rem'
+                                    }
+
+                                }
+
+        </script>
     </body>
 </html>

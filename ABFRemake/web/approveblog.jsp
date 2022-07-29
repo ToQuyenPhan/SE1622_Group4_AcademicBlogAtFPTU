@@ -96,6 +96,7 @@
         <!----------------------------- Main Site Section ------------------------------>
 
         <main>
+            
 
             <!------------------------ Site Title ---------------------->
 
@@ -109,6 +110,7 @@
             <!-- ---------------------- Site Content -------------------------->
 
             <section class="site-blog-content">
+                
                 <div>
                     <%
                         List<BlogDTO> listAllBlogs = (List<BlogDTO>) request.getAttribute("LIST_ALL_BLOGS");
@@ -138,6 +140,12 @@
                                         }
                                         String content = "";
                                         String remain = "";
+                                        String status = "";
+                                        if (blog.getStatus().equals("approved")) {
+                                            status = "Approved";
+                                        } else if (blog.getStatus().equals("waiting")) {
+                                            status = "Waiting For Approval";
+                                        }
                         %>
                         <form action="MainController"method="POST">
                             <div class="post-content" data-aos="zoom-in" data-aos-delay="200">
@@ -148,7 +156,7 @@
                                     <div class="post-info flex-row">
                                         <span><i class="fas fa-user text-gray"></i>&nbsp;&nbsp;<%= blog.getFullName()%></span>
                                         <span><i class="fas fa-calendar-alt text-gray"></i>&nbsp;&nbsp;<%= blog.getDate()%></span>
-                                        <span><%= blog.getNumberOfComments()%> Comments</span>
+                                        <span><%= status%></span>
                                     </div>
                                 </div>
                                 <div class="post-title">
@@ -181,113 +189,135 @@
                             }
                         %>
                         <hr>
-                        <div class="pagination flex-row">
+<!--                        <div class="pagination flex-row">
                             <a href="#"><i class="fas fa-chevron-left"></i></a>
                             <a href="#" class="pages">1</a>
                             <a href="#" class="pages">2</a>
                             <a href="#" class="pages">3</a>
                             <a href="#"><i class="fas fa-chevron-right"></i></a>
+                        </div>-->
+                    </div>
+                        <div style="top: 5rem;" class="menu">
+                    <ul>
+                        <li>
+                            <a style="text-align: center;" href="profile.jsp">My profile</a>
+                        </li>
+                        <li>
+                            <a style="text-align: center;" href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
+                        </li>
+                    <%
+                        if (loginUser.getRoleID() == 3) {
+                    %>
+                    <li>
+                        <a style="text-align: center;" href="MainController?action=GetApproveList">Approve List</a>
+                    </li>
+                    <%
+                        }
+                    %>
+                    <li>
+                        <a style="text-align: center;" href="MainController?action=Logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+                    <!--                    <aside class="sidebar">
+                                            <div class="category">
+                                                <h2>Majors</h2>
+                                                <ul class="category-list">
+                    <%
+                        if (listMajor != null) {
+                            if (listMajor.size() > 0) {
+                                for (MajorDTO major : listMajor) {
+                                    int numberOfBlogs = 0;
+                                    int subjectID = 0;
+                                    for (SubjectDTO subject : listSubject) {
+                                        if (major.getMajorID() == subject.getMajorID()) {
+                                            subjectID = subject.getSubjectID();
+                                        }
+                                        for (BlogDTO blog : listAllBlogs) {
+                                            if (blog.getSubjectID() == subjectID) {
+                                                numberOfBlogs++;
+                                            }
+                                        }
+                                    }
+                    %>
+                    <li class="list-items" data-aos="fade-left" data-aos-delay="100">
+                        <a href="#"><%= major.getMajorName()%></a>
+                        <span>(<%= numberOfBlogs%>)</span>
+                    </li>
+                    <%
+                                }
+                            }
+                        }
+                    %>
+                </ul>
+                <div style="top: 5rem;" class="menu">
+                    <ul>
+                        <li>
+                            <a style="text-align: center;" href="profile.jsp">My profile</a>
+                        </li>
+                        <li>
+                            <a style="text-align: center;" href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
+                        </li>
+                    <%
+                        if (loginUser.getRoleID() == 3) {
+                    %>
+                    <li>
+                        <a style="text-align: center;" href="MainController?action=GetApproveList">Approve List</a>
+                    </li>
+                    <%
+                        }
+                    %>
+                    <li>
+                        <a style="text-align: center;" href="MainController?action=Logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="popular-post">
+            <h2>Popular Post</h2>
+                    <%
+                        if (listPopulartBlogs != null) {
+                            if (listPopulartBlogs.size() > 0) {
+                                for (BlogDTO blog : listPopulartBlogs) {
+                    %>
+                    <div class="post-content" data-aos="flip-up" data-aos-delay="200">
+                        <div class="post-image">
+                            <div>
+                                <img src="<%= blog.getImage()%>" class="img" alt="blog1">
+                            </div>
+                            <div class="post-info flex-row">
+                                <span><i class="fas fa-calendar-alt text-gray"></i>&nbsp;&nbsp;<%= blog.getDate()%></span>
+                                <span><%= blog.getNumberOfVotes()%> Votes</span>
+                            </div>
+                        </div>
+                        <div class="post-title">
+                            <a href="MainController?action=ViewBlogDetails&blogID=<%= blog.getBlogID()%>"><%= blog.getTitle()%></a>
                         </div>
                     </div>
-                    <aside class="sidebar">
-                        <div class="category">
-                            <h2>Majors</h2>
-                            <ul class="category-list">
-                                <%
-                                    if (listMajor != null) {
-                                        if (listMajor.size() > 0) {
-                                            for (MajorDTO major : listMajor) {
-                                                int numberOfBlogs = 0;
-                                                int subjectID = 0;
-                                                for (SubjectDTO subject : listSubject) {
-                                                    if (major.getMajorID() == subject.getMajorID()) {
-                                                        subjectID = subject.getSubjectID();
-                                                    }
-                                                    for (BlogDTO blog : listAllBlogs) {
-                                                        if (blog.getSubjectID() == subjectID) {
-                                                            numberOfBlogs++;
-                                                        }
-                                                    }
-                                                }
-                                %>
-                                <li class="list-items" data-aos="fade-left" data-aos-delay="100">
-                                    <a href="#"><%= major.getMajorName()%></a>
-                                    <span>(<%= numberOfBlogs%>)</span>
-                                </li>
-                                <%
-                                            }
-                                        }
-                                    }
-                                %>
-                            </ul>
-                            <div style="top: 5rem;" class="menu">
-                                <ul>
-                                    <li>
-                                        <a style="text-align: center;" href="profile.jsp">My profile</a>
-                                    </li>
-                                    <li>
-                                        <a style="text-align: center;" href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
-                                    </li>
-                                    <%
-                                        if (loginUser.getRoleID() == 3) {
-                                    %>
-                                    <li>
-                                        <a style="text-align: center;" href="MainController?action=GetApproveList">Approve List</a>
-                                    </li>
-                                    <%
-                                        }
-                                    %>
-                                    <li>
-                                        <a style="text-align: center;" href="MainController?action=Logout">Logout</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="popular-post">
-                            <h2>Popular Post</h2>
-                            <%
-                                if (listPopulartBlogs != null) {
-                                    if (listPopulartBlogs.size() > 0) {
-                                        for (BlogDTO blog : listPopulartBlogs) {
-                            %>
-                            <div class="post-content" data-aos="flip-up" data-aos-delay="200">
-                                <div class="post-image">
-                                    <div>
-                                        <img src="<%= blog.getImage()%>" class="img" alt="blog1">
-                                    </div>
-                                    <div class="post-info flex-row">
-                                        <span><i class="fas fa-calendar-alt text-gray"></i>&nbsp;&nbsp;<%= blog.getDate()%></span>
-                                        <span><%= blog.getNumberOfVotes()%> Votes</span>
-                                    </div>
-                                </div>
-                                <div class="post-title">
-                                    <a href="MainController?action=ViewBlogDetails&blogID=<%= blog.getBlogID()%>"><%= blog.getTitle()%></a>
-                                </div>
-                            </div>
-                            <%
-                                        }
-                                    }
+                    <%
                                 }
-                            %>
-                        </div>
-                        <div class="popular-tags">
-                            <h2>Subjects</h2>
-                            <div class="tags flex-row">
-                                <%
-                                    if (listSubject != null) {
-                                        if (listSubject.size() > 0) {
-                                            for (SubjectDTO subject : listSubject) {
+                            }
+                        }
+                    %>
+                </div>
+                <div class="popular-tags">
+                    <h2>Subjects</h2>
+                    <div class="tags flex-row">
+                    <%
+                        if (listSubject != null) {
+                            if (listSubject.size() > 0) {
+                                for (SubjectDTO subject : listSubject) {
 
-                                %>
-                                <span class="tag" data-aos="flip-up" data-aos-delay="100"><%= subject.getSubjectName()%></span>
-                                <%
-                                            }
-                                        }
-                                    }
-                                %>
-                            </div>
-                        </div>
-                    </aside>
+                    %>
+                    <span class="tag" data-aos="flip-up" data-aos-delay="100"><%= subject.getSubjectName()%></span>
+                    <%
+                                }
+                            }
+                        }
+                    %>
+                </div>
+            </div>
+        </aside>-->
                 </div>
             </section>
 
@@ -361,14 +391,14 @@
                                     const toggleMenu = document.querySelector(".menu");
                                     toggleMenu.classList.toggle("active2");
                                 }
-                                
-                                function openNav(){
-                                    if(document.getElementById('header').style.height === '19rem'){
+
+                                function openNav() {
+                                    if (document.getElementById('header').style.height === '19rem') {
                                         document.getElementById('header').style.height = '4rem'
-                                    }else{
+                                    } else {
                                         document.getElementById('header').style.height = '19rem'
                                     }
-                                    
+
                                 }
         </script>
     </body>

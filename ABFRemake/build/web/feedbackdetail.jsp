@@ -14,12 +14,12 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Admin Page</title>
+        <title>Feedback Details</title>
         <link rel="stylesheet" href="fontawesome/css/all.min.css"> <!-- https://fontawesome.com/ -->
         <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet"> <!-- https://fonts.google.com/ -->
         <link href="CSS/bootstrap.min.css" rel="stylesheet">
         <link href="css/templatemo-xtra-blog.css" rel="stylesheet">
-        <link rel="stylesheet" href="CSS/style.css">
+        <link rel="stylesheet" href="CSS/oldstyle.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
@@ -59,14 +59,14 @@
                 </div>
                 <nav class="tm-nav" id="tm-nav">            
                     <ul>
-                        <li class="tm-nav-item active"><a href="#" class="tm-nav-link">
+                        <li class="tm-nav-item"><a href="manageaccount.jsp" class="tm-nav-link">
                                 <i class="fas fa-user-tie"></i>
                                 Admin Dashboard
                             </a></li>
-                        <li class="tm-nav-item"><a href="MainController?action=GetActivityList&userID=<%= loginUser.getUserID()%>" class="tm-nav-link">
+<!--                        <li class="tm-nav-item"><a href="MainController?action=GetActivityList&userID=<%= loginUser.getUserID()%>" class="tm-nav-link">
                                 <i class="fas fa-tasks"></i>
                                 Activity
-                            </a></li>
+                            </a></li>-->
                         <li class="tm-nav-item"><a href="MainController?action=GetMajorList" class="tm-nav-link">
                                 <i class="fas fa-users"></i>
                                 Majors
@@ -75,9 +75,13 @@
                                 <i class="fas fa-users"></i>
                                 Subjects
                             </a></li>
-                        <li class="tm-nav-item"><a href="#" class="tm-nav-link">
+                        <li class="tm-nav-item"><a href="MainController?action=GetFeedbackList" class="tm-nav-link">
                                 <i class="far fa-comments"></i>
                                 Feedback
+                            </a></li>
+                            <li class="tm-nav-item"><a href="MainController?action=Logout" class="tm-nav-link">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Logout
                             </a></li>
                     </ul>
                 </nav>

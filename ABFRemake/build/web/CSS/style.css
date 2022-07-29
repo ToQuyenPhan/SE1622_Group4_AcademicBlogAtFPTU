@@ -1053,6 +1053,11 @@ footer.footer .move-up span:hover{
         padding: 1rem !important;
     }
     
+    .blog div div h1{
+        width: 100%;
+        text-align: center;
+    }
+    
     .blog-content{
         margin-right: 1.5rem !important;
         margin-left: 0.5rem;
@@ -1063,11 +1068,7 @@ footer.footer .move-up span:hover{
         padding-bottom: 5rem !important;
     }
     
-    .blog-title h3{
-        display: none;
-    }
-    
-    .blog-title span{
+    main .blog-content span{
         display: none;
     }
     
@@ -1086,6 +1087,13 @@ footer.footer .move-up span:hover{
         margin-top: 1rem;
     }
     
+    .blog-post{
+        height: 28rem;
+    }
+    
+    main .blog{
+        height: 80vh;
+    }
 }
 
 
@@ -1215,6 +1223,32 @@ footer.footer .move-up span:hover{
 }
 
 /*Blog Detail*/
+.tag-blog-detail{
+    position: relative;
+}
+
+.status-blog-detail{
+    position: absolute;
+    right: 2%;
+}
+
+.button-blog-detail{
+    position: absolute;
+    right: 2%;
+}
+
+.button-blog-detail button:first-child{
+    margin-right: 1rem;
+}
+
+.button-blog-detail button a{
+    color: white;
+}
+
+.button-blog-detail button a:hover{
+    text-decoration: none;
+}
+
 .fa-vote-yea{
     font-size: 2rem;
     margin-left: 2rem;
@@ -1234,6 +1268,18 @@ footer.footer .move-up span:hover{
     background-color: #104f55;
     color: white;
     padding: 0.5rem;
+}
+
+.modal-footer button{
+    background-color: #5a6268; 
+    color: white; 
+    border: none; 
+    padding: 0.45rem 0.8rem; 
+    border-radius: 5px;
+}
+
+.modal-footer button:hover{
+    background-color: #4e555b;
 }
 
 .category-link:hover{

@@ -174,7 +174,7 @@
                         </figure>
                         <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
                         <!-- Post tags-->
-                        <div class="d-flex align-items-center flex-column flex-sm-row mb-4 p-4 bg-light">
+                        <div class="d-flex align-items-center flex-column flex-sm-row mb-4 p-4 bg-light tag-blog-detail">
                             <h3 class="h4 mb-3 mb-sm-0">Tags</h3>
                             <%
                                 String subjectName = "";
@@ -183,10 +183,18 @@
                                         subjectName = subject.getSubjectName();
                                     }
                                 }
+                                String status = "";
+                                if (blogDetail.getStatus().equals("approved")) {
+                                    status = "Approved";
+                                } else if (blogDetail.getStatus().equals("waiting")) {
+                                    status = "Waiting For Approval";
+                                }
                             %>
                             <ul class="list-inline mb-0 ms-0 ms-sm-3">
-                                <li class="list-inline-item my-1 me-2"><a class="sidebar-tag-link" href="MainController?action=SearchSubject&subjectID=<%= blogDetail.getSubjectID() %>&subjectName=<%= subjectName %>"><%= subjectName%></a></li>
+                                <li class="list-inline-item my-1 me-2"><a class="sidebar-tag-link" href="MainController?action=SearchSubject&subjectID=<%= blogDetail.getSubjectID()%>&subjectName=<%= subjectName%>"><%= subjectName%></a></li>
+
                             </ul>
+                            <h3 class="h4 mb-3 mb-sm-0 status-blog-detail"><%= status%></h3>
                         </div>
                         <%
                             if (blogDetail.getStatus().equals("approved")) {
@@ -206,10 +214,22 @@
                                     <%
                                         }
                                     %>
-
                                 </a>
                                 <a><%= blogDetail.getNumberOfVotes()%></a>
-                            </div>             
+
+                            </div>  
+                            <%
+                                if (loginUser.getUserID() == blogDetail.getUserID()) {
+                            %>
+                            <div class="form-inline button-blog-detail">
+                                <button type="button" class="btn btn-primary">
+                                    <a href="MainController?action=EditBlog&blogID=<%=blogDetail.getBlogID()%>&userID=<%=loginUser.getUserID()%>&subjectID=<%=blogDetail.getSubjectID()%>">Edit</a>
+                                </button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Delete</button>   
+                            </div>
+                            <%
+                                }
+                            %>
                         </div>
                         <%
                         } else {
@@ -231,7 +251,19 @@
 
                                 </a>
                                 <a><%= blogDetail.getNumberOfVotes()%></a>
-                            </div>           
+                            </div>
+                            <%
+                                if (loginUser.getUserID() == blogDetail.getUserID()) {
+                            %>
+                            <div class="form-inline button-blog-detail">
+                                <button type="button" class="btn btn-primary">
+                                    <a href="MainController?action=EditBlog&blogID=<%=blogDetail.getBlogID()%>&userID=<%=loginUser.getUserID()%>&subjectID=<%=blogDetail.getSubjectID()%>">Edit</a>
+                                </button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Delete</button>   
+                            </div>
+                            <%
+                                }
+                            %>
                         </div>
                         <%
                             }
@@ -298,8 +330,19 @@
                                 </ul>-->
                             </li>
                             <%
-                                            }
                                         }
+                                    }
+                                }
+                            } else {
+                                if (loginUser.getUserID() == blogDetail.getUserID()) {
+                            %>
+                            <div class="form-inline button-blog-detail">
+                                <button type="button" class="btn btn-primary">
+                                    <a href="MainController?action=EditBlog&blogID=<%=blogDetail.getBlogID()%>&userID=<%=loginUser.getUserID()%>&subjectID=<%=blogDetail.getSubjectID()%>">Edit</a>
+                                </button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Delete</button>   
+                            </div>
+                            <%
                                     }
                                 }
                             %>
@@ -396,6 +439,25 @@
                     </div>
                   </div>-->
                         </section>
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalCenterTitle">Delete</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to delete?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" data-dismiss="modal">Cancel</button>
+                                        <a href="MainController?action=DeleteBlog&blogID=<%= blogDetail.getBlogID()%>&userID=<%= loginUser.getUserID() %>" type="button" class="btn btn-danger">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <%
                             }
                         %>

@@ -29,7 +29,7 @@ public class LoginWithGoogleController extends HttpServlet {
     private static final String ADMIN = "Admin";
     private static final String STUDENT = "Student";
     private static final String MENTOR = "Mentor";
-    private static final String ADMIN_PAGE = "admin.jsp";
+    private static final String ADMIN_PAGE = "manageaccount.jsp";
     private static final String USER_CONTROLLER = "MainController?action=GetList";
 
     /**

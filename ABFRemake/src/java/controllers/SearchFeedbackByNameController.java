@@ -5,8 +5,18 @@
  */
 package controllers;
 
-import dao.BlogDAO;
+import dao.FeedbackDAO;
+import dao.UserDAO;
+import dto.FeedbackDTO;
+import dto.FeedbackTypeDTO;
+import dto.UserDTO;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.Collections;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,12 +25,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author To Quyen Phan
+ * @author DELL
  */
-@WebServlet(name = "DeleteBlogController", urlPatterns = {"/DeleteBlogController"})
-public class DeleteBlogController extends HttpServlet {
-    private static final String ERROR = "blogDetail.jsp";
-    private static final String SUCCESS = "MainController?action=ViewPersonalPage";
+@WebServlet(name = "SearchFeedbackByNameController", urlPatterns = {"/SearchFeedbackByNameController"})
+public class SearchFeedbackByNameController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,20 +40,28 @@ public class DeleteBlogController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
-        try {
-            int blogID = Integer.parseInt(request.getParameter("blogID"));
-            BlogDAO dao = new BlogDAO();
-            boolean check = dao.deleteBlog(blogID);
-            if(check){
-                url = SUCCESS;
-            }
-        } catch (Exception e) {
-            log("Error at DeleteController: " + e.toString());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+           FeedbackDAO dao = new FeedbackDAO();
+            UserDAO userdao = new UserDAO();
+            String search = request.getParameter("searchName");
+            List<FeedbackDTO> fb = dao.getAllFeedbackByName(search);
+            List<FeedbackTypeDTO> fbType = dao.getAllFeedbackTypes();
+            Collections.sort(fb,FeedbackDTO.compareDate);
+            List<UserDTO> user = (List<UserDTO>) userdao.getAllUser();
+            if(fb.size() > 0 )
+                if(user != null )
+                if(fbType.size() >0){
+                    request.setAttribute("LIST_FEEDBACKS", fb);
+                    request.setAttribute("LIST_FEEDBACK_TYPES", fbType);
+                    request.setAttribute("AUTHOR", user);
+                    
+            }else{
+                    request.setAttribute("MESSAGE", "Don't any feedack yet!");
+                }
+            request.getRequestDispatcher("managefeedback.jsp").forward(request, response);
         }
     }
 
@@ -61,7 +77,11 @@ public class DeleteBlogController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(SearchFeedbackByNameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -75,7 +95,11 @@ public class DeleteBlogController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(SearchFeedbackByNameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

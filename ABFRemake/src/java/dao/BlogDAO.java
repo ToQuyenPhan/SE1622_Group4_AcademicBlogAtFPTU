@@ -36,13 +36,13 @@ public class BlogDAO {
             + "WHERE Blog.status LIKE 'waiting' AND Blog.userID != ?";
     private static final String DELETE_BLOG = "UPDATE Blog SET status = 'disable' WHERE blogID = ?";
     private static final String EDIT_BLOG = "UPDATE Blog  \n"
-            + "set subjectID=?, title=? , content=?,date=?,image=?, video=?\n"
+            + "set subjectID=?, title=?, content=?,date=?, image=?, status='waiting' \n"
             + "where blogID=?";
     private static final String APPROVE_BLOG = "UPDATE Blog SET status= 'approved' WHERE blogID = ?";
     private static final String REJECT_BLOG = "UPDATE Blog SET status= 'rejected' WHERE blogID = ?";
     private static final String GET_ALL_PERSONAL_BLOGS = "SELECT blogID,Blog.userID,userApproveID,subjectID,title,content,date, Blog.image,video,"
             + "numberOfVotes,numberOfComments,Blog.status, fullName FROM Blog JOIN [USER] ON Blog.userID = [User].userID "
-            + "WHERE Blog.userID = ?";
+            + "WHERE Blog.userID = ? AND Blog.status != 'disable'";
     private static final String SAVE_DRAFT_BLOG = "INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status)"
             + "VALUES( ?,null,?,?,?,?,?,null,0,0,'draft')";
     private static final String SEARCH_MAJOR = "SELECT blogID,Blog.userID,userApproveID,Blog.subjectID,title,content,date, Blog.image,video,"
@@ -344,26 +344,34 @@ public class BlogDAO {
         return check;
     }
     
-    public static int editBlog(int blogID, int subjectID, String title, String content, String date, String image, String video) throws ClassNotFoundException, SQLException {
+    public static boolean editBlog(int blogID, int subjectID, String title, String content, String date, String image) throws ClassNotFoundException, SQLException {
         Connection cn = null;
         PreparedStatement ptm = null;
-        int rs = 0;
-        cn = DBUtils.getConnection();
-        if (cn != null) {
-            ptm = cn.prepareStatement(EDIT_BLOG);
-            ptm.setInt(1, subjectID);
-            ptm.setString(2, title);
-            ptm.setString(3, content);
-            ptm.setString(4, date);
-            ptm.setString(5, image);
-            ptm.setString(6, video);
-            ptm.setInt(7, blogID);
-            rs = ptm.executeUpdate();
+        boolean check = false;
+        try {
+            cn = DBUtils.getConnection();
+            if (cn != null) {
+                ptm = cn.prepareStatement(EDIT_BLOG);
+                ptm.setInt(1, subjectID);
+                ptm.setString(2, title);
+                ptm.setString(3, content);
+                ptm.setString(4, date);
+                ptm.setString(5, image);
+                ptm.setInt(6, blogID);
+                check = ptm.executeUpdate() > 0 ? true : false;
 
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
         }
-
-        cn.close();
-        return rs;
+        return check;
     }
     
     public boolean approveBlog(int blogID) throws SQLException {

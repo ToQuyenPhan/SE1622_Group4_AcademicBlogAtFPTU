@@ -3,12 +3,12 @@
     Created on : Jun 3, 2022, 10:08:21 PM
     Author     : Bat
 --%>
-
-<%@page import="dao.BlogDAO"%>
 <%@page import="dto.BlogDTO"%>
 <%@page import="dao.SubjectDAO"%>
-<%@page import="dto.SubjectDTO"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="dto.SubjectDTO"%>
+<%@page import="java.util.List"%>
+<%@page import="dto.BlogError"%>
 <%@page import="dto.UserDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -22,175 +22,224 @@
         <link href="CSS/bootstrap.min.css" rel="stylesheet">
         <link href="CSS/templatemo-xtra-blog.css" rel="stylesheet">
         <link rel="stylesheet" href="CSS/style.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+        <!--
+            
+        TemplateMo 553 Xtra Blog
+        
+        https://templatemo.com/tm-553-xtra-blog
+        
+        -->
     </head>
-    <script>
-        function validation() {
-             var myForm = document.forms["MainController"];
-
-             var t = myForm["title"].value;
-             var c = myForm["content"].value;
-              var i = myForm["image"].value;
-             
-            if (t.length === 0 || t.length > 100) {
-                alert("Title is invalid");
-                myForm["title"].focus();
-                return false;
+    <body class="body-postblog-page">
+        <%
+            //Hiển thị Full Name của user
+            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+            if (loginUser == null) {
+                loginUser = new UserDTO();
             }
-            if (c === null || c === " " || c.length <= 0) {
-                alert("Content is invalid");
-                myForm["content"].focus();
-                return false;
+            String search = request.getParameter("search");
+            if (search == null) {
+                search = "";
             }
-            return true;
-            alert(t);
-        }
+            String image = loginUser.getImage();
+            if (image == null) {
+                image = "image/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png";
+            }
+            BlogError blogError = (BlogError) request.getAttribute("BLOG_ERROR");
+            if (blogError == null) {
+                blogError = new BlogError();
+            }
 
-
-
-        function thongbaosuccess() {
-            alert("Edit success!");
-        }
-    </script>
-    <body class="body-edit-blog">
-
-        <header class="tm-header" id="tm-header">
-            <div class="tm-header-wrapper">
-                <button class="navbar-toggler" type="button" aria-label="Toggle navigation">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="tm-site-header">
-                    <div class="mb-3 mx-auto tm-site-logo"><img src="img/logo.png"><i class="fas fa-times fa-2x"></i></div>            
-
-                </div>
-                <nav class="tm-nav" id="tm-nav">            
-                    <ul>
-                        <li class="tm-nav-item"><a href="homepage.jsp" class="tm-nav-link">
-                                <i class="fas fa-home"></i>
-                                Home
-                            </a></li>
-                        <li class="tm-nav-item active"><a href="postBlog.jsp" class="tm-nav-link">
-                                <i class="fas fa-pen"></i>
-                                Post Blog
-                            </a></li>
-                        <li class="tm-nav-item"><a href="about.html" class="tm-nav-link">
-                                <i class="fas fa-users"></i>
-                                My profile
-                            </a></li>
-                        <li class="tm-nav-item"><a href="feedback.jsp" class="tm-nav-link">
-                                <i class="far fa-comments"></i>
-                                Feedback
-                            </a></li>
-                    </ul>
-                </nav>
-                <div class="tm-mb-65">
-                    <a href="https://facebook.com" class="tm-social-link">
-                        <i class="fab fa-facebook tm-social-icon"></i>
-                    </a>
-                    <a href="https://twitter.com" class="tm-social-link">
-                        <i class="fab fa-twitter tm-social-icon"></i>
-                    </a>
-                    <a href="https://instagram.com" class="tm-social-link">
-                        <i class="fab fa-instagram tm-social-icon"></i>
-                    </a>
-                    <a href="https://linkedin.com" class="tm-social-link">
-                        <i class="fab fa-linkedin tm-social-icon"></i>
-                    </a>
-                </div>
-                <p class="tm-mb-80 pr-5 text-white">
-                    <%
-                        //Hiển thị Full Name của user
-                        UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
-                        if (loginUser == null) {
-                            loginUser = new UserDTO();
-                        }
-                    %>
-                    Hello <%= loginUser.getFullName()%> 
-                </p>
-            </div>
-        </header>
-        <div class="container-fluid">
-            <main class="tm-main">
-                <!-- Search form -->
-                <div class="row tm-row">
-                    <div class="col-12">
-                        <form method="GET" class="form-inline tm-mb-80 tm-search-form">                
-                            <input class="form-control tm-search-input" name="query" type="text" placeholder="Search..." aria-label="Search">
-                            <button class="tm-search-button" type="submit">
-                                <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
-                            </button>                                
-                        </form>
-                    </div>                
-                </div>            
-                <div class="row tm-row">
-                    <div class="col-12">
-                        <hr class="tm-hr-primary tm-mb-55">
-                        <!-- Video player 1422x800 -->
-                        <!--
-                        <video width="954" height="535" controls class="tm-mb-40">
-                            <source src="" type="">							  
-                            Your browser does not support the video tag.
-                        </video>
-                        -->
+            String position = "editblog.jsp";
+        %>
+        <nav class="nav" id="header">
+            <form action="MainController" method="POST">
+                <div class="nav-menu row">
+                    <div class="nav-brand">
+                        <a href="MainController?action=GetList" class="text-gray">Academic Blog</a>
+                    </div>
+                    <div onclick="openNav();" class="toggle-collapse">
+                        <div class="toggle-icons">
+                            <i class="fas fa-bars"></i>
+                        </div>
+                    </div>
+                    <div class="">
+                        <ul class="nav-items">
+                            <li class="nav-link">
+                                <a href="MainController?action=GetList">Home</a>
+                            </li>
+                            <li class="nav-link">
+                                <a href="MainController?action=GetFeedbackTypeList">Feedback</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="new col-sm-3"><a href="#"><i class="fas fa-pen"></i></a></div>
+                    <div class="profile text-gray col-sm-3">
+                        <div class="row">         
+                            <a><h6><%= loginUser.getFullName()%></h6></a>
+                            <img onclick="menuToggle();" src="<%= image%>">
+                        </div>
                     </div>
                 </div>
-                <%
-                    BlogDTO blog = (BlogDTO) request.getAttribute("BLOG_EDIT");
-                    if (blog != null) {
-                %>
+            </form>
+        </nav>
+        <div>
+            <main class="tm-main">
+                <!-- Search form -->
+
                 <div class="row tm-row">
-                    <div class="col-lg-8 tm-post-col">
-                        <div class="tm-post-full">
-                            <form action="MainController" method="POST" onsubmit = "return validation() >
-                                <div class="mb-4">
-                                    <!--HERE-->
-                                    <input type="hidden" name="blogID" value="<%=blog.getSubjectID()%>" readonly="">
-                                    <input type="hidden" name="UserID" value="<%=blog.getUserID()%>"  readonly="">
-                                    <div class="mb-4">
-                                        Title<input class="form-control" name="title" type="text" value="<%=blog.getTitle()%>"><span id="e1"></span>
-                                    </div>
+                    <div class="col-12">
+                        <div class="menu">
+                            <ul>
+                                <li>
+                                    <a href="profile.jsp">My profile</a>
+                                </li>
+                                <li>
+                                    <a href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
+                                </li>
+                                <%
+                                    if (loginUser.getRoleID() == 3) {
+                                %>
+                                <li>
+                                    <a href="MainController?action=GetApproveList">Approve List</a>
+                                </li>
+                                <%
+                                    }
+                                %>
+                                <li>
+                                    <a href="MainController?action=Logout">Logout</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <hr class="tm-hr-primary tm-mb-45">
+                        <form action="MainController" method="POST" enctype="multipart/form-data">
+                            <h2 class="tm-color-primary tm-post-title mb-4">Your Post</h2>
+                            <input type="hidden" name="userID" value="<%=loginUser.getUserID()%>" readonly="">
 
-                                    <div class="mb-4">
+                            <div class="mb-4">
 
-                                        <p>Subject<select name="subjectID" >
-                                                <%
-                                                    ArrayList<SubjectDTO> listc = SubjectDAO.getSubject();
-                                                    if (listc != null && !listc.isEmpty()) {
-                                                        for (SubjectDTO c : listc) {
-                                                            if (blog.getSubjectID() == c.getSubjectID()) {
-                                                %>
-                                                <option value="<%=c.getSubjectID()%>" selected="<%= c.getSubjectName()%>"><%= c.getSubjectName()%> </option>
-                                                <% } else {
-                                                %>
-                                                <option value="<%=c.getSubjectID()%>"><%= c.getSubjectName()%> </option>
-                                                <%}
-                                                        }
-                                                    }%>
+                                <%
+                                    BlogDTO blog = (BlogDTO) request.getAttribute("BLOG_EDIT");
+                                    if (blog != null) {
+                                %>
+                                Title<input class="form-control" name="title" type="text" value="<%= blog.getTitle()%>">
 
-                                            </select>
-                                            </br>
-                                            <p class="mb-4">
-                                            <img src="<%= blog.getImage()%>" style="width:300px;height:200px;" class="form-control" readonly=""/>
-                                            <input type="text" name="image" value="<%= blog.getImage()%>" class="form-control">
-                                        </p>
-                                        
-                                        <div class="mb-4">
-                                            Details<textarea class="form-control" name="content" value="<%=blog.getContent()%>" rows="6"></textarea><span id="e2"></span>
-                                        </div>
-                                        
-                                        <%
+                            </div>
+                            <input type="hidden" name="blogID" value="<%= blog.getBlogID()%>">
+                            <div class="mb-4">
+                                Subject
+                                <select name="subjectID" class="form-control" >
+                                    <%  ArrayList<SubjectDTO> listc = SubjectDAO.getSubject();
+                                        if (listc != null && !listc.isEmpty()) {
+                                            for (SubjectDTO c : listc) {
+                                                if (c.getSubjectID() == blog.getSubjectID()) {
+
+                                    %>
+                                    <option value="<%=c.getSubjectID()%>" selected="<%=c.getSubjectID()%>"><%= c.getSubjectName()%> </option>
+                                    <% } else {%>
+                                    <option value="<%=c.getSubjectID()%>"><%= c.getSubjectName()%> </option>
+                                    <% }
                                             }
-                                        %>
-                                        </br>
-                                    </div>
+                                        }
 
+                                    %>
+                                </select>
+                            </div>
+                            <div class="mb-4">                               
+                                Details<textarea class="form-control" name="content" rows="6"><%= blog.getContent()%></textarea>
+                            </div>
+                            <div class="mb-4">
+                                <form method="post" action="MainController" enctype="multipart/form-data">
+                                    Image<input class="form-control" name="file" type="file">                                                                                        
+                                    </div>
+                                    <%
+                                        }
+                                    %>  
+                                    <div class="text-right post-blog-form">
+                                        <input type="hidden" name="position" value="<%= position%>"/>
+                                        <input type="submit" name="action" value="Cancel"
+                                               <button class="tm-btn tm-btn-primary tm-btn-small"></button>
+                                        <!--<input type="submit" name="action" value="SaveDraftBlog"
+                                               <button class="tm-btn tm-btn-primary tm-btn-small"></button>-->
+
+                                        <input type="submit" name="action" value="Edit"
+                                               <button class="tm-btn tm-btn-primary tm-btn-small"></button>  
+                                    </div>
+                                </form>
+
+                            </div>
+                    </div>
+                    <footer class="footer">
+                        <div class="container">
+                            <div class="about-us" data-aos="fade-right" data-aos-delay="200">
+                                <h2>About us</h2>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quia atque nemo ad modi officiis
+                                    iure, autem nulla tenetur repellendus.</p>
+                            </div>
+                            <!--                        <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
+                                                        <h2>Newsletter</h2>
+                                                        <p>Stay update with our latest</p>
+                                                        <div class="form-element">
+                                                            <input type="text" placeholder="Email"><span><i class="fas fa-chevron-right"></i></span>
+                                                        </div>
+                                                    </div>-->
+                            <div class="instagram" data-aos="fade-left" data-aos-delay="200">
+                                <h2>Instagram</h2>
+                                <div class="flex-row">
+                                    <img src="./assets/instagram/thumb-card3.png" alt="insta1">
+                                    <img src="./assets/instagram/thumb-card4.png" alt="insta2">
+                                    <img src="./assets/instagram/thumb-card5.png" alt="insta3">
                                 </div>
-                                <div class="text-right">
-                                    <input type="submit" name="action" value="Edit" onclick="return validation()"
-                                           <button class="tm-btn tm-btn-primary tm-btn-small"></button>                        
+                                <div class="flex-row">
+                                    <img src="./assets/instagram/thumb-card6.png" alt="insta4">
+                                    <img src="./assets/instagram/thumb-card7.png" alt="insta5">
+                                    <img src="./assets/instagram/thumb-card8.png" alt="insta6">
                                 </div>
-                            </form>
-                            <script src="js/jquery.min.js"></script>
-                            <script src="js/templatemo-script.js"></script>
-                            </body>
-                            </html>
+                            </div>
+                            <div class="follow" data-aos="fade-left" data-aos-delay="200">
+                                <h2>Follow us</h2>
+                                <p>Let us be Social</p>
+                                <div>
+                                    <i class="fab fa-facebook-f"></i>
+                                    <i class="fab fa-twitter"></i>
+                                    <i class="fab fa-instagram"></i>
+                                    <i class="fab fa-youtube"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rights flex-row">
+                            <h4 class="text-gray">
+                                Copyright ©2019 All rights reserved | made by
+                                <a href="www.youtube.com/c/dailytuition" target="_black">Daily Tuition <i class="fab fa-youtube"></i>
+                                    Channel</a>
+                            </h4>
+                        </div>
+                        <div class="move-up">
+                            <span><a href="#header"><i class="fas fa-arrow-circle-up fa-2x"></i></a></span>
+                        </div>
+                    </footer>
+            </main>
+        </div>
+        <script>
+            function menuToggle() {
+                const toggleMenu = document.querySelector(".menu");
+                toggleMenu.classList.toggle("active2");
+            }
+
+            function openNav() {
+                if (document.getElementById('header').style.height === '15rem') {
+                    document.getElementById('header').style.height = '4rem'
+                } else {
+                    document.getElementById('header').style.height = '15rem'
+                }
+
+            }
+
+        </script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/templatemo-script.js"></script>
+    </body>
+</html>

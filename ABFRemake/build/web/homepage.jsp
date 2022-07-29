@@ -175,8 +175,8 @@
                                             }
                                             if (blog.getImage() != null || blog.getImage() != "") {
                                                 String title = "";
-                                                if (blog.getTitle().length() > 30) {
-                                                    title = blog.getTitle().substring(0, 26) + "...";
+                                                if (blog.getTitle().length() > 20) {
+                                                    title = blog.getTitle().substring(0, 20) + "...";
                                                 } else {
                                                     title = blog.getTitle();
                                                 }
@@ -270,7 +270,7 @@
                                     <div class="post-info flex-row">
                                         <span><i class="fas fa-user text-gray"></i>&nbsp;&nbsp;<%= blog.getFullName()%></span>
                                         <span><i class="fas fa-calendar-alt text-gray"></i>&nbsp;&nbsp;<%= blog.getDate()%></span>
-                                        <span><%= blog.getNumberOfComments()%> Comments</span>
+<!--                                        <span><%= blog.getNumberOfComments()%> Comments</span>-->
                                     </div>
                                 </div>
                                 <div class="post-title">
@@ -302,13 +302,13 @@
                             }
                         %>
                         <hr>
-                        <div class="pagination flex-row">
+<!--                        <div class="pagination flex-row">
                             <a href="#"><i class="fas fa-chevron-left"></i></a>
                             <a href="#" class="pages">1</a>
                             <a href="#" class="pages">2</a>
                             <a href="#" class="pages">3</a>
                             <a href="#"><i class="fas fa-chevron-right"></i></a>
-                        </div>
+                        </div>-->
                     </div>
                     <aside class="sidebar">
                         <div class="category">

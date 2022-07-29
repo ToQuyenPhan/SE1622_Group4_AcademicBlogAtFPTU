@@ -6,6 +6,8 @@
 package controllers;
 
 import dao.BlogDAO;
+import dto.BlogError;
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
@@ -22,7 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "EditBlogController", urlPatterns = {"/EditBlogController"})
 public class EditBlogController extends HttpServlet {
     private static final String ERROR = "error.jsp";
-    private static final String SUCCESS = "homepage.jsp";
+    private static final String SUCCESS = "MainController?action=ViewPersonalPage";
+    public static final String UPLOAD_DIR = "uploads";//local save image
+    public String dbFileName = "";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,34 +41,80 @@ public class EditBlogController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        BlogError blogError = new BlogError();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date dateFormat = new Date();
+
+        String applicationPath = getServletContext().getRealPath("");
+        String uploadPath = applicationPath + File.separator + UPLOAD_DIR;
+
         try {
             int blogID = Integer.parseInt(request.getParameter("blogID"));
             int subjectID = Integer.parseInt(request.getParameter("subjectID"));
-            String title = request.getParameter("title");
-            String content = request.getParameter("content");
+            String title = request.getParameter("title").trim();
+            String content = request.getParameter("content").trim();
             String date = sdf.format(dateFormat);
-            String image = request.getParameter("image");
-            String video = request.getParameter("video");
-            boolean checkValidation = true;
-            if (checkValidation) {
-                int checkPost = BlogDAO.editBlog(blogID, subjectID, title, content, date, image, video);
-                if (checkPost != 0) {
-                    url = SUCCESS;
-                
+            boolean checkValidation = false;
+            Part part = request.getPart("file");
+            String image = "";
+            String fileName = extractFileName(part);//file name
+            if ("".equals(fileName)) {
+                blogError.setImageError("Please choose an image!");
+                checkValidation = true;
             } else {
-//                request.setAttribute("BLOG_ERROR", blogError);
-                url =ERROR;
-            }}
+                image = UPLOAD_DIR + File.separator + fileName;
+                File fileUploadDirectory = new File(uploadPath);
+                if (!fileUploadDirectory.exists()) {
+                    fileUploadDirectory.mkdirs();
+                }
+                String savePath = uploadPath + File.separator + fileName;
+                part.write(savePath + File.separator);
+                File fileSaveDir1 = new File(savePath);
+                part.write(savePath + File.separator);
+            }
+            BlogDAO dao = new BlogDAO();
+            if (title.length() < 10 || title.length() > 50) {
+                blogError.setTitleError("Title must be in [10,50]!");
+                checkValidation = true;
+            }
+            if (content.length() < 50) {
+                blogError.setContentError("Content must be greater than 50!");
+                checkValidation = true;
+            }
 
+            if (!checkValidation) {
+                boolean check = dao.editBlog(blogID, subjectID, title, content, date, image);
+                if (check) {
+                    url = SUCCESS;
+                    request.getRequestDispatcher(url).forward(request, response);
+
+                }
+            } else {
+                request.setAttribute("BLOG_ERROR", blogError);
+                request.setAttribute("TITLE", title);
+                request.setAttribute("CONTENT", content);
+                request.setAttribute("IMAGE", image);
+                request.setAttribute("BLOGID", blogID);
+                request.setAttribute("SUBJECTID", subjectID);
+                request.getRequestDispatcher("editblogfail.jsp").forward(request, response);
+            }
         } catch (Exception e) {
-            log("Error at PostBlogController: " + e.toString());
+            log("Error at Post Blog Controller: " + e.toString());
         } finally {
-            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
+    private String extractFileName(Part part) {//This method will print the file name.
+        String contentDisp = part.getHeader("content-disposition");
+        String[] items = contentDisp.split(";");
+        for (String s : items) {
+            if (s.trim().startsWith("filename")) {
+                return s.substring(s.indexOf("=") + 2, s.length() - 1);
+            }
+        }
+        return "";
+
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

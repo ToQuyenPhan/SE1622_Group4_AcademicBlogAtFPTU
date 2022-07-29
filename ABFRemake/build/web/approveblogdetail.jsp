@@ -207,7 +207,7 @@
                                 }
                             %>
                             <ul class="list-inline mb-0 ms-0 ms-sm-3">
-                                <li class="list-inline-item my-1 me-2"><a class="sidebar-tag-link" href="#!"><%= subjectName%></a></li>
+                                <li class="list-inline-item my-1 me-2"><a class="sidebar-tag-link" href="MainController?action=SearchSubject&subjectID=<%= blogDetail.getSubjectID() %>&subjectName=<%= subjectName %>"><%= subjectName%></a></li>
                             </ul>
                         </div>
                         <%

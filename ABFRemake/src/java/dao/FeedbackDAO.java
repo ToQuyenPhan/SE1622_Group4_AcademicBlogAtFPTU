@@ -25,6 +25,9 @@ public class FeedbackDAO {
             + " VALUES(?,?,?,?)";
     private static final String GET_ALL_FEEDBACK = "SELECT [feedbackID],[userID],[feedbackTypeID],[description],[date]\n"
             + "  FROM [ABF].[dbo].[Feedback]";
+    private static final String SEARCH_FEEDBACK_BY_NAME = "SELECT [feedbackID],[userID],a.[feedbackTypeID],[description],[date]\n"
+            + "FROM [ABF].[dbo].[Feedback] a JOIN FeedbackType b ON a.feedbackTypeID = b.feedbackTypeID\n"
+            + "WHERE feedbackName LIKE ?";
 
     public List<FeedbackTypeDTO> getAllFeedbackTypes() throws SQLException {
         List<FeedbackTypeDTO> listAllFeedbackTypes = new ArrayList<>();
@@ -153,5 +156,41 @@ public class FeedbackDAO {
             }
         }
         return fb;
+    }
+    
+    public List<FeedbackDTO> getAllFeedbackByName(String searchName) throws SQLException {
+        List<FeedbackDTO> listAllFeedback = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement psm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                psm = conn.prepareStatement(SEARCH_FEEDBACK_BY_NAME);
+                psm.setString(1, "%" +searchName+ "%");
+                rs = psm.executeQuery();
+                while (rs.next()) {
+                    int feedbackID = rs.getInt("feedbackID");
+                    int userID = rs.getInt("userID");
+                    int feedbackTypesID = rs.getInt("feedbackTypeID");
+                    String description = rs.getString("description");
+                    String date = rs.getString("date");
+                    listAllFeedback.add(new FeedbackDTO(feedbackID, userID, feedbackTypesID, description, date));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (psm != null) {
+                psm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return listAllFeedback;
     }
 }
