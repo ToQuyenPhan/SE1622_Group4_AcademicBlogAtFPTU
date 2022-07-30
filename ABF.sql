@@ -63,16 +63,16 @@ majorName nvarchar(50) not null,
 status nvarchar(10) not null)
 
 --Bảng Registration
-create table RegistrationDetail(
-subjectID int not null,
-registrationID int not null,
-date nvarchar(50) not null)
+--create table RegistrationDetail(
+--subjectID int not null,
+--registrationID int not null,
+--date nvarchar(50) not null)
 
 --Bảng RegistrationDetails
-create table Registration(
-registrationID int identity(1,1) primary key,
-userID int not null,
-certificate image not null)
+--create table Registration(
+--registrationID int identity(1,1) primary key,
+--userID int not null,
+--certificate image not null)
 
 --Bảng Feedback
 create table Feedback(
@@ -103,6 +103,16 @@ create table ActivityType(
 activityTypeID int identity(1,1) primary key,
 activity nvarchar(50) not null,
 )
+
+--Bảng Registration
+create table Registration(
+registrationID int identity(1,1) primary key,
+userID int not null,
+subjectID int not null,
+date nvarchar(50) not null,
+certificate nvarchar(max) not null,
+status int not null
+)
 --------Thêm khoá ngoại------------
 alter table Blog add foreign key (userID) references [User](userID)
 alter table Blog add foreign key (subjectID) references Subject(subjectID)
@@ -110,8 +120,7 @@ alter table [User] add foreign key (roleID) references Role(roleID)
 alter table Comment add foreign key (blogID) references Blog(blogID)
 alter table Comment add foreign key (userID) references [User](userID)
 alter table Subject add foreign key (majorID) references Major(majorID)
-alter table RegistrationDetail add foreign key (subjectID) references Subject(subjectID)
-alter table RegistrationDetail add foreign key (registrationID) references Registration(registrationID)
+alter table Registration add foreign key (subjectID) references Subject(subjectID)
 alter table Registration add foreign key (userID) references [User](userID)
 alter table Feedback add foreign key (userID) references [User](userID)
 alter table Feedback add foreign key (feedbackTypeID) references FeedbackType(feedbackTypeID)
@@ -122,11 +131,13 @@ alter table HistoryActivity add foreign key (activityTypeID) references Activity
 --Xem dữ liệu--
 select * from Feedback
 select * from [User]
+select * from Role
 select * from Major
 select * from Subject
 select * from Blog
 select * from HistoryActivity
 select * from ActivityType
+select * from Registration
 --Insert dữ liệu vào bảng--
 
 --Bảng Major--
@@ -152,6 +163,9 @@ null, 0,null, null,null,null,null, 1)
 insert into [User](password,fullName,roleID,email,image,numberOfBlogs,gender,dateOfBirth,
 address,contact,aboutme,status) values ('123','Phan Thi To Quyen', 2, 'quyenlh012@gmail.com',
 null, 0,null, null,null,null,null, 1)
+insert into [User](password,fullName,roleID,email,image,numberOfBlogs,gender,dateOfBirth,
+address,contact,aboutme,status) values ('123','Phan Thi To Quyen', 3, 'quyenlh0123@gmail.com',
+null, 0,null, null,null,null,null, 1)
 
 --Bảng FeedbackType--
 insert into FeedbackType(feedbackName) values('About System')
@@ -165,6 +179,26 @@ INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image
 			VALUES( 1,null,2,'123asd','akjshfksnnvoiewrwqurfjckanc','6/3/2022 11:23:02',null,null,0,0,'approved')
 INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 
 			VALUES( 1,null,2,'123asd','akjshfksnnvoiewrwqurfjckanc','6/2/2022 11:22:02',null, null,0,0,'approved')
+INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 
+			VALUES( 2,null,2,'123asd','akjshfksnnvoiewrwqurfjckanc','8/6/2022 11:22:02','image/bg6.jpg','video/123',4,0,'approved')
+INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 
+			VALUES( 2,null,2,'123asd','akjshfksnnvoiewrwqurfjckanc','6/3/2022 11:23:02',null,null,0,0,'approved')
+INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 
+			VALUES( 2,null,2,'123asd','akjshfksnnvoiewrwqurfjckanc','6/2/2022 11:22:02',null, null,0,0,'approved')
+INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 
+			VALUES( 1,null,2,'123asd','akjshfksnnvoiewrwqurfjckanc','8/6/2022 11:22:02','image/bg6.jpg','video/123',4,0,'approved')
+INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 
+			VALUES( 1,null,2,'123asd','akjshfksnnvoiewrwqurfjckanc','6/3/2022 11:23:02',null,null,0,0,'approved')
+INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 
+			VALUES( 1,null,2,'123asd','akjshfksnnvoiewrwqurfjckanc','6/2/2022 11:22:02',null, null,0,0,'approved')
+INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 
+			VALUES( 1,null,2,'123asd','akjshfksnnvoiewrwqurfjckanc','8/6/2022 11:22:02','image/bg6.jpg','video/123',4,0,'waiting')
+INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 
+			VALUES( 1,null,2,'123asd','akjshfksnnvoiewrwqurfjckanc','6/3/2022 11:23:02',null,null,0,0,'waiting')
+INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 
+			VALUES( 1,null,2,'123asd','akjshfksnnvoiewrwqurfjckanc','6/2/2022 11:22:02',null, null,0,0,'waiting')
+INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 
+			VALUES( 1,null,6,'123asd','akjshfksnnvoiewrwqurfjckanc','30/7/2022 11:22:02',null, null,0,0,'waiting')
 
 --Bảng ActivityType
 insert into ActivityType(activity) values('You voted a blog.')
@@ -178,6 +212,12 @@ insert into HistoryActivity(userID, date, activityTypeID, blogID, status)
 values(2, '11/12/2011 11:33:02', 1, 1,1)
 insert into HistoryActivity(userID, date, activityTypeID, blogID, status) 
 values(2, '11/12/2011 11:32:02', 1, 1,1)
+
+--Bảng Registration
+insert into Registration(userID, subjectID, date, certificate, status) values(2, 2, '11/12/2011 11:32:02', 'abc', 1)
+insert into Registration(userID, subjectID, date, certificate, status) values(3, 2, '11/12/2011 11:32:02', 'abc', 1)
+insert into Registration(userID, subjectID, date, certificate, status) values(3, 6, '11/12/2011 11:32:02', 'abc', 1)
+
 
 delete HistoryActivity where userID = 2 AND blogID = 1 AND activityTypeID = 1
 Update [User] SET roleID = 2 where userID = 1

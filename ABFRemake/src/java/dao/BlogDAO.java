@@ -33,7 +33,7 @@ public class BlogDAO {
     private static final String UPDATE_VOTE = "UPDATE Blog SET numberOfVotes = ? WHERE blogID = ?";
     private static final String GET_ALL_APPROVE_BLOGS = "SELECT blogID,Blog.userID,userApproveID,subjectID,title,content,date, Blog.image,video,"
             + "numberOfVotes,numberOfComments,Blog.status, fullName FROM Blog JOIN [USER] ON Blog.userID = [User].userID "
-            + "WHERE Blog.status LIKE 'waiting' AND Blog.userID != ?";
+            + "WHERE Blog.status LIKE 'waiting' AND Blog.userID != ? AND Blog.subjectID = ?";
     private static final String DELETE_BLOG = "UPDATE Blog SET status = 'disable' WHERE blogID = ?";
     private static final String EDIT_BLOG = "UPDATE Blog  \n"
             + "set subjectID=?, title=?, content=?,date=?, image=?, status='waiting' \n"
@@ -275,7 +275,7 @@ public class BlogDAO {
         return check;
     }
 
-    public List<BlogDTO> getAllApproveBlogs(int loginUserID) throws SQLException {
+    public List<BlogDTO> getAllApproveBlogs(int loginUserID, int subjectID) throws SQLException {
         List<BlogDTO> listAllApproveBlogs = new ArrayList<>();
         Connection conn = null;
         PreparedStatement psm = null;
@@ -285,12 +285,12 @@ public class BlogDAO {
             if (conn != null) {
                 psm = conn.prepareStatement(GET_ALL_APPROVE_BLOGS);
                 psm.setInt(1, loginUserID);
+                psm.setInt(2, subjectID);
                 rs = psm.executeQuery();
                 while (rs.next()) {
                     int blogID = rs.getInt("blogID");
                     int userID = rs.getInt("userID");
                     int userApproveID = rs.getInt("userApproveID");
-                    int subjectID = rs.getInt("subjectID");
                     String title = rs.getString("title");
                     String content = rs.getString("content");
                     String date = rs.getString("date");

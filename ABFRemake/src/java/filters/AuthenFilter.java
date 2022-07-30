@@ -54,6 +54,9 @@ public class AuthenFilter implements Filter {
     private static final String MAJOR_PAGE = "major.jsp";
     private static final String SUBJECT_PAGE = "subject.jsp";
     private static final String MANAGEACCOUNT_PAGE = "manageaccount.jsp";
+    private static final String VOTE_RATINGS_PAGE = "voteratings.jsp";
+    private static final String CREATE_MAJOR_PAGE = "createmajor.jsp";
+    private static final String CREATE_SUBJECT_PAGE = "createsubject.jsp";
 
     private static final boolean debug = true;
 
@@ -70,6 +73,8 @@ public class AuthenFilter implements Filter {
         ADMIN_RESOURCES.add(MAJOR_PAGE);
         ADMIN_RESOURCES.add(SUBJECT_PAGE);
         ADMIN_RESOURCES.add(MANAGEACCOUNT_PAGE);
+        ADMIN_RESOURCES.add(CREATE_MAJOR_PAGE);
+        ADMIN_RESOURCES.add(CREATE_SUBJECT_PAGE);
 
         //Khai báo các Resource Student được phép truy cập
         STUDENT_RESOURCES = new ArrayList<>();
@@ -92,6 +97,7 @@ public class AuthenFilter implements Filter {
         MENTOR_RESOURCES.add(APPROVE_BLOG_PAGE);
         MENTOR_RESOURCES.add(APPROVE_BLOG_DETAIL_PAGE);
         MENTOR_RESOURCES.add(ACTIVITY_PAGE);
+        MENTOR_RESOURCES.add(VOTE_RATINGS_PAGE);
         MENTOR_RESOURCES.add("SearchController");
         MENTOR_RESOURCES.add("PostBlogController");
 

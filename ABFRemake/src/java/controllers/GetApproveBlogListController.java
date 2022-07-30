@@ -6,9 +6,12 @@
 package controllers;
 
 import dao.BlogDAO;
+import dao.RegistrationDAO;
 import dto.BlogDTO;
+import dto.RegistrationDTO;
 import dto.UserDTO;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -41,29 +44,23 @@ public class GetApproveBlogListController extends HttpServlet {
         String url = ERROR;
         try {
             BlogDAO dao = new BlogDAO();
+            RegistrationDAO regisDao = new RegistrationDAO();
             HttpSession session = request.getSession();
             UserDTO loginUser = (UserDTO)session.getAttribute("LOGIN_USER");
-            int userID = loginUser.getUserID();
-            List<BlogDTO> listApproveBlogs = dao.getAllApproveBlogs(userID);//Lấy hết các blog
-            if (listApproveBlogs.size() > 0) {
-//                String value = request.getParameter("sortBy");
-//                String orderValue = request.getParameter("sortOrder");
-//                if ("date".equals(value)) {//Nếu người dùng chọn sort by date
-//                    if("descending".equals(orderValue)){//Sắp xếp theo giảm dần
-//                        Collections.sort(listApproveBlogs, BlogDTO.compareDate);
-//                        request.setAttribute("ORDER_OPTION", "Descending");
-//                    }else if("ascending".equals(orderValue)){//Sắp xếp giảm dần
-//                        Collections.sort(listApproveBlogs, BlogDTO.compareDate);
-//                        Collections.reverse(listApproveBlogs);
-//                        request.setAttribute("ORDER_OPTION", "Ascending");
-//                    }else{
-//                        request.setAttribute("ORDER_OPTION", "None");
-//                    }
-//                    request.setAttribute("OPTION", "Date");
-//                } 
-                Collections.sort(listApproveBlogs, BlogDTO.compareDate);
-                request.setAttribute("LIST_ALL_BLOGS", listApproveBlogs);
-            }
+            int loginUserID = loginUser.getUserID();
+            List<BlogDTO> listApproveBlogs2 = new ArrayList<>();
+            List<BlogDTO> listApproveBlogs1 = new ArrayList<>();
+            List<RegistrationDTO> listsub = regisDao.getRegistrationByUserid(loginUserID);
+            if(listsub.size() > 0 ){
+                 for(RegistrationDTO regis: listsub){
+                    listApproveBlogs2 = dao.getAllApproveBlogs(loginUserID,regis.getSubjectID());//Lấy hết các blog
+                    listApproveBlogs1.addAll(listApproveBlogs2);
+                }
+            if (listApproveBlogs1.size() > 0) {                
+                Collections.sort(listApproveBlogs1, BlogDTO.compareDate);
+                request.setAttribute("LIST_ALL_BLOGS", listApproveBlogs1);
+                request.setAttribute("MENTOR_REGIS", listsub);
+            }}
             url = SUCCESS;
         } catch (Exception e) {
             log("Error at Get List Controller: " + e.toString());

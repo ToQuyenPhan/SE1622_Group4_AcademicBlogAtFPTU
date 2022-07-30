@@ -67,6 +67,12 @@ public class MainController extends HttpServlet {
     private static final String SEARCH_MAJOR_BY_NAME = "SearchMajorByName";
     private static final String SEARCH_SUBJECT_BY_NAME = "SearchSubjectByName";
     private static final String UPDATE_STATUS_USER = "UpdateStatusUser";
+    private static final String CREATE_MAJOR = "CreateMajor";
+    private static final String CREATE_SUBJECT = "CreateSubject";
+    private static final String GO_TO_EDIT_SUBJECT = "GoToEditSubject";
+    private static final String SAVE_SUBJECT = "Save Subject";
+    private static final String GO_TO_EDIT_MAJOR = "GoToEditMajor";
+    private static final String SAVE_MAJOR = "Save Major";
 
     private static final String LOGIN_WITH_GOOGLE_CONTROLLER = "LoginWithGoogleController";
     private static final String LOGIN_CONTROLLER = "LoginController";
@@ -108,6 +114,12 @@ public class MainController extends HttpServlet {
     private static final String SEARCH_MAJOR_BY_NAME_CONTROLLER = "SearchMajorByNameController";
     private static final String SEARCH_SUBJECT_BY_NAME_CONTROLLER = "SearchSubjectByNameController";
     private static final String BAN_OR_UNBAN_CONTROLLER = "BanOrUnBanUserController";
+    private static final String CREATE_MAJOR_CONTROLLER = "CreateMajorController";
+    private static final String CREATE_SUBJECT_CONTROLLER = "CreateSubjectController";
+    private static final String GO_TO_EDIT_SUBJECT_CONTROLLER = "GoToEditSubjectController";
+    private static final String EDIT_SUBJECT_CONTROLLER = "EditSubjectController";
+    private static final String GO_TO_EDIT_MAJOR_CONTROLLER = "GoToEditMajorController";
+    private static final String EDIT_MAJOR_CONTROLLER = "EditMajorController";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -133,34 +145,64 @@ public class MainController extends HttpServlet {
             } else if (GETLIST.equals(action)) {
                 url = GET_BLOG_LIST_CONTROLLER;
             } else if (GETFEEDBACKTYPELIST.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
                 url = GET_FEEDBACK_TYPE_LIST_CONTROLLER;
             } else if (SEND.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
                 url = SEND_FEEDBACK_CONTROLLER;
             } else if (SEARCH.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
                 url = SEARCH_CONTROLLER;
             } else if (SORT_BY_DATE.equals(action)) {
                 url = SORT_BY_DATE_PAGE;
             } else if (VIEW_BLOG_DETAIL.equals(action)) {
                 url = BLOG_DETAIL_CONTROLLER;
             } else if (POST.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
                 url = POST_BLOG_CONTROLLER;
             } else if (UPLOAD.equals(action)) {
                 url = UPLOAD_FILE_CONTROLLER;
             } else if (COMMENT.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
                 url = COMMENT_CONTROLLER;
             } else if (GET_ACTIVITY_LIST.equals(action)) {
                 url = GET_ACTIVITY_LIST_CONTROLLER;
             } else if (DELETE_ACTIVITY.equals(action)) {
                 url = DELETE_ACTIVITY_CONTROLLER;
             } else if (VOTE.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
                 url = VOTE_CONTROLLER;
             } else if (GET_APPROVE_LIST.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
                 url = GET_APPROVE_BLOG_CONTROLLER;
             } else if (SORT_APPROVE_LIST.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
                 url = GET_APPROVE_BLOG_CONTROLLER;
             } else if (DELETE_BLOG.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
                 url = DELETE_BLOG_CONTROLLER;
             } else if (EDIT_BLOG.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
                 url = GO_TO_EDIT_BLOG_PAGE_CONTROLLER;
             } else if (EDIT.equals(action)) {
                 url = EDIT_BLOG_CONTROLLER;
@@ -193,6 +235,9 @@ public class MainController extends HttpServlet {
                 }
                 url = FEEDBACK_LIST_CONTROLLER;
             } else if (FEEDBACK_DETAIL.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
                 url = FEEDBACK_DETAIL_CONTROLLER;
             } else if (GO_TO_WELCOME_PAGE.equals(action)) {
                 url = WELCOME_PAGE;
@@ -207,10 +252,16 @@ public class MainController extends HttpServlet {
                 }
                 url = VIEW_PERSONAL_PAGE_CONTROLLER;
             } else if (SAVE_DRAFT_BLOG.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
                 url = SAVE_DRAFT_BLOG_CONTROLLER;
             } else if (LOGOUT.equals(action)) {
                 url = LOGOUT_CONTROLLER;
             } else if (SEARCH_ACTIVITY_BY_NAME.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
                 url = SEARCH_ACTIVITY_BY_NAME_CONTROLLER;
             } else if (CANCEL.equals(action)) {
                 url = CANCEL_CONTROLLER;
@@ -244,7 +295,36 @@ public class MainController extends HttpServlet {
                     response.sendRedirect("MainController?action=GoToWelcomePage");   
                 }
                 url = BAN_OR_UNBAN_CONTROLLER;
-            } else {
+            } else if (CREATE_MAJOR.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
+                url = CREATE_MAJOR_CONTROLLER;
+            } else if (CREATE_SUBJECT.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
+                url = CREATE_SUBJECT_CONTROLLER;
+            } else if (GO_TO_EDIT_SUBJECT.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
+                url = GO_TO_EDIT_SUBJECT_CONTROLLER;
+            } else if (SAVE_SUBJECT.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
+                url = EDIT_SUBJECT_CONTROLLER;
+            } else if (GO_TO_EDIT_MAJOR.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
+                url = GO_TO_EDIT_MAJOR_CONTROLLER;
+            } else if (SAVE_MAJOR.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
+                url = EDIT_MAJOR_CONTROLLER;
                 request.setAttribute("ERROR_MESSAGE", "Function is not available!");
             }
         } catch (Exception e) {

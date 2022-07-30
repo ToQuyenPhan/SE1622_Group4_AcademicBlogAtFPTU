@@ -100,7 +100,7 @@
                                 <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
                             </button>                                
                         </form>
-                        <a href="post.html" class="tm-nav-link col-sm-3">
+                        <a href="createsubject.jsp" class="tm-nav-link col-sm-3">
                             <i class="fas fa-pen"></i>
                             Create
                         </a>
@@ -118,7 +118,7 @@
                     <div class="row">
                         <h5 class="col-sm-8"><%= subject.getSubjectName() %></h5> 
                         <div class="col-sm-4 row">
-                            <a class="col-sm-5" href="#">Students</a>
+                            <a class="col-sm-5" href="MainController?action=GoToEditSubject&subjectID=<%=subject.getSubjectID() %>" >Edit</a>
                             <a onclick="showPopUp(<%= index%>, <%= all%>)" class="col-sm-5">Deactivate</a>
                         </div>
                     </div>  
