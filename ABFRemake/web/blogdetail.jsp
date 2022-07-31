@@ -64,18 +64,18 @@
                 numberOfVotes = "";
             }
         %>
-        <nav class="nav" id="header">
+        <nav class="nav approve-page" id="header">
             <form action="MainController" method="POST">
                 <div class="nav-menu row">
-                    <div class="nav-brand">
+                    <div class="nav-brand col-sm-2">
                         <a href="MainController?action=GetList" class="text-gray">Academic Blog</a>
                     </div>
-                    <div onclick="openNav();" class="toggle-collapse">
+                    <div class="approve-page toggle-collapse">
                         <div class="toggle-icons">
-                            <i class="fas fa-bars"></i>
+                            <i onclick="openNav();" class="fas fa-bars"></i>
                         </div>
                     </div>
-                    <div class="">
+                    <div class="nav-link-items col-sm-3">
                         <ul class="nav-items">
                             <li class="nav-link">
                                 <a href="MainController?action=GetList">Home</a>
@@ -83,18 +83,18 @@
                             <li class="nav-link">
                                 <a href="MainController?action=GetFeedbackTypeList">Feedback</a>
                             </li>
-                            <li class="nav-link non-display">
-                                <a href="MainController?action=GoToPostBlogPage&position=homepage.jsp">New Blog</a>
-                            </li>
+                            <li class="nav-link"><a href="MainController?action=MentorRegisterPage&userID=<%=loginUser.getUserID()%>" class="tm-nav-link">
+                                    Registration
+                                </a></li>  
                         </ul>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="search-div col-sm-3">
                         <div class="search-form-search">
                             <input type="text" placeholder="Search..." name="search" type="text">
                             <div class="search-search"><button type="submit" name="action" value="Search"><i class="fas fa-search"></i></button></div>
                         </div>
                     </div>
-                    <div class="new col-sm-1"><a href="MainController?action=GoToPostBlogPage"><i class="fas fa-pen"></i></a></div>
+                    <div class="new col-sm-1"><a href="MainController?action=GoToPostBlogPage&position=homepage.jsp"><i class="fas fa-pen"></i></a></div>
 
                     <div class="profile text-gray col-sm-3">
                         <div class="row">         
@@ -105,6 +105,7 @@
                 </div>
             </form>
         </nav>
+
 
         <%
             List<MajorDTO> listMajor = (List<MajorDTO>) session.getAttribute("LIST_MAJOR");
@@ -351,7 +352,7 @@
                     <div style="top: 5rem;" class="menu">
                         <ul>
                             <li>
-                                <a style="text-align: center;" href="profile.jsp">My profile</a>
+                                <a href="MainController?action=ViewProfile">My profile</a>
                             </li>
                             <li>
                                 <a style="text-align: center;" href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>

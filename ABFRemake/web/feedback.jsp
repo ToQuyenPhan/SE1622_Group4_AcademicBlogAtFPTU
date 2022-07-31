@@ -80,7 +80,7 @@
                 </div>
                 <h4 class="label-for-feedback-type">Description:</h4>
                 <textarea class="textarea-feedback-page" id="" cols="30" rows="4" placeholder="Write your description ..." name="description"></textarea>
-                <a href="MainController?action=GetList">Cancel</a>
+                <a style="text-decoration: none;" href="MainController?action=GetList">Cancel</a>
                 <input type="submit" name="action" value="Send">
             </form>
         </div> 

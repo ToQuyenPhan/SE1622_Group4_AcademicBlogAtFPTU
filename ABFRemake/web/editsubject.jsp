@@ -73,9 +73,13 @@
                                 <i class="fas fa-users"></i>
                                 Subjects
                             </a></li>
+                        <li class="tm-nav-item"><a href="MainController?action=ManageRegistration" class="tm-nav-link">
+                                <i class="fa fa-user-plus"></i>
+                                Registrations
+                            </a></li>
                         <li class="tm-nav-item"><a href="MainController?action=GetFeedbackList" class="tm-nav-link">
                                 <i class="far fa-comments"></i>
-                                Feedback
+                                Feedbacks
                             </a></li>
                         <li class="tm-nav-item"><a href="MainController?action=Logout" class="tm-nav-link">
                                 <i class="fas fa-sign-out-alt"></i>

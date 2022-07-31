@@ -16,6 +16,17 @@
 <%@page import="dto.UserDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%
+    //check co parameter warning=thanhcong nhan dc tu trang addtocart
+    String msq = request.getParameter("notiRegis");
+    if (msq != null) {
+%>
+<script>
+    alert("Registration has been send");
+</script>
+<%
+    }
+%>  
 <html lang="en">
 
     <head>
@@ -64,7 +75,7 @@
         <nav class="nav approve-page" id="header">
             <form action="MainController" method="POST">
                 <div class="nav-menu row">
-                    <div class="nav-brand ">
+                    <div class="nav-brand col-sm-2">
                         <a href="#" class="text-gray">Academic Blog</a>
                     </div>
                     <div class="approve-page toggle-collapse">
@@ -72,7 +83,7 @@
                             <i onclick="openNav();" class="fas fa-bars"></i>
                         </div>
                     </div>
-                    <div class="nav-link-items">
+                    <div class="nav-link-items col-sm-3">
                         <ul class="nav-items">
                             <li class="nav-link active">
                                 <a href="#">Home</a>
@@ -80,6 +91,9 @@
                             <li class="nav-link">
                                 <a href="MainController?action=GetFeedbackTypeList">Feedback</a>
                             </li>
+                            <li class="nav-link"><a href="MainController?action=MentorRegisterPage&userID=<%=loginUser.getUserID()%>" class="tm-nav-link">
+                                    Registration
+                                </a></li>  
                             <li class="nav-link non-display">
                                 <a href="MainController?action=GoToPostBlogPage&position=homepage.jsp">New Blog</a>
                             </li>
@@ -127,20 +141,23 @@
                     <div class="menu">
                         <ul>
                             <li>
-                                <a href="profile.jsp">My profile</a>
+                                <a href="MainController?action=ViewProfile">My profile</a>
                             </li>
                             <li>
                                 <a href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
                             </li>
+<!--                            <li>
+                                <a href="#">Draft</a>
+                            </li>-->
                             <%
                                 if (loginUser.getRoleID() == 3) {
                             %>
                             <li>
                                 <a href="MainController?action=GetApproveList">Approve List</a>
                             </li>
-<!--                            <li>
-                                <a href="voteratings.jsp">Vote Ratings</a>
-                            </li>-->
+                            <!--                            <li>
+                                                            <a href="voteratings.jsp">Vote Ratings</a>
+                                                        </li>-->
                             <%
                                 }
                             %>
@@ -198,34 +215,12 @@
                                                     }
                                                 }
                                                 if (status.equals("1")) {
-//                                                    String myDate = blog.getDate();
-//                                                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-//                                                    Date date = sdf.parse(myDate);
-//                                                    Date instanceDate = Calendar.getInstance().getTime();
-//                                                    String strDate = sdf.format(instanceDate);
-//                                                    Date formattedDate = sdf.parse(strDate);
-//                                                    long different = formattedDate.getTime() - date.getTime();
-//                                                    long secondsInMilli = 1000;
-//                                                    long minutesInMilli = secondsInMilli * 60;
-//                                                    long hoursInMilli = minutesInMilli * 60;
-//                                                    long daysInMilli = hoursInMilli * 24;
-//
-//                                                    long elapsedDays = different / daysInMilli;
-//                                                    different = different % daysInMilli;
-//
-//                                                    long elapsedHours = different / hoursInMilli;
-//                                                    different = different % hoursInMilli;
-//
-//                                                    long elapsedMinutes = different / minutesInMilli;
-//                                                    different = different % minutesInMilli;
-//
-//                                                    long elapsedSeconds = different / secondsInMilli;
-%> 
+                            %> 
                             <div class="blog-content col-sm-3">
                                 <form action="MainController" method="POST">
                                     <img src="<%= blog.getImage()%>" alt="post-<%= index%>">
                                     <div class="blog-title">
-                                        <h3><%= title%></h3>
+                                        <h3><a href="MainController?action=ViewBlogDetails&blogID=<%= blog.getBlogID()%>"><%= title %></a></h3>
                                         <input type="hidden" name="majorID" value="<%= majorID%>"/>
                                         <input type="hidden" name="majorName" value="<%= majorName%>"/>
                                         <button type="submit" name="action" value="SearchMajor" class="btn btn-blog"><%= majorName%></button>
@@ -305,13 +300,13 @@
                             }
                         %>
                         <hr>
-<!--                        <div class="pagination flex-row">
-                            <a href="#"><i class="fas fa-chevron-left"></i></a>
-                            <a href="#" class="pages">1</a>
-                            <a href="#" class="pages">2</a>
-                            <a href="#" class="pages">3</a>
-                            <a href="#"><i class="fas fa-chevron-right"></i></a>
-                        </div>-->
+                        <!--                        <div class="pagination flex-row">
+                                                    <a href="#"><i class="fas fa-chevron-left"></i></a>
+                                                    <a href="#" class="pages">1</a>
+                                                    <a href="#" class="pages">2</a>
+                                                    <a href="#" class="pages">3</a>
+                                                    <a href="#"><i class="fas fa-chevron-right"></i></a>
+                                                </div>-->
                     </div>
                     <aside class="sidebar">
                         <div class="category">
@@ -395,7 +390,7 @@
                                             for (SubjectDTO subject : listSubject) {
 
                                 %>
-                                <span class="tag" data-aos="flip-up" data-aos-delay="100"><%= subject.getSubjectName()%></span>
+                                <span class="tag" data-aos="flip-up" data-aos-delay="100"><a href="MainController?action=SearchSubject&subjectID=<%= subject.getSubjectID()%>&subjectName=<%= subject.getSubjectName() %>"><%= subject.getSubjectName()%></a></span>
                                 <%
                                             }
                                         }
@@ -420,8 +415,7 @@
             <div class="container">
                 <div class="about-us" data-aos="fade-right" data-aos-delay="200">
                     <h2>About us</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quia atque nemo ad modi officiis
-                        iure, autem nulla tenetur repellendus.</p>
+                    <p>ABF is a website for all students of FPT University, this is a place for students to learn, gather knowledge and share experiences about their major, especially their subject.</p>
                 </div>
                 <div class="instagram" data-aos="fade-left" data-aos-delay="200">
                     <h2>Instagram</h2>
@@ -446,13 +440,11 @@
                         <i class="fab fa-youtube"></i>
                     </div>
                 </div>
-            </div>
-            <div class="rights flex-row">
-                <h4 class="text-gray">
-                    Copyright ©2019 All rights reserved | made by
-                    <a href="www.youtube.com/c/dailytuition" target="_black">Daily Tuition <i class="fab fa-youtube"></i>
-                        Channel</a>
-                </h4>
+                <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
+                    <h4 class="text-gray">
+                        Copyright ©2022 Team 4
+                    </h4>
+                </div>
             </div>
             <div class="move-up">
                 <span><a href="#header"><i class="fas fa-arrow-circle-up fa-2x"></i></a></span>
@@ -474,20 +466,20 @@
         <script src="js/main.js"></script>
 
         <script>
-                                function menuToggle() {
-                                    const toggleMenu = document.querySelector(".menu");
-                                    toggleMenu.classList.toggle("active2");
-                                }
-                                
-                                function openNav(){
-                                    if(document.getElementById('header').style.height === '20rem'){
-                                        document.getElementById('header').style.height = '4rem'
-                                    }else{
-                                        document.getElementById('header').style.height = '20rem'
+                                    function menuToggle() {
+                                        const toggleMenu = document.querySelector(".menu");
+                                        toggleMenu.classList.toggle("active2");
                                     }
-                                    
-                                }
-                              
+
+                                    function openNav() {
+                                        if (document.getElementById('header').style.height === '20rem') {
+                                            document.getElementById('header').style.height = '4rem'
+                                        } else {
+                                            document.getElementById('header').style.height = '20rem'
+                                        }
+
+                                    }
+
         </script>
     </body>
 

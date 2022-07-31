@@ -72,11 +72,15 @@
                                 <i class="fas fa-users"></i>
                                 Subjects
                             </a></li>
+                        <li class="tm-nav-item"><a href="MainController?action=ManageRegistration" class="tm-nav-link">
+                                <i class="fa fa-user-plus"></i>
+                                Registrations
+                            </a></li>
                         <li class="tm-nav-item"><a href="MainController?action=GetFeedbackList" class="tm-nav-link">
                                 <i class="far fa-comments"></i>
-                                Feedback
+                                Feedbacks
                             </a></li>
-                            <li class="tm-nav-item"><a href="MainController?action=Logout" class="tm-nav-link">
+                        <li class="tm-nav-item"><a href="MainController?action=Logout" class="tm-nav-link">
                                 <i class="fas fa-sign-out-alt"></i>
                                 Logout
                             </a></li>
@@ -89,24 +93,24 @@
             <main class="tm-main">
                 <!-- Search form -->
                 <div class="row tm-row admin-page">
-                <div class="col-12 col-md-12">
-                    <a href="manageaccount.jsp" class="">
-                        <h1 class="tm-pt-30 tm-color-primary tm-post-title">Manage Accounts</h1>
-                    </a>                    
-                </div>
-                <div class="col-12 col-md-12">
-                    <a href="MainController?action=GetMajorList" class="">
-                        <h1 class="tm-pt-30 tm-color-primary tm-post-title">Manage Majors</h1>
-                    </a>                    
-                </div>
-                <div class="col-12 col-md-12">
-                    <a href="MainController?action=GetFeedbackList" class="">
-                        <h1 class="tm-pt-30 tm-color-primary tm-post-title">Manage Feedbacks</h1>
-                    </a>                    
-                </div>
-            </div>        
-            <footer class="row tm-row">
-            </footer>
+                    <div class="col-12 col-md-12">
+                        <a href="manageaccount.jsp" class="">
+                            <h1 class="tm-pt-30 tm-color-primary tm-post-title">Manage Accounts</h1>
+                        </a>                    
+                    </div>
+                    <div class="col-12 col-md-12">
+                        <a href="MainController?action=GetMajorList" class="">
+                            <h1 class="tm-pt-30 tm-color-primary tm-post-title">Manage Majors</h1>
+                        </a>                    
+                    </div>
+                    <div class="col-12 col-md-12">
+                        <a href="MainController?action=GetFeedbackList" class="">
+                            <h1 class="tm-pt-30 tm-color-primary tm-post-title">Manage Feedbacks</h1>
+                        </a>                    
+                    </div>
+                </div>        
+                <footer class="row tm-row">
+                </footer>
             </main>
         </div>
         <script src="js/jquery.min.js"></script>

@@ -75,11 +75,15 @@
                                 <i class="fas fa-users"></i>
                                 Subjects
                             </a></li>
+                        <li class="tm-nav-item"><a href="MainController?action=ManageRegistration" class="tm-nav-link">
+                                <i class="fa fa-user-plus"></i>
+                                Registrations
+                            </a></li>
                         <li class="tm-nav-item"><a href="MainController?action=GetFeedbackList" class="tm-nav-link">
                                 <i class="far fa-comments"></i>
-                                Feedback
+                                Feedbacks
                             </a></li>
-                            <li class="tm-nav-item"><a href="MainController?action=Logout" class="tm-nav-link">
+                        <li class="tm-nav-item"><a href="MainController?action=Logout" class="tm-nav-link">
                                 <i class="fas fa-sign-out-alt"></i>
                                 Logout
                             </a></li>
@@ -115,9 +119,9 @@
                 %>
                 <div class="row tm-row activity-item major-item">
                     <div class="row">
-                        <h5 class="col-sm-8"><%= major.getMajorName()%></h5> 
+                        <h5 class="col-sm-8"><a class="col-sm-5" href="MainController?action=GetSubjectList"><%= major.getMajorName()%></a></h5> 
                         <div class="col-sm-4 row">
-                            <a class="col-sm-5" href="MainController?action=GoToEditMajor&majorID=<%= major.getMajorID() %>">Edit</a>
+                            <a class="col-sm-5" href="MainController?action=GoToEditMajor&majorID=<%= major.getMajorID()%>">Edit</a>
                             <a onclick="showPopUp(<%= index%>, <%= all%>)" class="col-sm-5">Deactivate</a>
                         </div>
                     </div>  

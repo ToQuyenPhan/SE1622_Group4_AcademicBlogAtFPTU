@@ -73,6 +73,13 @@ public class MainController extends HttpServlet {
     private static final String SAVE_SUBJECT = "Save Subject";
     private static final String GO_TO_EDIT_MAJOR = "GoToEditMajor";
     private static final String SAVE_MAJOR = "Save Major";
+    private static final String MENTOR_REGISTER = "MentorRegisterPage";
+    private static final String REGISTER = "Register";
+    private static final String MANAGE_REGISTRATION = "ManageRegistration";
+    private static final String REGISTRATION_DETAIL = "RegistrationDetail";
+    private static final String APPROVE_REGISTRATION = "ApproveRegis";
+    private static final String REJECT_REGISTRATION = "RejectRegis";
+    private static final String VIEW_PROFILE = "ViewProfile";
 
     private static final String LOGIN_WITH_GOOGLE_CONTROLLER = "LoginWithGoogleController";
     private static final String LOGIN_CONTROLLER = "LoginController";
@@ -119,7 +126,14 @@ public class MainController extends HttpServlet {
     private static final String GO_TO_EDIT_SUBJECT_CONTROLLER = "GoToEditSubjectController";
     private static final String EDIT_SUBJECT_CONTROLLER = "EditSubjectController";
     private static final String GO_TO_EDIT_MAJOR_CONTROLLER = "GoToEditMajorController";
-    private static final String EDIT_MAJOR_CONTROLLER = "EditMajorController";
+    private static final String EDIT_MAJOR_CONTROLLER = "EditMajorController"; 
+    private static final String MENTOR_REGISTER_PAGE = "mentorregister.jsp";
+    private static final String REGISTRATION_CONTROLLER = "RegistrationController";
+    private static final String GET_LIST_REGISTRATION_CONTROLLER = "GetListRegistrationController";
+    private static final String REGISTRATION_DETAIL_CONTROLLER = "RegistrationDetailController";
+    private static final String APPROVE_REGISTRATION_CONTROLLER = "ApproveRegistrationController";
+    private static final String REJECT_REGISTRATION_CONTROLLER = "RejectRegistrationController";
+    private static final String PROFILE_PAGE = "profile.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -325,6 +339,42 @@ public class MainController extends HttpServlet {
                     response.sendRedirect("MainController?action=GoToWelcomePage");   
                 }
                 url = EDIT_MAJOR_CONTROLLER;
+            }else if (MENTOR_REGISTER.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
+                url = MENTOR_REGISTER_PAGE;
+            }else if (REGISTER.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
+                url = REGISTRATION_CONTROLLER;
+            }else if (MANAGE_REGISTRATION.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
+                url = GET_LIST_REGISTRATION_CONTROLLER;
+            }else if (REGISTRATION_DETAIL.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
+                url = REGISTRATION_DETAIL_CONTROLLER;
+            }else if (APPROVE_REGISTRATION.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
+                url = APPROVE_REGISTRATION_CONTROLLER;
+            }else if (REJECT_REGISTRATION.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
+                url = REJECT_REGISTRATION_CONTROLLER;
+            }else if (VIEW_PROFILE.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
+                url = PROFILE_PAGE;
+            }else{
                 request.setAttribute("ERROR_MESSAGE", "Function is not available!");
             }
         } catch (Exception e) {

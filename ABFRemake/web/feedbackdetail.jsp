@@ -75,11 +75,15 @@
                                 <i class="fas fa-users"></i>
                                 Subjects
                             </a></li>
+                        <li class="tm-nav-item"><a href="MainController?action=ManageRegistration" class="tm-nav-link">
+                                <i class="fa fa-user-plus"></i>
+                                Registrations
+                            </a></li>
                         <li class="tm-nav-item"><a href="MainController?action=GetFeedbackList" class="tm-nav-link">
                                 <i class="far fa-comments"></i>
-                                Feedback
+                                Feedbacks
                             </a></li>
-                            <li class="tm-nav-item"><a href="MainController?action=Logout" class="tm-nav-link">
+                        <li class="tm-nav-item"><a href="MainController?action=Logout" class="tm-nav-link">
                                 <i class="fas fa-sign-out-alt"></i>
                                 Logout
                             </a></li>
@@ -91,26 +95,27 @@
         <div class="container-fluid activity-page">
             <main class="tm-main activity-list">
                 <%
-                        FeedbackDTO fb = (FeedbackDTO) request.getAttribute("FEEDBACK_DETAIL");
-                        List<FeedbackTypeDTO> fb2 = (List<FeedbackTypeDTO>) request.getAttribute("FEEDBACK_TYPE");
-                        UserDTO author = (UserDTO) request.getAttribute("FEEDBACK_AUTHOR");
-                        if (fb != null) 
-                            if (fb2 != null) 
-                                if (author != null) {
-                     %>
-                     <input type="hidden" name="feedbackID" value="<%= fb.getFeedbackID() %>">
-                     <h2><%= author.getFullName() %></h2>
-                     <p><%= fb.getDescription() %></p> 
-                     <%
-                         for (FeedbackTypeDTO a : fb2) {
-                                 if(a.getFeedbackTypeID() == fb.getFeedbackTypeID()){
-                        %>
-                        <p><%= a.getFeedbackName() %></p>
-                        <%        
-                            } }
-                         %>
-                     <p><%= fb.getDate() %></p>
-                     <% } %>
+                    FeedbackDTO fb = (FeedbackDTO) request.getAttribute("FEEDBACK_DETAIL");
+                    List<FeedbackTypeDTO> fb2 = (List<FeedbackTypeDTO>) request.getAttribute("FEEDBACK_TYPE");
+                    UserDTO author = (UserDTO) request.getAttribute("FEEDBACK_AUTHOR");
+                    if (fb != null)
+                        if (fb2 != null)
+                            if (author != null) {
+                %>
+                <input type="hidden" name="feedbackID" value="<%= fb.getFeedbackID()%>">
+                <h2><%= author.getFullName()%></h2>
+                <p><%= fb.getDescription()%></p> 
+                <%
+                    for (FeedbackTypeDTO a : fb2) {
+                        if (a.getFeedbackTypeID() == fb.getFeedbackTypeID()) {
+                %>
+                <p><%= a.getFeedbackName()%></p>
+                <%
+                        }
+                    }
+                %>
+                <p><%= fb.getDate()%></p>
+                <% }%>
             </main>
         </div>
         <script>

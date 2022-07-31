@@ -102,7 +102,7 @@ p{
 }
 
 .nav-link-items{
-    margin-left: 7rem;
+    margin-left: 0rem;
 }
 
 .nav form{
@@ -185,7 +185,7 @@ p{
     position: relative;
     display: inline-block;
     z-index: 1;
-    margin-left: 8.5rem;
+    margin-left: 0rem;
 }
 
 .nav .profile div{
@@ -240,9 +240,11 @@ p{
 .active a{
     color: white !important;
 }
+
 .non-display{
     display: none;
 }
+
 
 .new{
     text-align: center;
@@ -834,10 +836,6 @@ main .post-content .post-title a{
     padding: .4rem 1rem;
     border-radius: 3rem;
     margin: .4rem .6rem;
-}
-
-.site-blog-content{
-    padding: 0;
 }
 
 .site-blog-content h3{

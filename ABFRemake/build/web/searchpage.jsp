@@ -57,18 +57,18 @@
                 image = "image/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png";
             }
         %>
-        <nav class="nav nav-new" id="header">
+        <nav class="nav approve-page" id="header">
             <form action="MainController" method="POST">
                 <div class="nav-menu row">
-                    <div class="nav-brand">
+                    <div class="nav-brand col-sm-2">
                         <a href="MainController?action=GetList" class="text-gray">Academic Blog</a>
                     </div>
-                    <div class="toggle-collapse">
+                    <div class="approve-page toggle-collapse">
                         <div class="toggle-icons">
                             <i onclick="openNav();" class="fas fa-bars"></i>
                         </div>
                     </div>
-                    <div class="">
+                    <div class="nav-link-items col-sm-3">
                         <ul class="nav-items">
                             <li class="nav-link">
                                 <a href="MainController?action=GetList">Home</a>
@@ -76,9 +76,9 @@
                             <li class="nav-link">
                                 <a href="MainController?action=GetFeedbackTypeList">Feedback</a>
                             </li>
-                            <li class="nav-link non-display">
-                                <a href="MainController?action=GoToPostBlogPage&position=homepage.jsp">New Blog</a>
-                            </li>
+                            <li class="nav-link"><a href="#" class="tm-nav-link">
+                                    Registration
+                                </a></li>  
                         </ul>
                     </div>
                     <div class="search-div col-sm-3">
@@ -87,7 +87,7 @@
                             <div class="search-search"><button type="submit" name="action" value="Search"><i class="fas fa-search"></i></button></div>
                         </div>
                     </div>
-                    <div class="new col-sm-1"><a href="MainController?action=GoToPostBlogPage"><i class="fas fa-pen"></i></a></div>
+                    <div class="new col-sm-1"><a href="MainController?action=GoToPostBlogPage&position=homepage.jsp"><i class="fas fa-pen"></i></a></div>
 
                     <div class="profile text-gray col-sm-3">
                         <div class="row">         
@@ -129,11 +129,11 @@
                     String searchInfor = "";
                     if (majorName != null) {
                         searchInfor = majorName;
-                    } 
-                    if(subjectName != null) {
+                    }
+                    if (subjectName != null) {
                         searchInfor = subjectName;
                     }
-                    if(search != null){
+                    if (search != null) {
                         searchInfor = search;
                     }
                     if (listSearchBlogs != null) {
@@ -193,13 +193,13 @@
                             }
                         %>
                         <hr>
-<!--                        <div class="pagination flex-row">
-                            <a href="#"><i class="fas fa-chevron-left"></i></a>
-                            <a href="#" class="pages">1</a>
-                            <a href="#" class="pages">2</a>
-                            <a href="#" class="pages">3</a>
-                            <a href="#"><i class="fas fa-chevron-right"></i></a>
-                        </div>-->
+                        <!--                        <div class="pagination flex-row">
+                                                    <a href="#"><i class="fas fa-chevron-left"></i></a>
+                                                    <a href="#" class="pages">1</a>
+                                                    <a href="#" class="pages">2</a>
+                                                    <a href="#" class="pages">3</a>
+                                                    <a href="#"><i class="fas fa-chevron-right"></i></a>
+                                                </div>-->
                     </div>
                     <%
                         }
@@ -255,7 +255,7 @@
                                 <div style="top: 5rem;" class="menu">
                                     <ul>
                                         <li>
-                                            <a style="text-align: center;" href="profile.jsp">My profile</a>
+                                            <a href="MainController?action=ViewProfile">My profile</a>
                                         </li>
                                         <li>
                                             <a style="text-align: center;" href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
@@ -311,12 +311,12 @@
                                                 for (SubjectDTO subject : listSubject) {
 
                                     %>
-                                    <span class="tag" data-aos="flip-up" data-aos-delay="100"><%= subject.getSubjectName()%></span>
-                                    <%
+                                    <span class="tag" data-aos="flip-up" data-aos-delay="100"><a href="MainController?action=SearchSubject&subjectID=<%= subject.getSubjectID()%>&subjectName=<%= subject.getSubjectName()%>"><%= subject.getSubjectName()%></a></span>
+                                        <%
+                                                    }
                                                 }
                                             }
-                                        }
-                                    %>
+                                        %>
                                 </div>
                             </div>
                         </aside>
@@ -336,8 +336,7 @@
             <div class="container">
                 <div class="about-us" data-aos="fade-right" data-aos-delay="200">
                     <h2>About us</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quia atque nemo ad modi officiis
-                        iure, autem nulla tenetur repellendus.</p>
+                    <p>ABF is a website for all students of FPT University, this is a place for students to learn, gather knowledge and share experiences about their major, especially their subject.</p>
                 </div>
                 <div class="instagram" data-aos="fade-left" data-aos-delay="200">
                     <h2>Instagram</h2>
@@ -362,13 +361,11 @@
                         <i class="fab fa-youtube"></i>
                     </div>
                 </div>
-            </div>
-            <div class="rights flex-row">
-                <h4 class="text-gray">
-                    Copyright ©2019 All rights reserved | made by
-                    <a href="www.youtube.com/c/dailytuition" target="_black">Daily Tuition <i class="fab fa-youtube"></i>
-                        Channel</a>
-                </h4>
+                <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
+                    <h4 class="text-gray">
+                        Copyright ©2022 Team 4
+                    </h4>
+                </div>
             </div>
             <div class="move-up">
                 <span><a href="#header"><i class="fas fa-arrow-circle-up fa-2x"></i></a></span>
@@ -393,14 +390,14 @@
                                     const toggleMenu = document.querySelector(".menu");
                                     toggleMenu.classList.toggle("active2");
                                 }
-                                
-                                function openNav(){
-                                    if(document.getElementById('header').style.height === '20rem'){
+
+                                function openNav() {
+                                    if (document.getElementById('header').style.height === '20rem') {
                                         document.getElementById('header').style.height = '4rem'
-                                    }else{
+                                    } else {
                                         document.getElementById('header').style.height = '20rem'
                                     }
-                                    
+
                                 }
         </script>
     </body>

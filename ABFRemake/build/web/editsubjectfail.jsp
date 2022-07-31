@@ -73,9 +73,17 @@
                                 <i class="fas fa-users"></i>
                                 Subjects
                             </a></li>
+                        <li class="tm-nav-item"><a href="MainController?action=ManageRegistration" class="tm-nav-link">
+                                <i class="fa fa-user-plus"></i>
+                                Registrations
+                            </a></li>
                         <li class="tm-nav-item"><a href="#" class="tm-nav-link">
                                 <i class="far fa-comments"></i>
-                                Feedback
+                                Feedbacks
+                            </a></li>
+                        <li class="tm-nav-item"><a href="MainController?action=Logout" class="tm-nav-link">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Logout
                             </a></li>
                     </ul>
                 </nav>
@@ -103,7 +111,7 @@
                             <input type="hidden" name="subjectID" value="<%= subjectID%>">
                             <input type="hidden" name="majorID" value="<%= subjectID%>">
                             <div class="mb-4">
-                                Subject Name: <input class="form-control" name="subjectName" type="text" value="<%= subjectName %>">                             
+                                Subject Name: <input class="form-control" name="subjectName" type="text" value="<%= subjectName%>">                             
                                 <div style="color: red"><%= (request.getAttribute("CERTIFICATE_ERROR") == null) ? "" : request.getAttribute("CERTIFICATE_ERROR")%> </div>
                                 <div style="color: red"><%= (request.getAttribute("DOUBLE_SUBJECT") == null) ? "" : request.getAttribute("DOUBLE_SUBJECT")%> </div>
                             </div>                           

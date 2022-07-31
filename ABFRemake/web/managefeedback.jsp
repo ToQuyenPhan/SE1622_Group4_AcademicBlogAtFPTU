@@ -75,11 +75,15 @@
                                 <i class="fas fa-users"></i>
                                 Subjects
                             </a></li>
+                        <li class="tm-nav-item"><a href="MainController?action=ManageRegistration" class="tm-nav-link">
+                                <i class="fa fa-user-plus"></i>
+                                Registrations
+                            </a></li>
                         <li class="tm-nav-item active"><a href="#" class="tm-nav-link">
                                 <i class="far fa-comments"></i>
-                                Feedback
+                                Feedbacks
                             </a></li>
-                            <li class="tm-nav-item"><a href="MainController?action=Logout" class="tm-nav-link">
+                        <li class="tm-nav-item"><a href="MainController?action=Logout" class="tm-nav-link">
                                 <i class="fas fa-sign-out-alt"></i>
                                 Logout
                             </a></li>
@@ -134,11 +138,11 @@
                             <% }%>
                         </div>
                     </div>
-                        <div class="col-md-0">
-                            <!-- Them o day 
-                                nếu thêm thì sửa chỉ số cột lại
-                            -->
-                        </div>
+                    <div class="col-md-0">
+                        <!-- Them o day 
+                            nếu thêm thì sửa chỉ số cột lại
+                        -->
+                    </div>
                     <div class="col-md-2">
                         <h6 class="col-sm-12"><%= fb.getDate()%></h6>
                     </div>

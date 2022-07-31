@@ -19,6 +19,7 @@ import utils.DBUtils;
  * @author To Quyen Phan
  */
 public class RegistrationDAO {
+
     private static final String GET_ALL_REGISTRATION_WAIT = "SELECT registrationID ,Registration.userID, Registration.subjectID,certificate,date, Registration.status, [User].email, Subject.subjectName\n"
             + "FROM ((Registration\n"
             + "INNER JOIN [User] ON Registration.userID = [User].userID)\n"
@@ -35,9 +36,12 @@ public class RegistrationDAO {
             + "INNER JOIN [User] ON Registration.userID = [User].userID)\n"
             + "INNER JOIN Subject ON Registration.subjectID = Subject.subjectID)\n"
             + "WHERE Registration.registrationID = ?";
-    private static final String APPROVE_REGISTRATION = "UPDATE Registration\n"
+    private static final String APPROVE_REGISTRATION = " UPDATE [Registration]\n"
             + "  SET status = 1\n"
-            + "  WHERE registrationID =?";
+            + " WHERE registrationID =?\n"
+            + "  UPDATE [User]\n"
+            + "  SET roleID = 2\n"
+            + " WHERE userID =?";
     private static final String REJECT_REGISTRATION = "UPDATE Registration\n"
             + "  SET status = 2\n"
             + "  WHERE registrationID =?";
@@ -180,7 +184,7 @@ public class RegistrationDAO {
         return regis;
     }
 
-    public static boolean approveRegistration(int registrationID) throws SQLException {
+    public static boolean approveRegistration(int registrationID, int userID) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement psm = null;
@@ -190,6 +194,7 @@ public class RegistrationDAO {
             if (conn != null) {
                 psm = conn.prepareStatement(APPROVE_REGISTRATION);
                 psm.setInt(1, registrationID);
+                psm.setInt(2, userID);
                 check = psm.executeUpdate() > 0 ? true : false;
             }
         } catch (Exception e) {

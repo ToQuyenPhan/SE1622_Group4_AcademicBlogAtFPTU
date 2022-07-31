@@ -1,10 +1,11 @@
 <%-- 
-    Document   : editmajor
-    Created on : Jul 27, 2022, 3:38:43 AM
+    Document   : registrationdetail
+    Created on : Jul 13, 2022, 12:56:02 AM
     Author     : Bat
 --%>
 
-<%@page import="dto.SubjectDTO"%>
+<%@page import="dto.RegistrationDTO"%>
+<%@page import="java.util.List"%>
 <%@page import="dto.UserDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -12,7 +13,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Subject Page</title>
+        <title>Registration Details</title>
         <link rel="stylesheet" href="fontawesome/css/all.min.css"> <!-- https://fontawesome.com/ -->
         <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet"> <!-- https://fonts.google.com/ -->
         <link href="CSS/bootstrap.min.css" rel="stylesheet">
@@ -57,7 +58,7 @@
                 </div>
                 <nav class="tm-nav" id="tm-nav">            
                     <ul>
-                        <li class="tm-nav-item"><a href="admin.jsp" class="tm-nav-link">
+                        <li class="tm-nav-item"><a href="manageaccount.jsp" class="tm-nav-link">
                                 <i class="fas fa-user-tie"></i>
                                 Admin Dashboard
                             </a></li>
@@ -69,7 +70,7 @@
                                 <i class="fas fa-users"></i>
                                 Majors
                             </a></li>
-                        <li class="tm-nav-item active"><a href="#" class="tm-nav-link">
+                        <li class="tm-nav-item"><a href="MainController?action=GetSubjectList" class="tm-nav-link">
                                 <i class="fas fa-users"></i>
                                 Subjects
                             </a></li>
@@ -89,61 +90,55 @@
                 </nav>
             </div>
         </header>
-        <div class="container-fluid">
-            <main class="tm-main">
-                <div class="row tm-row">
-                    <div class="col-12">
-                        <hr class="tm-hr-primary tm-mb-45">
-                        <form action="MainController" method="POST" name="f">
-                            <input type="hidden" name="userID" value="<%=loginUser.getUserID()%>" readonly="">                      
-                            <div class="mb-4">                   
 
-                                <%
-                                    int subjectID = 0, majorID = 0;
-                                    subjectID = (Integer) request.getAttribute("SUBJECTID");
-                                    majorID = (Integer) request.getAttribute("MAJORID");
-                                    String subjectName = (String) request.getAttribute("SUBJECTNAME");
-                                    if (subjectName == null || subjectName.trim().length() == 0) {
-                                        subjectName = "";
-                                    }
-                                    if (subjectID != 0) {%>
-                            </div>
-                            <input type="hidden" name="subjectID" value="<%= subjectID%>">
-                            <input type="hidden" name="majorID" value="<%= subjectID%>">
-                            <div class="mb-4">
-                                Subject Name: <input class="form-control" name="subjectName" type="text" value="<%= subjectName%>">                             
-                                <div style="color: red"><%= (request.getAttribute("CERTIFICATE_ERROR") == null) ? "" : request.getAttribute("CERTIFICATE_ERROR")%> </div>
-                                <div style="color: red"><%= (request.getAttribute("DOUBLE_SUBJECT") == null) ? "" : request.getAttribute("DOUBLE_SUBJECT")%> </div>
-                            </div>                           
-                            <div class="text-right">
-                                <input type="submit" name="action" value="Save Subject" 
-                                       <button class="tm-btn tm-btn-primary tm-btn-small"></button>                        
-                            </div>    
-                            <% }
-                            %>
+        <div class="container-fluid activity-page">
+            <main class="tm-main activity-list">
+                <%
+                    RegistrationDTO regis = (RegistrationDTO) request.getAttribute("REGIS_DETAIL");
+                    if (regis != null) {
+                %>
+                <input type="hidden" name="feedbackID" value="<%= regis.getRegistrationID()%>">
+                <h2><%= regis.getEmail()%></h2>
+                <p><%= regis.getSubjectID()%></p> 
 
-
-                        </form>
-                    </div>
-                </div>
-                <footer class="row tm-row">
-                    <div class="col-md-6 col-12 tm-color-gray">
-                        FPT University
-                    </div>
-                    <div class="col-md-6 col-12 tm-color-gray tm-copyright">
-                        ACADEMIC BLOG
-                    </div>
-
-                </footer>
+                <p><%= regis.getCertificate()%></p>
+                <p><%= regis.getDate()%></p>
+                <a href="MainController?action=ApproveRegis&registrationID=<%=regis.getUserID()%>&userID=<%=regis.getUserID()%>">Approve</a>
+                <a href="MainController?action=RejectRegis&registrationID=<%=regis.getUserID()%>">Reject</a>
+                <% }%>
             </main>
         </div>
+        <script>
+            var time_in_sec = 0;
+            var start_calling = '';
+            function showPopUp(item, size) {
+                for (var i = 0; i <= size; i++) {
+                    if (i == item) {
+                        document.getElementById(item).style.display = "block";
+                    }
+                }
+            }
+            function countdownTime() {
+                time_in_sec++;
+                html_tag.innerHTML = time_in_sec; // show time in html tag
+                if (time_in_sec == 10) {
+                    clearInterval(start_calling) // stop calling
+                    ClosePopUp();
+                }
+            }
+            function closePopUpConfirm(item, size) {
+                for (var i = 0; i <= size; i++) {
+                    if (i == item) {
+                        document.getElementById(item).style.display = "none";
+                    }
+                }
+            }
 
-
-        <footer class="row tm-row">
-        </footer>
-    </main>
-</div>
-<script src="js/jquery.min.js"></script>
-<script src="js/templatemo-script.js"></script>
-</body>
+            function closePopUp() {
+                document.getElementById('delete-activity-message-popup').style.display = 'none';
+            }
+        </script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/templatemo-script.js"></script>
+    </body>
 </html>

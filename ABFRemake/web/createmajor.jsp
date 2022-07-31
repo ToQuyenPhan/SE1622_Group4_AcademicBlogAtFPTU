@@ -76,17 +76,21 @@
                                 <i class="fas fa-tasks"></i>
                                 Activity
                             </a></li>
-<!--                        <li class="tm-nav-item"><a href="MainController?action=GetMajorList" class="tm-nav-link">
-                                <i class="fas fa-users"></i>
-                                Majors
-                            </a></li>-->
+                        <!--                        <li class="tm-nav-item"><a href="MainController?action=GetMajorList" class="tm-nav-link">
+                                                        <i class="fas fa-users"></i>
+                                                        Majors
+                                                    </a></li>-->
                         <li class="tm-nav-item"><a href="MainController?action=GetSubjectList" class="tm-nav-link">
                                 <i class="fas fa-users"></i>
                                 Subjects
                             </a></li>
+                        <li class="tm-nav-item"><a href="MainController?action=ManageRegistration" class="tm-nav-link">
+                                <i class="fa fa-user-plus"></i>
+                                Registrations
+                            </a></li>
                         <li class="tm-nav-item"><a href="MainController?action=GetFeedbackList" class="tm-nav-link">
                                 <i class="far fa-comments"></i>
-                                Feedback
+                                Feedbacks
                             </a></li>
                         <li class="tm-nav-item"><a href="MainController?action=Logout" class="tm-nav-link">
                                 <i class="fas fa-sign-out-alt"></i>

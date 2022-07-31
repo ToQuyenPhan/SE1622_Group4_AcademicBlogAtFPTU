@@ -55,18 +55,18 @@
 
             String position = request.getParameter("position");
         %>
-        <nav class="nav" id="header">
+        <nav class="nav approve-page" id="header">
             <form action="MainController" method="POST">
                 <div class="nav-menu row">
-                    <div class="nav-brand">
+                    <div class="nav-brand col-sm-2">
                         <a href="MainController?action=GetList" class="text-gray">Academic Blog</a>
                     </div>
-                    <div onclick="openNav();" class="toggle-collapse">
+                    <div class="approve-page toggle-collapse">
                         <div class="toggle-icons">
-                            <i class="fas fa-bars"></i>
+                            <i onclick="openNav();" class="fas fa-bars"></i>
                         </div>
                     </div>
-                    <div class="">
+                    <div class="nav-link-items col-sm-3">
                         <ul class="nav-items">
                             <li class="nav-link">
                                 <a href="MainController?action=GetList">Home</a>
@@ -74,9 +74,19 @@
                             <li class="nav-link">
                                 <a href="MainController?action=GetFeedbackTypeList">Feedback</a>
                             </li>
+                            <li class="nav-link"><a href="MainController?action=MentorRegisterPage&userID=<%=loginUser.getUserID()%>" class="tm-nav-link">
+                                    Registration
+                                </a></li>  
                         </ul>
                     </div>
-                    <div class="new col-sm-3"><a href="#"><i class="fas fa-pen"></i></a></div>
+                    <div class="search-div col-sm-4">
+                        <div class="search-form-search">
+                            <input type="text" placeholder="Search..." name="search" type="text">
+                            <div class="search-search"><button type="submit" name="action" value="Search"><i class="fas fa-search"></i></button></div>
+                        </div>
+                    </div>
+                    <!--                    <div class="new col-sm-1"><a href="#"><i class="fas fa-pen"></i></a></div>-->
+
                     <div class="profile text-gray col-sm-3">
                         <div class="row">         
                             <a><h6><%= loginUser.getFullName()%></h6></a>
@@ -94,7 +104,7 @@
                         <div class="menu">
                             <ul>
                                 <li>
-                                    <a href="profile.jsp">My profile</a>
+                                    <a href="MainController?action=ViewProfile">My profile</a>
                                 </li>
                                 <li>
                                     <a href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
@@ -173,7 +183,7 @@
                                     }
                                 %>
                                 <form method="post" action="MainController" enctype="multipart/form-data">
-                                    Image<input class="form-control" name="file" type="file">
+                                    Image<input style="height: 3rem;" class="form-control" name="file" type="file">
                                     <h6><%= imageError%></h6>
                             </div>
                             <div class="text-right post-blog-form">
@@ -194,16 +204,8 @@
                     <div class="container">
                         <div class="about-us" data-aos="fade-right" data-aos-delay="200">
                             <h2>About us</h2>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quia atque nemo ad modi officiis
-                                iure, autem nulla tenetur repellendus.</p>
+                            <p>ABF is a website for all students of FPT University, this is a place for students to learn, gather knowledge and share experiences about their major, especially their subject.</p>
                         </div>
-<!--                        <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
-                            <h2>Newsletter</h2>
-                            <p>Stay update with our latest</p>
-                            <div class="form-element">
-                                <input type="text" placeholder="Email"><span><i class="fas fa-chevron-right"></i></span>
-                            </div>
-                        </div>-->
                         <div class="instagram" data-aos="fade-left" data-aos-delay="200">
                             <h2>Instagram</h2>
                             <div class="flex-row">
@@ -227,13 +229,11 @@
                                 <i class="fab fa-youtube"></i>
                             </div>
                         </div>
-                    </div>
-                    <div class="rights flex-row">
-                        <h4 class="text-gray">
-                            Copyright ©2019 All rights reserved | made by
-                            <a href="www.youtube.com/c/dailytuition" target="_black">Daily Tuition <i class="fab fa-youtube"></i>
-                                Channel</a>
-                        </h4>
+                        <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
+                            <h4 class="text-gray">
+                                Copyright ©2022 Team 4
+                            </h4>
+                        </div>
                     </div>
                     <div class="move-up">
                         <span><a href="#header"><i class="fas fa-arrow-circle-up fa-2x"></i></a></span>

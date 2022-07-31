@@ -339,7 +339,7 @@
                     <div style="top: 5rem;" class="menu">
                         <ul>
                             <li>
-                                <a style="text-align: center;" href="profile.jsp">My profile</a>
+                                <a href="MainController?action=ViewProfile">My profile</a>
                             </li>
                             <li>
                                 <a style="text-align: center;" href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>

@@ -39,27 +39,23 @@
             if (loginUser == null) {
                 loginUser = new UserDTO();
             }
-            String search = request.getParameter("search");
-            if (search == null) {
-                search = "";
-            }
             String image = loginUser.getImage();
             if (image == null) {
                 image = "image/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png";
             }
         %>
-        <nav class="nav nav-new" id="header">
+        <nav class="nav approve-page" id="header">
             <form action="MainController" method="POST">
                 <div class="nav-menu row">
-                    <div class="nav-brand">
+                    <div class="nav-brand col-sm-2">
                         <a href="MainController?action=GetList" class="text-gray">Academic Blog</a>
                     </div>
-                    <div onclick="openNav();" class="toggle-collapse">
+                    <div class="approve-page toggle-collapse">
                         <div class="toggle-icons">
-                            <i class="fas fa-bars"></i>
+                            <i onclick="openNav();" class="fas fa-bars"></i>
                         </div>
                     </div>
-                    <div class="">
+                    <div class="nav-link-items col-sm-3">
                         <ul class="nav-items">
                             <li class="nav-link">
                                 <a href="MainController?action=GetList">Home</a>
@@ -67,9 +63,9 @@
                             <li class="nav-link">
                                 <a href="MainController?action=GetFeedbackTypeList">Feedback</a>
                             </li>
-                            <li class="nav-link non-display">
-                                <a href="MainController?action=GoToPostBlogPage&position=homepage.jsp">New Blog</a>
-                            </li>
+                            <li class="nav-link"><a href="MainController?action=MentorRegisterPage&userID=<%=loginUser.getUserID()%>" class="tm-nav-link">
+                                    Registration
+                                </a></li>  
                         </ul>
                     </div>
                     <div class="search-div col-sm-3">
@@ -78,7 +74,7 @@
                             <div class="search-search"><button type="submit" name="action" value="Search"><i class="fas fa-search"></i></button></div>
                         </div>
                     </div>
-                    <div class="new col-sm-1"><a href="MainController?action=GoToPostBlogPage"><i class="fas fa-pen"></i></a></div>
+                    <div class="new col-sm-1"><a href="MainController?action=GoToPostBlogPage&position=homepage.jsp"><i class="fas fa-pen"></i></a></div>
 
                     <div class="profile text-gray col-sm-3">
                         <div class="row">         
@@ -114,15 +110,7 @@
                 <div>
                     <%
                         List<BlogDTO> listAllBlogs = (List<BlogDTO>) request.getAttribute("LIST_ALL_BLOGS");
-                        String majorName = request.getParameter("majorName");
-                        String searchInfor = "";
-                        if (majorName == null) {
-                            searchInfor = search;
-                        } else {
-                            searchInfor = majorName;
-                        }
                     %>
-<!--                    <h3><%= listAllBlogs.size()%> results for: <%= searchInfor%></h3>-->
                 </div>
                 <div class="site-content">
 
@@ -212,7 +200,7 @@
                         <div style="top: 5rem;" class="menu">
                             <ul>
                                 <li>
-                                    <a style="text-align: center;" href="profile.jsp">My profile</a>
+                                    <a href="MainController?action=ViewProfile">My profile</a>
                                 </li>
                                 <li>
                                     <a style="text-align: center;" href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
@@ -235,87 +223,87 @@
                                                 <div class="category">
                                                     <h2>Majors</h2>
                                                     <ul class="category-list">
-                        <%
-                            if (listMajor != null) {
-                                if (listMajor.size() > 0) {
-                                    for (MajorDTO major : listMajor) {
-                                        int numberOfBlogs = 0;
-                                        int subjectID = 0;
-                                        for (SubjectDTO subject : listSubject) {
-                                            if (major.getMajorID() == subject.getMajorID()) {
-                                                subjectID = subject.getSubjectID();
-                                            }
-                                            for (BlogDTO blog : listAllBlogs) {
-                                                if (blog.getSubjectID() == subjectID) {
-                                                    numberOfBlogs++;
+                        <%--    <%
+                                if (listMajor != null) {
+                                    if (listMajor.size() > 0) {
+                                        for (MajorDTO major : listMajor) {
+                                            int numberOfBlogs = 0;
+                                            int subjectID = 0;
+                                            for (SubjectDTO subject : listSubject) {
+                                                if (major.getMajorID() == subject.getMajorID()) {
+                                                    subjectID = subject.getSubjectID();
+                                                }
+                                                for (BlogDTO blog : listAllBlogs) {
+                                                    if (blog.getSubjectID() == subjectID) {
+                                                        numberOfBlogs++;
+                                                    }
                                                 }
                                             }
+                            %>
+                            <li class="list-items" data-aos="fade-left" data-aos-delay="100">
+                                <a href="#"><%= major.getMajorName()%></a>
+                                <span>(<%= numberOfBlogs%>)</span>
+                            </li>
+                            <%
                                         }
-                        %>
-                        <li class="list-items" data-aos="fade-left" data-aos-delay="100">
-                            <a href="#"><%= major.getMajorName()%></a>
-                            <span>(<%= numberOfBlogs%>)</span>
-                        </li>
-                        <%
                                     }
                                 }
-                            }
-                        %>
-                    </ul>
-                    <div style="top: 5rem;" class="menu">
-                        <ul>
+                            %>
+                        </ul>
+                        <div style="top: 5rem;" class="menu">
+                            <ul>
+                                <li>
+                                    <a style="text-align: center;" href="profile.jsp">My profile</a>
+                                </li>
+                                <li>
+                                    <a style="text-align: center;" href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
+                                </li>
+                            <%
+                                if (loginUser.getRoleID() == 3) {
+                            %>
                             <li>
-                                <a style="text-align: center;" href="profile.jsp">My profile</a>
+                                <a style="text-align: center;" href="MainController?action=GetApproveList">Approve List</a>
                             </li>
-                            <li>
-                                <a style="text-align: center;" href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
-                            </li>
-                        <%
-                            if (loginUser.getRoleID() == 3) {
-                        %>
-                        <li>
-                            <a style="text-align: center;" href="MainController?action=GetApproveList">Approve List</a>
-                        </li>
-                        <%
-                            }
-                        %>
-                        <li>
-                            <a style="text-align: center;" href="MainController?action=Logout">Logout</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="popular-post">
-                <h2>Popular Post</h2>
-                        <%
-                            if (listPopulartBlogs != null) {
-                                if (listPopulartBlogs.size() > 0) {
-                                    for (BlogDTO blog : listPopulartBlogs) {
-                        %>
-                        <div class="post-content" data-aos="flip-up" data-aos-delay="200">
-                            <div class="post-image">
-                                <div>
-                                    <img src="<%= blog.getImage()%>" class="img" alt="blog1">
-                                </div>
-                                <div class="post-info flex-row">
-                                    <span><i class="fas fa-calendar-alt text-gray"></i>&nbsp;&nbsp;<%= blog.getDate()%></span>
-                                    <span><%= blog.getNumberOfVotes()%> Votes</span>
-                                </div>
-                            </div>
-                            <div class="post-title">
-                                <a href="MainController?action=ViewBlogDetails&blogID=<%= blog.getBlogID()%>"><%= blog.getTitle()%></a>
-                            </div>
-                        </div>
-                        <%
-                                    }
+                            <%
                                 }
-                            }
-                        %>
+                            %>
+                            <li>
+                                <a style="text-align: center;" href="MainController?action=Logout">Logout</a>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="popular-tags">
-                        <h2>Subjects</h2>
-                        <div class="tags flex-row">
-                        <%
+                </div>
+                <div class="popular-post">
+                    <h2>Popular Post</h2>
+                        <%--   <%
+                               if (listPopulartBlogs != null) {
+                                   if (listPopulartBlogs.size() > 0) {
+                                       for (BlogDTO blog : listPopulartBlogs) {
+                           %>
+                           <div class="post-content" data-aos="flip-up" data-aos-delay="200">
+                               <div class="post-image">
+                                   <div>
+                                       <img src="<%= blog.getImage()%>" class="img" alt="blog1">
+                                   </div>
+                                   <div class="post-info flex-row">
+                                       <span><i class="fas fa-calendar-alt text-gray"></i>&nbsp;&nbsp;<%= blog.getDate()%></span>
+                                       <span><%= blog.getNumberOfVotes()%> Votes</span>
+                                   </div>
+                               </div>
+                               <div class="post-title">
+                                   <a href="MainController?action=ViewBlogDetails&blogID=<%= blog.getBlogID()%>"><%= blog.getTitle()%></a>
+                               </div>
+                           </div>
+                           <%
+                                       }
+                                   }
+                               }
+                           %>
+                       </div>
+                       <div class="popular-tags">
+                           <h2>Subjects</h2>
+                           <div class="tags flex-row">
+                        <%--<%
                             if (listSubject != null) {
                                 if (listSubject.size() > 0) {
                                     for (SubjectDTO subject : listSubject) {
@@ -326,7 +314,7 @@
                                     }
                                 }
                             }
-                        %>
+                        %>--%>
                     </div>
                 </div>
             </aside>-->
@@ -346,8 +334,7 @@
             <div class="container">
                 <div class="about-us" data-aos="fade-right" data-aos-delay="200">
                     <h2>About us</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quia atque nemo ad modi officiis
-                        iure, autem nulla tenetur repellendus.</p>
+                    <p>ABF is a website for all students of FPT University, this is a place for students to learn, gather knowledge and share experiences about their major, especially their subject.</p>
                 </div>
                 <div class="instagram" data-aos="fade-left" data-aos-delay="200">
                     <h2>Instagram</h2>
@@ -372,13 +359,11 @@
                         <i class="fab fa-youtube"></i>
                     </div>
                 </div>
-            </div>
-            <div class="rights flex-row">
-                <h4 class="text-gray">
-                    Copyright ©2019 All rights reserved | made by
-                    <a href="www.youtube.com/c/dailytuition" target="_black">Daily Tuition <i class="fab fa-youtube"></i>
-                        Channel</a>
-                </h4>
+                <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
+                    <h4 class="text-gray">
+                        Copyright ©2022 Team 4
+                    </h4>
+                </div>
             </div>
             <div class="move-up">
                 <span><a href="#header"><i class="fas fa-arrow-circle-up fa-2x"></i></a></span>

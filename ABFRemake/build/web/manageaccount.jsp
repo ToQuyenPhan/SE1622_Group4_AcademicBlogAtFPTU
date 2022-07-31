@@ -19,9 +19,9 @@
         <link href="CSS/bootstrap.min.css" rel="stylesheet">
         <link href="css/templatemo-xtra-blog.css" rel="stylesheet">
         <link rel="stylesheet" href="CSS/oldstyle.css">
-        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <link href="vendor/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link href="vendor/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="vendor/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
@@ -55,7 +55,7 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="tm-site-header">
-                    <a href="profile.jsp">
+                    <a href="#">
                         <div class="mb-3 mx-auto tm-site-logo">
                             <img src="<%= image%>">
 
@@ -81,11 +81,15 @@
                                 <i class="fas fa-users"></i>
                                 Subjects
                             </a></li>
+                        <li class="tm-nav-item"><a href="MainController?action=ManageRegistration" class="tm-nav-link">
+                                <i class="fa fa-user-plus"></i>
+                                Registrations
+                            </a></li>
                         <li class="tm-nav-item"><a href="MainController?action=GetFeedbackList" class="tm-nav-link">
                                 <i class="far fa-comments"></i>
-                                Feedback
+                                Feedbacks
                             </a></li>
-                            <li class="tm-nav-item"><a href="MainController?action=Logout" class="tm-nav-link">
+                        <li class="tm-nav-item"><a href="MainController?action=Logout" class="tm-nav-link">
                                 <i class="fas fa-sign-out-alt"></i>
                                 Logout
                             </a></li>
@@ -142,11 +146,11 @@
                                     <%
                                         if (user.getRoleID() == 1) {
                                     %>
-                                    <td>User</td>
-                                    <%
-                                    } else {
-                                    %>
                                     <td>Admin</td>
+                                    <%
+                                    } else{
+                                    %>
+                                    <td>User</td>
                                     <% }
 
                                         if (user.isStatus() == true) {
@@ -173,31 +177,7 @@
                     </div>
                 </div>
 
-                <div class="row tm-row page-activity-list">
-                    <div class="tm-prev-next-wrapper">
-                        <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next disabled tm-mr-20">Prev</a>
-                        <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next">Next</a>
-                    </div>
-                    <div class="tm-paging-wrapper">
-                        <span class="d-inline-block mr-3">Page</span>
-                        <nav class="tm-paging-nav d-inline-block">
-                            <ul>
-                                <li class="tm-paging-item active">
-                                    <a href="#" class="mb-2 tm-btn tm-paging-link">1</a>
-                                </li>
-                                <li class="tm-paging-item">
-                                    <a href="#" class="mb-2 tm-btn tm-paging-link">2</a>
-                                </li>
-                                <li class="tm-paging-item">
-                                    <a href="#" class="mb-2 tm-btn tm-paging-link">3</a>
-                                </li>
-                                <li class="tm-paging-item">
-                                    <a href="#" class="mb-2 tm-btn tm-paging-link">4</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>                
-                </div>  
+                
                 <footer class="row tm-row">
                 </footer>
             </main>
@@ -232,11 +212,11 @@
                 document.getElementById('delete-activity-message-popup').style.display = 'none';
             }
         </script>
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+        <script src="vendor/vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="vendor/vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="vendor/vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="vendor/vendor/datatables/dataTables.bootstrap4.min.js"></script>
         <script>
             $(document).ready(function () {
                 $('#dataTable').DataTable(); // ID From dataTable 

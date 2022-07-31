@@ -5,31 +5,24 @@
  */
 package controllers;
 
-import dao.BlogDAO;
 import dao.RegistrationDAO;
-import dto.BlogDTO;
-import dto.RegistrationDTO;
-import dto.UserDTO;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author To Quyen Phan
  */
-@WebServlet(name = "GetApproveBlogListController", urlPatterns = {"/GetApproveBlogListController"})
-public class GetApproveBlogListController extends HttpServlet {
-
-    private static final String ERROR = "error.jsp";
-    private static final String SUCCESS = "approveblog.jsp";
+@WebServlet(name = "ApproveRegistrationController", urlPatterns = {"/ApproveRegistrationController"})
+public class ApproveRegistrationController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,34 +34,19 @@ public class GetApproveBlogListController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
-        try {
-            BlogDAO dao = new BlogDAO();
-            RegistrationDAO regisDao = new RegistrationDAO();
-            HttpSession session = request.getSession();
-            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
-            int loginUserID = loginUser.getUserID();
-            List<BlogDTO> listApproveBlogs2 = new ArrayList<>();
-            List<BlogDTO> listApproveBlogs1 = new ArrayList<>();
-            List<RegistrationDTO> listsub = regisDao.getRegistrationByUserid(loginUserID);
-            if (listsub.size() > 0) {
-                for (RegistrationDTO regis : listsub) {
-                    listApproveBlogs2 = dao.getAllApproveBlogs(loginUserID, regis.getSubjectID());//Lấy hết các blog
-                    listApproveBlogs1.addAll(listApproveBlogs2);
-                }
-                if (listApproveBlogs1.size() > 0) {
-                    Collections.sort(listApproveBlogs1, BlogDTO.compareDate);
-                    request.setAttribute("LIST_ALL_BLOGS", listApproveBlogs1);
-                    request.setAttribute("MENTOR_REGIS", listsub);
-                }
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            int registrationID = Integer.parseInt(request.getParameter("registrationID"));
+            int userID = Integer.parseInt(request.getParameter("userID"));
+            boolean check = false;
+            check = RegistrationDAO.approveRegistration(registrationID,userID);
+            if (check) {
+                request.getRequestDispatcher("MainController?action=ManageRegistration&notiRegis=success").forward(request, response);
+            } else {
+                request.getRequestDispatcher("MainController?action=ManageRegistration").forward(request, response);
             }
-            url = SUCCESS;
-        } catch (Exception e) {
-            log("Error at Get Approve Blog List Controller: " + e.toString());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
@@ -84,7 +62,11 @@ public class GetApproveBlogListController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ApproveRegistrationController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -98,7 +80,11 @@ public class GetApproveBlogListController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ApproveRegistrationController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

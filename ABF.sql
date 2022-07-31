@@ -234,10 +234,12 @@ INSERT INTO [User](fullName, roleID, email, gender, dateOfBirth, image, status)
 
 INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 
 			VALUES( 1,null,2,'123asd','akjshfksnnvoiewrwqurfjckanc','8/6/2022 11:22:02','image/bg6.jpg','video/123',4,0,'approved')
-			INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 
+INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 
 			VALUES( 1,null,2,'123asd','akjshfksnnvoiewrwqurfjckanc','6/3/2022 11:23:02','img/123','video/123',0,0,'approved')
-			INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 
+INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 
 			VALUES( 1,null,2,'123asd','akjshfksnnvoiewrwqurfjckanc','6/2/2022 11:22:02','img/123','video/123',0,0,'approved')
+INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status) 
+			VALUES( 1,null,2,'123asd','akjshfksnnvoiewrwqurfjckanc','6/2/2022 11:22:02','img/123','video/123',0,0,'saved')
 Insert into [User](password,fullName,roleID,email,image,numberOfBlogs,
 gender,dateOfBirth,address,contact,aboutme,status) values
 ('123','To Quyen',1,'quyenlh01@gmail.com',null,0,null,null,null,null,null,1)
