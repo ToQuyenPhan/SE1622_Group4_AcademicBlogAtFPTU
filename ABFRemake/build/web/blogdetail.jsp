@@ -363,6 +363,9 @@
                             <li>
                                 <a style="text-align: center;" href="MainController?action=GetApproveList">Approve List</a>
                             </li>
+                            <li>
+                                <a style="text-align: center;" href="MainController?action=ViewTopVote">Vote Ratings</a>
+                            </li>
                             <%
                                 }
                             %>
@@ -454,7 +457,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" data-dismiss="modal">Cancel</button>
-                                        <a href="MainController?action=DeleteBlog&blogID=<%= blogDetail.getBlogID()%>&userID=<%= loginUser.getUserID() %>" type="button" class="btn btn-danger">Delete</a>
+                                        <a href="MainController?action=DeleteBlog&blogID=<%= blogDetail.getBlogID()%>&userID=<%= loginUser.getUserID()%>" type="button" class="btn btn-danger">Delete</a>
                                     </div>
                                 </div>
                             </div>

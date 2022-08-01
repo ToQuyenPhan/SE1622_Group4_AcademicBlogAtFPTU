@@ -27,6 +27,7 @@ public class BlogDTO{
     private int numberOfComments;
     private String status;
     private String fullName;
+    private int award;
 
     public BlogDTO() {
         this.userID = 0;
@@ -41,9 +42,10 @@ public class BlogDTO{
         this.numberOfComments = 0;
         this.status = "";
         this.fullName = "";
+        this.award = 0;
     }
 
-    public BlogDTO(int blogID, int userID, int userApproveID, int subjectID, String title, String content, String date, String image, String video, int numberOfVotes, int numberOfComments, String status, String fullName) {
+    public BlogDTO(int blogID, int userID, int userApproveID, int subjectID, String title, String content, String date, String image, String video, int numberOfVotes, int numberOfComments, String status, String fullName,  int award) {
         this.blogID = blogID;
         this.userID = userID;
         this.userApproveID = userApproveID;
@@ -57,6 +59,7 @@ public class BlogDTO{
         this.numberOfComments = numberOfComments;
         this.status = status;
         this.fullName = fullName;
+        this.award = award;
     }
 
     public int getBlogID() {
@@ -161,6 +164,14 @@ public class BlogDTO{
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public int getAward() {
+        return award;
+    }
+
+    public void setAward(int award) {
+        this.award = award;
     }
 
     public static Comparator compareDate = new Comparator(){

@@ -45,7 +45,7 @@ public class EditSubjectController extends HttpServlet {
             int majorID = Integer.parseInt(request.getParameter("majorID"));
             String subjectName = request.getParameter("subjectName");
             SubjectDAO dao = new SubjectDAO();
-            List<SubjectDTO> list = dao.getSubjectByMajor(majorID);
+            List<SubjectDTO> list = dao.getSubjectByMajorID(majorID);
             boolean validate = true;
             int i = 0;
             for(SubjectDTO subject: list )

@@ -135,18 +135,18 @@
                             <li>
                                 <a href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
                             </li>
-<!--                            <li>
-                                <a href="#">Draft</a>
-                            </li>-->
+                            <!--                            <li>
+                                                            <a href="#">Draft</a>
+                                                        </li>-->
                             <%
                                 if (loginUser.getRoleID() == 3) {
                             %>
                             <li>
                                 <a href="MainController?action=GetApproveList">Approve List</a>
                             </li>
-                            <!--                            <li>
-                                                            <a href="voteratings.jsp">Vote Ratings</a>
-                                                        </li>-->
+                            <li>
+                                <a href="MainController?action=ViewTopVote">Vote Ratings</a>
+                            </li>
                             <%
                                 }
                             %>
@@ -209,7 +209,7 @@
                                 <form action="MainController" method="POST">
                                     <img src="<%= blog.getImage()%>" alt="post-<%= index%>">
                                     <div class="blog-title">
-                                        <h3><a href="MainController?action=ViewBlogDetails&blogID=<%= blog.getBlogID()%>"><%= title %></a></h3>
+                                        <h3><a href="MainController?action=ViewBlogDetails&blogID=<%= blog.getBlogID()%>"><%= title%></a></h3>
                                         <input type="hidden" name="majorID" value="<%= majorID%>"/>
                                         <input type="hidden" name="majorName" value="<%= majorName%>"/>
                                         <button type="submit" name="action" value="SearchMajor" class="btn btn-blog"><%= majorName%></button>
@@ -379,12 +379,12 @@
                                             for (SubjectDTO subject : listSubject) {
 
                                 %>
-                                <span class="tag" data-aos="flip-up" data-aos-delay="100"><a href="MainController?action=SearchSubject&subjectID=<%= subject.getSubjectID()%>&subjectName=<%= subject.getSubjectName() %>"><%= subject.getSubjectName()%></a></span>
-                                <%
+                                <span class="tag" data-aos="flip-up" data-aos-delay="100"><a href="MainController?action=SearchSubject&subjectID=<%= subject.getSubjectID()%>&subjectName=<%= subject.getSubjectName()%>"><%= subject.getSubjectName()%></a></span>
+                                    <%
+                                                }
                                             }
                                         }
-                                    }
-                                %>
+                                    %>
                             </div>
                         </div>
                     </aside>
@@ -455,19 +455,19 @@
         <script src="js/main.js"></script>
 
         <script>
-                                    function menuToggle() {
-                                        const toggleMenu = document.querySelector(".menu");
-                                        toggleMenu.classList.toggle("active2");
+                                function menuToggle() {
+                                    const toggleMenu = document.querySelector(".menu");
+                                    toggleMenu.classList.toggle("active2");
+                                }
+
+                                function openNav() {
+                                    if (document.getElementById('header').style.height === '20rem') {
+                                        document.getElementById('header').style.height = '4rem'
+                                    } else {
+                                        document.getElementById('header').style.height = '20rem'
                                     }
 
-                                    function openNav() {
-                                        if (document.getElementById('header').style.height === '20rem') {
-                                            document.getElementById('header').style.height = '4rem'
-                                        } else {
-                                            document.getElementById('header').style.height = '20rem'
-                                        }
-
-                                    }
+                                }
 
         </script>
     </body>

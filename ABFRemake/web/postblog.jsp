@@ -115,6 +115,9 @@
                                 <li>
                                     <a style="text-align: center;" href="MainController?action=GetApproveList">Approve List</a>
                                 </li>
+                                <li>
+                                    <a style="text-align: center;" href="MainController?action=ViewTopVote">Vote Ratings</a>
+                                </li>
                                 <%
                                     }
                                 %>

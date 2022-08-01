@@ -119,7 +119,7 @@
                 %>
                 <div class="row tm-row activity-item major-item">
                     <div class="row">
-                        <h5 class="col-sm-8"><a class="col-sm-5" href="MainController?action=GetSubjectList"><%= major.getMajorName()%></a></h5> 
+                        <h5 class="col-sm-8"><a class="col-sm-5" href="MainController?action=SearchSubjectByMajorID&majorID=<%= major.getMajorID() %>"><%= major.getMajorName()%></a></h5> 
                         <div class="col-sm-4 row">
                             <a class="col-sm-5" href="MainController?action=GoToEditMajor&majorID=<%= major.getMajorID()%>">Edit</a>
                             <a onclick="showPopUp(<%= index%>, <%= all%>)" class="col-sm-5">Deactivate</a>
@@ -144,7 +144,7 @@
                     }
                 %>
 
-                <div class="row tm-row tm-mt-100 tm-mb-75">
+<!--                <div class="row tm-row tm-mt-100 tm-mb-75">
                     <div class="tm-prev-next-wrapper">
                         <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next disabled tm-mr-20">Prev</a>
                         <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next">Next</a>
@@ -168,7 +168,7 @@
                             </ul>
                         </nav>
                     </div>                
-                </div>      
+                </div>      -->
                 <%
                     String deleteMessage = (String) request.getAttribute("DELETE_MESSAGE");
                     if (deleteMessage != null) {

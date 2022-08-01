@@ -15,6 +15,7 @@ image nvarchar(max),
 video nvarchar(max),
 numberOfVotes int not null,
 numberOfComments int,
+award int,
 status nvarchar(10) not null)
 
 --Bảng User

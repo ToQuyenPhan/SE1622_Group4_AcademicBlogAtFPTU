@@ -131,11 +131,12 @@
                     List<SubjectDTO> listSubject = (List<SubjectDTO>) session.getAttribute("LIST_SUBJECT");
                     String listName = "";
                     int numberOfAllBlogs = 0;
+                    if(listPersonalBlogs != null) numberOfAllBlogs = listPersonalBlogs.size();
                     if (request.getParameter("majorName") != null) {
                         listName = request.getParameter("majorName");
-                    } else if(request.getParameter("subjectName") != null) {
+                    } else if (request.getParameter("subjectName") != null) {
                         listName = request.getParameter("subjectName");
-                    }else{
+                    } else {
                         listName = loginUser.getFullName();
                     }
                     if (listAllBlogsByMajorOrSubject != null) {
@@ -208,7 +209,6 @@
                     </div> 
                     <%                } else if (listPersonalBlogs != null) {
                         if (listPersonalBlogs.size() > 0) {
-                            numberOfAllBlogs = listPersonalBlogs.size();
                     %>
                     <div>
                         <h3><%= loginUser.getFullName()%>'s Blog List</h3>
@@ -296,7 +296,7 @@
                                     <ul class="category-list">
                                         <li class="list-items" data-aos="fade-left" data-aos-delay="100">
                                             <a href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">All</a>
-                                            <span>(<%= numberOfAllBlogs %>)</span>
+                                            <span>(<%= numberOfAllBlogs%>)</span>
                                         </li>
                                         <%
                                             if (listMajor != null) {
@@ -344,6 +344,9 @@
                                             %>
                                             <li>
                                                 <a style="text-align: center;" href="MainController?action=GetApproveList">Approve List</a>
+                                            </li>
+                                            <li>
+                                                <a style="text-align: center;" href="MainController?action=ViewTopVote">Vote Ratings</a>
                                             </li>
                                             <%
                                                 }

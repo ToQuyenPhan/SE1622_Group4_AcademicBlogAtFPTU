@@ -5,14 +5,13 @@
  */
 package controllers;
 
+import dao.MajorDAO;
 import dao.SubjectDAO;
+import dto.MajorDTO;
 import dto.SubjectDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,8 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author To Quyen Phan
  */
-@WebServlet(name = "CreateSubjectController", urlPatterns = {"/CreateSubjectController"})
-public class CreateSubjectController extends HttpServlet {
+@WebServlet(name = "SearchSubjectByMajorIDController", urlPatterns = {"/SearchSubjectByMajorIDController"})
+public class SearchSubjectByMajorIDController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,40 +34,26 @@ public class CreateSubjectController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String ERROR = "subject.jsp";
-    private static final String SUCCESS = "MainController?action=GetSubjectList";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String subjectName = request.getParameter("subjectName");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+             try {
             int majorID = Integer.parseInt(request.getParameter("majorID"));
-            SubjectDAO dao = new SubjectDAO();
-            List<SubjectDTO> list = dao.getSubjectByMajorID(majorID);
-            boolean validate = true;
-            int i = 0;
-            for(SubjectDTO subject: list )
-                if(subject.getSubjectName().trim().equalsIgnoreCase(subjectName.trim()))
-                    i++;              
-            if(i != 0){
-                validate = false;
-                request.setAttribute("DOUBLE_SUBJECT","Subject Name is exist!");
+            MajorDAO dao = new MajorDAO();
+            List<SubjectDTO> listAllSubjects = SubjectDAO.getSubjectByMajorID(majorID);
+            List<MajorDTO> listmajor = dao.getAllMajors();
+            if (listAllSubjects.size() > 0) {
+                request.setAttribute("LIST_ALL_SUBJECTS", listAllSubjects);             
             }
-            if(subjectName.trim().length() == 0){
-                validate= false;
-                request.setAttribute("SUBJECT_INVALID","Subject Name is invalid!");
-            } 
-            boolean check = false;
-            if(validate){
-            check = dao.createSubject(subjectName, majorID);
-            }else{
-                request.setAttribute("SUBJECTNAME", subjectName);
-                request.setAttribute("MAJORID", majorID);
-            }
-            if ( check ){
-                request.getRequestDispatcher("MainController?action=GetSubjectList&majorID="+majorID).forward(request, response);
-            }else{
-                request.getRequestDispatcher("createsubject.jsp").forward(request, response);
-            }
+            request.setAttribute("LIST_ALL_MAJORS", listmajor);
+        } catch (Exception e) {
+            log("Error at Get List Controller: " + e.toString());
+        } finally {
+            request.getRequestDispatcher("subject.jsp").forward(request, response);
+        }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -83,11 +68,7 @@ public class CreateSubjectController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(CreateSubjectController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -101,11 +82,7 @@ public class CreateSubjectController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(CreateSubjectController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

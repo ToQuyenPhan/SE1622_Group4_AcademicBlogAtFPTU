@@ -348,7 +348,7 @@
                     <div style="top: 5rem;" class="menu">
                         <ul>
                             <li>
-                                <a href="MainController?action=ViewProfile">My profile</a>
+                                <a style="text-align: center;" href="MainController?action=ViewProfile">My profile</a>
                             </li>
                             <li>
                                 <a style="text-align: center;" href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
@@ -358,6 +358,9 @@
                             %>
                             <li>
                                 <a style="text-align: center;" href="MainController?action=GetApproveList">Approve List</a>
+                            </li>
+                            <li>
+                                <a style="text-align: center;" href="MainController?action=ViewTopVote">Vote Ratings</a>
                             </li>
                             <%
                                 }

@@ -4,6 +4,7 @@
     Author     : hotan
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@page import="dao.BlogDAO"%>
 <%@page import="dto.BlogDTO"%>
 <%@page import="java.util.List"%>
@@ -53,14 +54,62 @@
             if (image == null) {
                 image = "image/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png";
             }
+            String giveAward = (String) request.getAttribute("GIVE_AWARD");
+            List<BlogDTO> listPopularBlogs = new ArrayList<>();
+            if (giveAward == null) {
+                listPopularBlogs = (List<BlogDTO>) session.getAttribute("LIST_POPULAR_BLOGS");
+            } else {
+                listPopularBlogs = (List<BlogDTO>) request.getAttribute("LIST_POPULAR_BLOGS");
+            }
 //            BlogNotify blogNotify = (BlogNotify) request.getAttribute("GIVE_AWARD");
 //            if (blogNotify == null) {
 //                blogNotify = new BlogNotify();
 //            }
         %>
-        
-        <div class="container-fluid activity-page">
-            <main class="tm-main activity-list">                
+        <nav style="margin-bottom: 3rem;" class="nav approve-page" id="header">
+            <form action="MainController" method="POST">
+                <div class="nav-menu row">
+                    <div class="nav-brand col-sm-2">
+                        <a href="MainController?action=GetList" class="text-gray">Academic Blog</a>
+                    </div>
+                    <div class="approve-page toggle-collapse">
+                        <div class="toggle-icons">
+                            <i onclick="openNav();" class="fas fa-bars"></i>
+                        </div>
+                    </div>
+                    <div class="nav-link-items col-sm-3">
+                        <ul class="nav-items">
+                            <li class="nav-link">
+                                <a href="MainController?action=GetList">Home</a>
+                            </li>
+                            <li class="nav-link">
+                                <a href="MainController?action=GetFeedbackTypeList">Feedback</a>
+                            </li>
+                            <li class="nav-link"><a href="MainController?action=MentorRegisterPage&userID=<%=loginUser.getUserID()%>" class="tm-nav-link">
+                                    Registration
+                                </a></li>  
+                        </ul>
+                    </div>
+                    <div class="search-div col-sm-3">
+                        <div class="search-form-search">
+                            <input type="text" placeholder="Search..." name="search" type="text">
+                            <div class="search-search"><button type="submit" name="action" value="Search"><i class="fas fa-search"></i></button></div>
+                        </div>
+                    </div>
+                    <div class="new col-sm-1"><a href="MainController?action=GoToPostBlogPage&position=homepage.jsp"><i class="fas fa-pen"></i></a></div>
+
+                    <div class="profile text-gray col-sm-3">
+                        <div class="row">         
+                            <a href="MainController?action=ViewProfile"><h6><%= loginUser.getFullName()%></h6></a>
+                            <img onclick="menuToggle();" src="<%= image%>">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </nav>
+        <h1 style="text-align: center; top: 5rem;">Top Vote</h1>
+        <main class="tm-main activity-list">   
+            <div class="container-fluid activity-page">
                 <div id="wrapper">
                     <!-- Sidebar -->
                     <div id="content-wrapper" class="d-flex flex-column">
@@ -73,24 +122,24 @@
                                                 <%
                                                     BlogDAO dao = new BlogDAO();
                                                     int blogID = 0;
-                                                    List<BlogDTO> listAllBlogs = dao.getAllBlogs();
-                                                    if (listAllBlogs.size() > 0) {
+                                                    if (listPopularBlogs != null) {
+                                                        if (listPopularBlogs.size() > 0) {
                                                 %>                                                
                                                 <table class="table align-items-center table-flush" id="dataTable">
                                                     <thead class="thead-light">
                                                         <tr>
-                                                            <th class="border-0">#</th>                                    
-                                                            <th class="border-0">Blog ID</th>
+                                                            <th class="border-0">#</th>
                                                             <th class="border-0">Title</th>
                                                             <th class="border-0">By</th>                                   
                                                             <th class="border-0">Date</th>
-                                                            <th class="border-0">Number of vote</th>
-                                                            <th class="border-0">Awards</th>
+                                                            <th style="text-align: center;" class="border-0">Number of vote</th>
+                                                            <th style="text-align: center;" class="border-0">Awards</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <%  int count = 1;
-                                                            for (BlogDTO blog : listAllBlogs) {
+                                                            int index = 0;
+                                                            for (BlogDTO blog : listPopularBlogs) {
                                                                 if (loginUser == null) {
                                                                     loginUser = new UserDTO();
                                                                 }
@@ -98,46 +147,72 @@
                                                         %>
                                                         <tr>
                                                             <td><%= count++%></td>
-                                                            <td><%= blog.getBlogID()%></td>
-                                                            <td><%= blog.getTitle()%></td>
+                                                            <td><a class="title-blog-vote" href="MainController?action=ViewBlogDetails&blogID=<%= blog.getBlogID()%>"><%= blog.getTitle()%></a></td>
                                                             <td><%= blog.getFullName()%></td>
                                                             <td><%= blog.getDate()%></td>
-                                                            <td><%= blog.getNumberOfVotes()%></td>
+                                                            <td style="text-align: center;"><%= blog.getNumberOfVotes()%></td>
 
-                                                            <td>
-                                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" style="width: 7rem">Give Award</button>                                                                   
+                                                            <td style="text-align: center;">
+                                                                <%
+                                                                    if (blog.getAward() == 0) {
+                                                                %>
+                                                                <button onclick="showPopUp(<%= index%>, <%= listPopularBlogs.size()%>)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#<%= blog.getBlogID()%>"><i class="fa fa-gift"></i></button>   
+                                                                    <%
+                                                                    } else {
+                                                                    %>
+                                                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#<%= blog.getBlogID()%>"><i class="fa fa-gift"></i></button>   
+                                                                    <%
+                                                                        }
+                                                                    %>
                                                             </td>
+                                                    <div class="delete-activity-message-popup-confirm" id="<%= index%>">
+                                                        <p>Are you sure to give award to this blog?</p>
+                                                        <div>
+                                                            <a href="MainController?action=GiveAward&blogID=<%= blog.getBlogID()%>">Give Award</a>
+                                                            <a onclick="closePopUpConfirm(<%= index%>, <%= listPopularBlogs.size()%>)">Cancel</a>
+                                                        </div>
+                                                    </div>
 
+                                                    <%
 
-                                                            <%
-                                                                blogID = blog.getBlogID();
-                                                                    }
+                                                                    index++;
                                                                 }
-                                                            %>
-                                                        </tr>
+                                                            }
+                                                        }
+                                                    %>
+                                                    </tr>
                                                     </tbody>
                                                 </table>  
+                                                <!--                                                <div class="menu">
+                                                                                                    <ul>
+                                                                                                        <li>
+                                                                                                            <a href="MainController?action=ViewProfile">My profile</a>
+                                                                                                        </li>
+                                                                                                        <li>
+                                                                                                            <a href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
+                                                                                                        </li>
+                                                                                                                                    <li>
+                                                                                                                                        <a href="#">Draft</a>
+                                                                                                                                    </li>
+                                                <%
+                                                    if (loginUser.getRoleID() == 3) {
+                                                %>
+                                                <li>
+                                                    <a href="MainController?action=GetApproveList">Approve List</a>
+                                                </li>
+                                                <li>
+                                                    <a href="MainController?action=ViewTopVote">Vote Ratings</a>
+                                                </li>
+                                                <%
+                                                    }
+                                                %>
+                                                <li>
+                                                    <a href="MainController?action=Logout">Logout</a>
+                                                </li>
+                                            </ul>
+                                        </div>-->
+                                            </div>
 
-                                            </div>
-                                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalCenterTitle">Give Award</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <p>You gave a gift to a student</p>
-                                                        </div>    
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>  
-                                                            <a href="MainController?action=GiveAward&blogID=<%= blogID %>" type="button" class="btn btn-danger">Give Award</a>
-                                                        </div>                                    
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
 
 
@@ -149,52 +224,106 @@
                         </div>
                     </div>
                 </div>                
-            </main>
+        </main>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="about-us" data-aos="fade-right" data-aos-delay="200">
+                <h2>About us</h2>
+                <p>ABF is a website for all students of FPT University, this is a place for students to learn, gather knowledge and share experiences about their major, especially their subject.</p>
+            </div>
+            <div class="instagram" data-aos="fade-left" data-aos-delay="200">
+                <h2>Instagram</h2>
+                <div class="flex-row">
+                    <img src="./assets/instagram/thumb-card3.png" alt="insta1">
+                    <img src="./assets/instagram/thumb-card4.png" alt="insta2">
+                    <img src="./assets/instagram/thumb-card5.png" alt="insta3">
+                </div>
+                <div class="flex-row">
+                    <img src="./assets/instagram/thumb-card6.png" alt="insta4">
+                    <img src="./assets/instagram/thumb-card7.png" alt="insta5">
+                    <img src="./assets/instagram/thumb-card8.png" alt="insta6">
+                </div>
+            </div>
+            <div class="follow" data-aos="fade-left" data-aos-delay="200">
+                <h2>Follow us</h2>
+                <p>Let us be Social</p>
+                <div>
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-youtube"></i>
+                </div>
+            </div>
+            <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
+                <h4 class="text-gray">
+                    Copyright ©2022 Team 4
+                </h4>
+            </div>
         </div>
-
-        <script src="../vendor/vendor/jquery/jquery.min.js"></script>
-        <script src="../vendor/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="../vendor/vendor/jquery-easing/jquery.easing.min.js"></script>
-        <script src="../vendor/vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="../vendor/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $('#dataTable').DataTable(); // ID From dataTable 
-                $('#dataTableHover').DataTable(); // ID From dataTable with Hover
-            });
-        </script>
-        <script>
-            var time_in_sec = 0;
-            var start_calling = '';
-            function showPopUp(item, size) {
-                for (var i = 0; i <= size; i++) {
-                    if (i == item) {
-                        document.getElementById(item).style.display = "block";
-                    }
+        <div class="move-up">
+            <span><a href="#header"><i class="fas fa-arrow-circle-up fa-2x"></i></a></span>
+        </div>
+    </footer>                                               
+    <script src="../vendor/vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendor/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../vendor/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../vendor/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script>
+                                                                $(document).ready(function () {
+                                                                    $('#dataTable').DataTable(); // ID From dataTable 
+                                                                    $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+                                                                });
+    </script>
+    <script>
+        var time_in_sec = 0;
+        var start_calling = '';
+        function showPopUp(item, size) {
+            for (var i = 0; i <= size; i++) {
+                if (i == item) {
+                    document.getElementById(item).style.display = "block";
                 }
             }
-            function countdownTime() {
-                time_in_sec++;
-                html_tag.innerHTML = time_in_sec; // show time in html tag
-                if (time_in_sec == 10) {
-                    clearInterval(start_calling) // stop calling
-                    ClosePopUp();
+        }
+        function countdownTime() {
+            time_in_sec++;
+            html_tag.innerHTML = time_in_sec; // show time in html tag
+            if (time_in_sec == 10) {
+                clearInterval(start_calling) // stop calling
+                ClosePopUp();
+            }
+        }
+        function closePopUpConfirm(item, size) {
+            for (var i = 0; i <= size; i++) {
+                if (i == item) {
+                    document.getElementById(item).style.display = "none";
                 }
             }
-            function closePopUpConfirm(item, size) {
-                for (var i = 0; i <= size; i++) {
-                    if (i == item) {
-                        document.getElementById(item).style.display = "none";
-                    }
-                }
+        }
+
+        function closePopUp() {
+            document.getElementById('delete-activity-message-popup').style.display = 'none';
+        }
+    </script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/templatemo-script.js"></script>
+    <script>
+        function menuToggle() {
+            const toggleMenu = document.querySelector(".menu");
+            toggleMenu.classList.toggle("active2");
+        }
+
+        function openNav() {
+            if (document.getElementById('header').style.height === '20rem') {
+                document.getElementById('header').style.height = '4rem'
+            } else {
+                document.getElementById('header').style.height = '20rem'
             }
 
-            function closePopUp() {
-                document.getElementById('delete-activity-message-popup').style.display = 'none';
-            }
-        </script>
-        <script src="js/jquery.min.js"></script>
-        <script src="js/templatemo-script.js"></script>
+        }
 
-    </body>
+    </script>
+
+</body>
 </html>

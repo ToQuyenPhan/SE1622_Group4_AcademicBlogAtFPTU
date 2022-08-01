@@ -162,7 +162,7 @@ public class SubjectDAO {
         return subject;
     }
     
-    public static ArrayList<SubjectDTO> getSubjectByMajor(int majorID){
+    public static ArrayList<SubjectDTO> getSubjectByMajorID(int majorID){
         ArrayList<SubjectDTO> list = new ArrayList<>();
         Connection cn = null;
         try {

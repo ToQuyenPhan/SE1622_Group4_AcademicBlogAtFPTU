@@ -81,6 +81,9 @@ public class MainController extends HttpServlet {
     private static final String REJECT_REGISTRATION = "RejectRegis";
     private static final String VIEW_PROFILE = "ViewProfile";
     private static final String SEARCH_APPROVE_BLOG_BY_SUBJECT = "SearchApproveBlogBySubject";
+    private static final String VIEW_TOP_VOTE = "ViewTopVote";
+    private static final String GIVE_AWARD = "GiveAward";
+    private static final String SEARCH_SUBJECT_BY_MAJOR = "SearchSubjectByMajorID";
 
     private static final String LOGIN_WITH_GOOGLE_CONTROLLER = "LoginWithGoogleController";
     private static final String LOGIN_CONTROLLER = "LoginController";
@@ -136,6 +139,9 @@ public class MainController extends HttpServlet {
     private static final String REJECT_REGISTRATION_CONTROLLER = "RejectRegistrationController";
     private static final String PROFILE_PAGE = "profile.jsp";
     private static final String SEARCH_APPROVE_BLOG_CONTROLLER = "SearchApproveBlogController";
+    private static final String TOP_VOTE_PAGE = "voteratings.jsp";
+    private static final String GIVE_AWARD_CONTROLLER = "GiveAwardController";
+    private static final String SEARCH_SUBJECT_BY_MAJOR_CONTROLLER = "SearchSubjectByMajorIDController";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -381,6 +387,21 @@ public class MainController extends HttpServlet {
                     response.sendRedirect("MainController?action=GoToWelcomePage");   
                 }
                 url = SEARCH_APPROVE_BLOG_CONTROLLER;
+            }else if (VIEW_TOP_VOTE.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
+                url = TOP_VOTE_PAGE;
+            }else if (GIVE_AWARD.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
+                url = GIVE_AWARD_CONTROLLER;
+            }else if (SEARCH_SUBJECT_BY_MAJOR.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
+                url = SEARCH_SUBJECT_BY_MAJOR_CONTROLLER;
             }else{
                 request.setAttribute("ERROR_MESSAGE", "Function is not available!");
             }

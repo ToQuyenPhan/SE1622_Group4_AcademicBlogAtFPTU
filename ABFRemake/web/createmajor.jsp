@@ -51,6 +51,10 @@
             if (blogError == null) {
                 blogError = new BlogError();
             }
+            String majorName = (String) request.getAttribute("MAJORNAME");
+            if (majorName == null) {
+                majorName = "";
+            }
         %>
         <header class="tm-header" id="tm-header">
             <div class="tm-header-wrapper">
@@ -76,10 +80,10 @@
                                 <i class="fas fa-tasks"></i>
                                 Activity
                             </a></li>
-                        <!--                        <li class="tm-nav-item"><a href="MainController?action=GetMajorList" class="tm-nav-link">
-                                                        <i class="fas fa-users"></i>
-                                                        Majors
-                                                    </a></li>-->
+                        <li class="tm-nav-item"><a href="MainController?action=GetMajorList" class="tm-nav-link">
+                                <i class="fas fa-users"></i>
+                                Majors
+                            </a></li>
                         <li class="tm-nav-item"><a href="MainController?action=GetSubjectList" class="tm-nav-link">
                                 <i class="fas fa-users"></i>
                                 Subjects
@@ -109,7 +113,7 @@
                             <h2 class="tm-color-primary tm-post-title mb-4">Create New Major</h2>
                             <div class="mb-4">
                                 <label for="Title"></label> Major Name </label>
-                                <input class="form-control" name="majorName" type="text">
+                                <input class="form-control" name="majorName" type="text" value="<%= majorName%>">
                                 <div style="color: red"><%= (request.getAttribute("MAJOR_INVALID") == null) ? "" : request.getAttribute("MAJOR_INVALID")%> </div>
                                 <div style="color: red"><%= (request.getAttribute("DOUBLE_MAJOR") == null) ? "" : request.getAttribute("DOUBLE_MAJOR")%> </div>
                             </div>

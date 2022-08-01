@@ -183,12 +183,12 @@
                                              <a href="#" class="pages">3</a>
                                              <a href="#"><i class="fas fa-chevron-right"></i></a>
                                          </div>-->
-                        </div>
+                    </div>
                     <%
                     } else {
                     %>
                     <div class="message">
-                        <h1 style="margin-left: 7rem; margin-top: 1rem;" >You have not written any blog!</h1>
+                        <h1 style="margin-left: 7rem; margin-top: 1rem;" >You do not have any blogs to approve!</h1>
                     </div>
                     <div class="site-content">
                         <div class="posts">
@@ -214,6 +214,9 @@
                                 %>
                                 <li>
                                     <a style="text-align: center;" href="MainController?action=GetApproveList">Approve List</a>
+                                </li>
+                                <li>
+                                    <a style="text-align: center;" href="MainController?action=ViewTopVote">Vote Ratings</a>
                                 </li>
                                 <%
                                     }
@@ -408,19 +411,19 @@
         <!-- Custom Javascript file -->
         <script src="./js/main.js"></script>
         <script>
-                function menuToggle() {
-                    const toggleMenu = document.querySelector(".menu");
-                    toggleMenu.classList.toggle("active2");
-                }
+                                function menuToggle() {
+                                    const toggleMenu = document.querySelector(".menu");
+                                    toggleMenu.classList.toggle("active2");
+                                }
 
-                function openNav() {
-                    if (document.getElementById('header').style.height === '19rem') {
-                        document.getElementById('header').style.height = '4rem'
-                    } else {
-                        document.getElementById('header').style.height = '19rem'
-                    }
+                                function openNav() {
+                                    if (document.getElementById('header').style.height === '19rem') {
+                                        document.getElementById('header').style.height = '4rem'
+                                    } else {
+                                        document.getElementById('header').style.height = '19rem'
+                                    }
 
-                }
+                                }
         </script>
     </body>
 </html>

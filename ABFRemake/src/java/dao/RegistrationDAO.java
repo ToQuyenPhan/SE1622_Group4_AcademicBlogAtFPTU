@@ -40,7 +40,7 @@ public class RegistrationDAO {
             + "  SET status = 1\n"
             + " WHERE registrationID =?\n"
             + "  UPDATE [User]\n"
-            + "  SET roleID = 2\n"
+            + "  SET roleID = 3\n"
             + " WHERE userID =?";
     private static final String REJECT_REGISTRATION = "UPDATE Registration\n"
             + "  SET status = 2\n"

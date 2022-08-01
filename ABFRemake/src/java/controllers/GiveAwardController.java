@@ -5,10 +5,12 @@
  */
 package controllers;
 
-import dao.MajorDAO;
-import dto.MajorDTO;
+import dao.BlogDAO;
+import dto.BlogDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,8 +22,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author To Quyen Phan
  */
-@WebServlet(name = "CreateMajorController", urlPatterns = {"/CreateMajorController"})
-public class CreateMajorController extends HttpServlet {
+@WebServlet(name = "GiveAwardController", urlPatterns = {"/GiveAwardController"})
+public class GiveAwardController extends HttpServlet {
+    private static final String ERROR = "voteratings.jsp";
+    private static final String SUCCESS = "voteratings.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,37 +38,31 @@ public class CreateMajorController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            String url = ERROR;
         try {
-            String majorName = request.getParameter("majorName");          
-            MajorDAO dao = new MajorDAO();
-            List<MajorDTO> list = dao.getAllMajors();
-            boolean validate = true;
-            int i = 0;
-            for(MajorDTO major : list)
-                if(major.getMajorName().trim().equalsIgnoreCase(majorName.trim())){
-                    i++;}
-            if(i != 0){
-                request.setAttribute("DOUBLE_MAJOR", "Major Name is exist!");
-                validate = false;
-            }
-            if(majorName.trim().length() == 0){
-                request.setAttribute("MAJOR_INVALID", "Major Name is invalid!");
-                validate= false;
-            }
-            boolean check = false;
-            if(validate){
-            check = dao.createMajor( majorName);
-            }else{
-                request.setAttribute("MAJORNAME", majorName);
-            }
-            if ( check ){
-                request.getRequestDispatcher("MainController?action=GetMajorList").forward(request, response);
-            }else{
-                request.getRequestDispatcher("createmajor.jsp").forward(request, response);
+            int blogID = Integer.parseInt(request.getParameter("blogID"));
+            BlogDAO dao = new BlogDAO();
+            boolean check = dao.giveAward(blogID);
+            List<BlogDTO> listPopularBlogs = dao.getAllBlogs();
+            Collections.sort(listPopularBlogs, new Comparator<BlogDTO>() {
+                @Override
+                public int compare(BlogDTO o1, BlogDTO o2) {
+                    return o2.getNumberOfVotes() - o1.getNumberOfVotes();
+                }
+            });
+            if(check){
+                url = SUCCESS;
+                request.setAttribute("GIVE_AWARD", "Gave");
+                request.setAttribute("LIST_POPULAR_BLOGS", listPopularBlogs);
             }
         } catch (Exception e) {
-            log("Error at Create Major Controller: " + e.toString());
-    }
+            log("Error at Give Award Controller: " + e.toString());
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
+        }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

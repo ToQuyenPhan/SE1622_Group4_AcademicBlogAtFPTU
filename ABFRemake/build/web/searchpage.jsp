@@ -145,12 +145,7 @@
                 <div class="site-content">
                     <div class="posts">
                         <%
-
-                            int index = 0;
                             for (BlogDTO blog : listSearchBlogs) {
-                                if (index == 4) {
-                                    break;
-                                }
                                 String content = "";
                                 String remain = "";
                         %>
@@ -189,7 +184,6 @@
                             </div>
                         </form>
                         <%
-                                index++;
                             }
                         %>
                         <hr>
@@ -265,6 +259,9 @@
                                         %>
                                         <li>
                                             <a style="text-align: center;" href="MainController?action=GetApproveList">Approve List</a>
+                                        </li>
+                                        <li>
+                                            <a style="text-align: center;" href="MainController?action=ViewTopVote">Vote Ratings</a>
                                         </li>
                                         <%
                                             }

@@ -157,14 +157,14 @@
                                     %>
                                     <td>Active</td>
                                     <% if (user.getRoleID() != 1) {%>
-                                    <td style="text-align:center"><a href="MainController?action=UpdateStatusUser&userID=<%=user.getUserID()%>&oldStatus=<%=user.isStatus()%>">Ban</a></td>
+                                    <td class="ban-or-unban" style="text-align:center"><a href="MainController?action=UpdateStatusUser&userID=<%=user.getUserID()%>&oldStatus=<%=user.isStatus()%>">Ban</a></td>
                                     <%
                                         }
                                     } else {
                                     %>
                                     <td>InActive</td>   
                                     <% if (user.getRoleID() != 1) {%>
-                                    <td style="text-align:center"><a href="MainController?action=UpdateStatusUser&userID=<%=user.getUserID()%>&oldStatus=<%=user.isStatus()%>">UnBan</a></td>
+                                    <td class="ban-or-unban" style="text-align:center"><a href="MainController?action=UpdateStatusUser&userID=<%=user.getUserID()%>&oldStatus=<%=user.isStatus()%>">UnBan</a></td>
                                     <% }
                                                 }
                                             }

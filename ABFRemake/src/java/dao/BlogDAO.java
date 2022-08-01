@@ -20,19 +20,19 @@ import utils.DBUtils;
  */
 public class BlogDAO {
     private static final String GET_ALL_BLOGS = "SELECT blogID,Blog.userID,userApproveID,subjectID,title,content,date, Blog.image,video,"
-            + "numberOfVotes,numberOfComments,Blog.status, fullName FROM Blog JOIN [USER] ON Blog.userID = [User].userID "
+            + "numberOfVotes,numberOfComments,Blog.status, fullName, award FROM Blog JOIN [USER] ON Blog.userID = [User].userID "
             + "WHERE Blog.status LIKE 'approved'";
     private static final String SEARCH = "SELECT blogID,Blog.userID,userApproveID,subjectID,title,content,date, Blog.image,video,"
-            + "numberOfVotes,numberOfComments,Blog.status, fullName FROM Blog JOIN [USER] ON Blog.userID = [User].userID "
+            + "numberOfVotes,numberOfComments,Blog.status, fullName, award FROM Blog JOIN [USER] ON Blog.userID = [User].userID "
             + "WHERE title LIKE ? AND Blog.status LIKE 'approved'";
     private static final String BLOG_DETAIL = "SELECT blogID,Blog.userID,userApproveID,subjectID,title,content,date, Blog.image,video,"
-            + "numberOfVotes,numberOfComments,Blog.status, fullName FROM Blog JOIN [USER] ON Blog.userID = [User].userID "
+            + "numberOfVotes,numberOfComments,Blog.status, fullName, award FROM Blog JOIN [USER] ON Blog.userID = [User].userID "
             + "WHERE blogID = ? ";
-    private static final String POST_BLOG = "INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status)"
-            + "VALUES( ?,null,?,?,?,?,?,null,0,0,'waiting')";
+    private static final String POST_BLOG = "INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status, award)"
+            + "VALUES( ?,null,?,?,?,?,?,null,0,0,'waiting', 0)";
     private static final String UPDATE_VOTE = "UPDATE Blog SET numberOfVotes = ? WHERE blogID = ?";
     private static final String GET_ALL_APPROVE_BLOGS = "SELECT blogID,Blog.userID,userApproveID,subjectID,title,content,date, Blog.image,video,"
-            + "numberOfVotes,numberOfComments,Blog.status, fullName FROM Blog JOIN [USER] ON Blog.userID = [User].userID "
+            + "numberOfVotes,numberOfComments,Blog.status, fullName, award FROM Blog JOIN [USER] ON Blog.userID = [User].userID "
             + "WHERE Blog.status LIKE 'waiting' AND Blog.userID != ? AND Blog.subjectID = ?";
     private static final String DELETE_BLOG = "UPDATE Blog SET status = 'disable' WHERE blogID = ?";
     private static final String EDIT_BLOG = "UPDATE Blog  \n"
@@ -41,17 +41,18 @@ public class BlogDAO {
     private static final String APPROVE_BLOG = "UPDATE Blog SET status= 'approved' WHERE blogID = ?";
     private static final String REJECT_BLOG = "UPDATE Blog SET status= 'rejected' WHERE blogID = ?";
     private static final String GET_ALL_PERSONAL_BLOGS = "SELECT blogID,Blog.userID,userApproveID,subjectID,title,content,date, Blog.image,video,"
-            + "numberOfVotes,numberOfComments,Blog.status, fullName FROM Blog JOIN [USER] ON Blog.userID = [User].userID "
+            + "numberOfVotes,numberOfComments,Blog.status, fullName, award FROM Blog JOIN [USER] ON Blog.userID = [User].userID "
             + "WHERE Blog.userID = ? AND Blog.status != 'disable'";
     private static final String SAVE_DRAFT_BLOG = "INSERT INTO [Blog](userID, userApproveID, subjectID, title, content, date, image, video, numberOfVotes, numberOfComments, status)"
             + "VALUES( ?,null,?,?,?,?,?,null,0,0,'draft')";
     private static final String SEARCH_MAJOR = "SELECT blogID,Blog.userID,userApproveID,Blog.subjectID,title,content,date, Blog.image,video,"
-            + "numberOfVotes,numberOfComments,Blog.status, fullName FROM Blog JOIN [USER] ON Blog.userID = [User].userID JOIN Subject ON "
+            + "numberOfVotes,numberOfComments,Blog.status, fullName, award FROM Blog JOIN [USER] ON Blog.userID = [User].userID JOIN Subject ON "
             + "Blog.subjectID = Subject.subjectID WHERE Subject.majorID = ? AND Subject.status = 1 AND Blog.status LIKE 'approved'";
     
     private static final String SEARCH_SUBJECT = "SELECT blogID,Blog.userID,userApproveID,Blog.subjectID,title,content,date, Blog.image,video,"
-            + "numberOfVotes,numberOfComments,Blog.status, fullName FROM Blog JOIN [USER] ON Blog.userID = [User].userID JOIN Subject ON "
+            + "numberOfVotes,numberOfComments,Blog.status, fullName, award FROM Blog JOIN [USER] ON Blog.userID = [User].userID JOIN Subject ON "
             + "Blog.subjectID = Subject.subjectID WHERE Blog.subjectID = ? AND Subject.status = 1 AND Blog.status LIKE 'approved'";
+    private static final String GIVE_AWARD = "UPDATE Blog SET award = 1 WHERE blogID = ?";
     
     public List<BlogDTO> getAllBlogs() throws SQLException {
         List<BlogDTO> listAllBlogs = new ArrayList<>();
@@ -77,8 +78,9 @@ public class BlogDAO {
                     int numberOfComments = rs.getInt("numberOfComments");
                     String status = rs.getString("status");
                     String fullName = rs.getString("fullName");
+                    int award = rs.getInt("award");
                     listAllBlogs.add(new BlogDTO(blogID, userID, userApproveID, subjectID, title, content,
-                            date, image, video, numberOfVotes, numberOfComments, status, fullName));
+                            date, image, video, numberOfVotes, numberOfComments, status, fullName, award));
                 }
             }
         } catch (Exception e) {
@@ -122,8 +124,9 @@ public class BlogDAO {
                     int numberOfComments = rs.getInt("numberOfComments");
                     String status = rs.getString("status");
                     String fullName = rs.getString("fullName");
+                    int award = rs.getInt("award");
                     listAllBlogs.add(new BlogDTO(blogID, userID, userApproveID, subjectID, title, content,
-                            date, image, video, numberOfVotes, numberOfComments, status, fullName));
+                            date, image, video, numberOfVotes, numberOfComments, status, fullName, award));
                 }
             }
         } catch (Exception e) {
@@ -166,8 +169,9 @@ public class BlogDAO {
                     int numberOfComments = rs.getInt("numberOfComments");
                     String status = rs.getString("status");
                     String fullName = rs.getString("fullName");
+                    int award = rs.getInt("award");
                     blogDetail = new BlogDTO(blogID, userID, userApproveID, subjectID, title, content,
-                            date, image, video, numberOfVotes, numberOfComments, status, fullName);
+                            date, image, video, numberOfVotes, numberOfComments, status, fullName, award);
                 }
             }
         } catch (Exception e) {
@@ -236,8 +240,9 @@ public class BlogDAO {
                 int numberOfComments = rs.getInt("numberOfComments");
                 String status = rs.getString("status");
                 String fullName = rs.getString("fullName");
+                int award = rs.getInt("award");
                 blog = new BlogDTO(blogID, userID, userApproveID, subjectID, title, content,
-                        date, image, video, numberOfVotes, numberOfComments, status, fullName);
+                            date, image, video, numberOfVotes, numberOfComments, status, fullName, award);
             }
 
             conn.close();
@@ -300,8 +305,9 @@ public class BlogDAO {
                     int numberOfComments = rs.getInt("numberOfComments");
                     String status = rs.getString("status");
                     String fullName = rs.getString("fullName");
+                    int award = rs.getInt("award");
                     listAllApproveBlogs.add(new BlogDTO(blogID, userID, userApproveID, subjectID, title, content,
-                            date, image, video, numberOfVotes, numberOfComments, status, fullName));
+                            date, image, video, numberOfVotes, numberOfComments, status, fullName, award));
                 }
             }
         } catch (Exception e) {
@@ -454,8 +460,9 @@ public class BlogDAO {
                     int numberOfComments = rs.getInt("numberOfComments");
                     String status = rs.getString("status");
                     String fullName = rs.getString("fullName");
+                    int award = rs.getInt("award");
                     listAllBlogs.add(new BlogDTO(blogID, userID, userApproveID, subjectID, title, content,
-                            date, image, video, numberOfVotes, numberOfComments, status, fullName));
+                            date, image, video, numberOfVotes, numberOfComments, status, fullName, award));
                 }
             }
         } catch (Exception e) {
@@ -528,8 +535,9 @@ public class BlogDAO {
                     int numberOfComments = rs.getInt("numberOfComments");
                     String status = rs.getString("status");
                     String fullName = rs.getString("fullName");
+                    int award = rs.getInt("award");
                     listAllBlogs.add(new BlogDTO(blogID, userID, userApproveID, subjectID, title, content,
-                            date, image, video, numberOfVotes, numberOfComments, status, fullName));
+                            date, image, video, numberOfVotes, numberOfComments, status, fullName, award));
                 }
             }
         } catch (Exception e) {
@@ -572,8 +580,9 @@ public class BlogDAO {
                     int numberOfComments = rs.getInt("numberOfComments");
                     String status = rs.getString("status");
                     String fullName = rs.getString("fullName");
+                    int award = rs.getInt("award");
                     listAllBlogs.add(new BlogDTO(blogID, userID, userApproveID, subjectID, title, content,
-                            date, image, video, numberOfVotes, numberOfComments, status, fullName));
+                            date, image, video, numberOfVotes, numberOfComments, status, fullName, award));
                 }
             }
         } catch (Exception e) {
@@ -590,5 +599,30 @@ public class BlogDAO {
             }
         }
         return listAllBlogs;
+    }
+    
+     
+    public boolean giveAward(int blogID) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GIVE_AWARD);
+                ptm.setInt(1, blogID);
+                check = ptm.executeUpdate() > 0 ? true : false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
     }
 }

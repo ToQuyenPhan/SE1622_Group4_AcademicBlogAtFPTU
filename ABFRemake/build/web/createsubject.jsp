@@ -54,6 +54,10 @@
             if (blogError == null) {
                 blogError = new BlogError();
             }
+            String subjectName = (String) request.getAttribute("SUBJECTNAME");
+            if (subjectName == null) {
+                subjectName = "";
+            }
         %>
         <header class="tm-header" id="tm-header">
             <div class="tm-header-wrapper">
@@ -71,9 +75,9 @@
                 </div>
                 <nav class="tm-nav" id="tm-nav">            
                     <ul>
-                        <li class="tm-nav-item"><a href="MainController?action=GetList" class="tm-nav-link">
+                        <li class="tm-nav-item"><a href="manageaccount.jsp" class="tm-nav-link">
                                 <i class="fas fa-home"></i>
-                                Blog Home
+                                Admin Dashboard
                             </a></li>
 <!--                        <li class="tm-nav-item"><a href="MainController?action=GetActivityList&userID=<%= loginUser.getUserID()%>" class="tm-nav-link">
                                 <i class="fas fa-tasks"></i>
@@ -112,7 +116,9 @@
                         <form action="MainController" method="POST">
                             <div class="mb-4">
                                 <label for="Title"></label> Subject Name </label>
-                                <input class="form-control" name="subjectName" type="text">
+                                <input class="form-control" name="subjectName" type="text" value="<%= subjectName%>">
+                                <div style="color: red"><%= (request.getAttribute("SUBJECT_INVALID") == null) ? "" : request.getAttribute("SUBJECT_INVALID")%> </div>
+                                <div style="color: red"><%= (request.getAttribute("DOUBLE_SUBJECT") == null) ? "" : request.getAttribute("DOUBLE_SUBJECT")%> </div>
                             </div>
 
                             Major Name
