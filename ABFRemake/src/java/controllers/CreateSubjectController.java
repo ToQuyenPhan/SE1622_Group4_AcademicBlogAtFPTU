@@ -39,7 +39,6 @@ public class CreateSubjectController extends HttpServlet {
         try {
             String subjectName = request.getParameter("subjectName");
             int majorID = Integer.parseInt(request.getParameter("majorID"));
-            
             SubjectDAO dao = new SubjectDAO();
             boolean check = dao.createSubject(subjectName, majorID);
             if (check) {
@@ -47,7 +46,6 @@ public class CreateSubjectController extends HttpServlet {
             }
         } catch (Exception e) {
             log("Error at Create Subject Controller: " + e.toString());
-
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

@@ -4,6 +4,7 @@
     Author     : To Quyen Phan
 --%>
 
+<%@page import="dto.RegistrationDTO"%>
 <%@page import="dto.MajorDTO"%>
 <%@page import="dto.SubjectDTO"%>
 <%@page import="dto.BlogDTO"%>
@@ -78,7 +79,7 @@
 
                     <div class="profile text-gray col-sm-3">
                         <div class="row">         
-                            <a><h6><%= loginUser.getFullName()%></h6></a>
+                            <a href="MainController?action=ViewProfile"><h6><%= loginUser.getFullName()%></h6></a>
                             <img onclick="menuToggle();" src="<%= image%>">
                         </div>
                     </div>
@@ -110,6 +111,7 @@
                 <div>
                     <%
                         List<BlogDTO> listAllBlogs = (List<BlogDTO>) request.getAttribute("LIST_ALL_BLOGS");
+                        List<RegistrationDTO> listreigs = (List<RegistrationDTO>) request.getAttribute("MENTOR_REGIS");
                     %>
                 </div>
                 <div class="site-content">
@@ -172,35 +174,37 @@
 
                                 }
                             }
-                        } else {
-                        %>
-                        <div class="message">
-                            <h1>You do not have any blog!</h1>
+                        %>                       
+                        <hr>
+                        <!--                 <div class="pagination flex-row">
+                                             <a href="#"><i class="fas fa-chevron-left"></i></a>
+                                             <a href="#" class="pages">1</a>
+                                             <a href="#" class="pages">2</a>
+                                             <a href="#" class="pages">3</a>
+                                             <a href="#"><i class="fas fa-chevron-right"></i></a>
+                                         </div>-->
                         </div>
-                        <div class="site-content">
-                            <div class="posts">
-                                <div class="post-content" data-aos="zoom-in" data-aos-delay="200">
-                                    <div class="post-image">                                      
-                                    </div>
+                    <%
+                    } else {
+                    %>
+                    <div class="message">
+                        <h1 style="margin-left: 7rem; margin-top: 1rem;" >You have not written any blog!</h1>
+                    </div>
+                    <div class="site-content">
+                        <div class="posts">
+                            <div class="post-content" data-aos="zoom-in" data-aos-delay="200">
+                                <div class="post-image">                                      
                                 </div>
                             </div>
-                            <%
-                                }
-                            %>
-
-                            <hr>
-                            <!--                        <div class="pagination flex-row">
-                                                        <a href="#"><i class="fas fa-chevron-left"></i></a>
-                                                        <a href="#" class="pages">1</a>
-                                                        <a href="#" class="pages">2</a>
-                                                        <a href="#" class="pages">3</a>
-                                                        <a href="#"><i class="fas fa-chevron-right"></i></a>
-                                                    </div>-->
                         </div>
+                        <%
+                            }
+                        %>
+
                         <div style="top: 5rem;" class="menu">
                             <ul>
                                 <li>
-                                    <a href="MainController?action=ViewProfile">My profile</a>
+                                    <a style="text-align: center;" href="MainController?action=ViewProfile">My profile</a>
                                 </li>
                                 <li>
                                     <a style="text-align: center;" href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
@@ -219,6 +223,26 @@
                                 </li>
                             </ul>
                         </div>
+                        <aside class="sidebar">
+                            <div class="popular-tags">
+                                <h2>Subjects</h2>
+                                <div class="tags flex-row">
+                                    <%
+                                        if (listreigs != null) {
+                                            if (listreigs.size() > 0) {
+                                                for (RegistrationDTO regis : listreigs) {
+
+                                    %>
+                                    <a class="subject-regis" href="MainController?action=SearchApproveBlogBySubject&subjectID=<%= regis.getSubjectID()%>">
+                                        <span class="tag" data-aos="flip-up" data-aos-delay="100"><%= regis.getSubjectName()%></span></a>
+                                        <%
+                                                    }
+                                                }
+                                            }
+                                        %>
+                                </div>
+                            </div>
+                        </aside>
                         <!--                    <aside class="sidebar">
                                                 <div class="category">
                                                     <h2>Majors</h2>
@@ -384,19 +408,19 @@
         <!-- Custom Javascript file -->
         <script src="./js/main.js"></script>
         <script>
-                                function menuToggle() {
-                                    const toggleMenu = document.querySelector(".menu");
-                                    toggleMenu.classList.toggle("active2");
-                                }
+                function menuToggle() {
+                    const toggleMenu = document.querySelector(".menu");
+                    toggleMenu.classList.toggle("active2");
+                }
 
-                                function openNav() {
-                                    if (document.getElementById('header').style.height === '19rem') {
-                                        document.getElementById('header').style.height = '4rem'
-                                    } else {
-                                        document.getElementById('header').style.height = '19rem'
-                                    }
+                function openNav() {
+                    if (document.getElementById('header').style.height === '19rem') {
+                        document.getElementById('header').style.height = '4rem'
+                    } else {
+                        document.getElementById('header').style.height = '19rem'
+                    }
 
-                                }
+                }
         </script>
     </body>
 </html>

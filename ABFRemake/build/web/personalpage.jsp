@@ -97,7 +97,7 @@
 
                     <div class="profile text-gray col-sm-3">
                         <div class="row">         
-                            <a><h6><%= loginUser.getFullName()%></h6></a>
+                            <a href="MainController?action=ViewProfile"><h6><%= loginUser.getFullName()%></h6></a>
                             <img onclick="menuToggle();" src="<%= image%>">
                         </div>
                     </div>
@@ -130,10 +130,13 @@
                     List<MajorDTO> listMajor = (List<MajorDTO>) session.getAttribute("LIST_MAJOR");
                     List<SubjectDTO> listSubject = (List<SubjectDTO>) session.getAttribute("LIST_SUBJECT");
                     String listName = "";
+                    int numberOfAllBlogs = 0;
                     if (request.getParameter("majorName") != null) {
                         listName = request.getParameter("majorName");
-                    } else {
+                    } else if(request.getParameter("subjectName") != null) {
                         listName = request.getParameter("subjectName");
+                    }else{
+                        listName = loginUser.getFullName();
                     }
                     if (listAllBlogsByMajorOrSubject != null) {
                         if (listAllBlogsByMajorOrSubject.size() > 0) {
@@ -205,6 +208,7 @@
                     </div> 
                     <%                } else if (listPersonalBlogs != null) {
                         if (listPersonalBlogs.size() > 0) {
+                            numberOfAllBlogs = listPersonalBlogs.size();
                     %>
                     <div>
                         <h3><%= loginUser.getFullName()%>'s Blog List</h3>
@@ -292,6 +296,7 @@
                                     <ul class="category-list">
                                         <li class="list-items" data-aos="fade-left" data-aos-delay="100">
                                             <a href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">All</a>
+                                            <span>(<%= numberOfAllBlogs %>)</span>
                                         </li>
                                         <%
                                             if (listMajor != null) {
@@ -329,7 +334,7 @@
                                     <div style="top: 5rem;" class="menu">
                                         <ul>
                                             <li>
-                                                <a href="MainController?action=ViewProfile">My profile</a>
+                                                <a style="text-align: center;" href="MainController?action=ViewProfile">My profile</a>
                                             </li>
                                             <li>
                                                 <a style="text-align: center;" href="#">Blog List</a>

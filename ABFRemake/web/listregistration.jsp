@@ -123,7 +123,7 @@
                                         <div class="card mb-4">
                                             <%
                                                 List<RegistrationDTO> list = (List<RegistrationDTO>) request.getAttribute("LIST_REGISTRATION");
-                                                int count = 0;
+                                                int count = 1;
                                                 if (list != null)
                                                     if (list.size() > 0) {
                                             %>
@@ -132,7 +132,7 @@
                                                     <tr>
                                                         <th class="border-0">No</th>       
                                                         <th class="border-0">Email</th>
-                                                        <th class="border-0">Subject ID</th>
+                                                        <th class="border-0">Subject</th>
                                                         <th class="border-0">Action</th> 
                                                     </tr>
                                                 </thead>
@@ -143,8 +143,8 @@
                                                     <tr>
                                                         <td><%= count++%></td>                                           
                                                         <td><%= regis.getEmail()%></td>    
-                                                        <td><%= regis.getSubjectID()%></td> 
-                                                        <td><a href="MainController?action=RegistrationDetail&registrationID=<%=regis.getRegistrationID()%>">Detail</a>
+                                                        <td><%= regis.getSubjectName()%></td> 
+                                                        <td><a style=" background-color: white; color: blue;" href="MainController?action=RegistrationDetail&registrationID=<%=regis.getRegistrationID()%>">Detail</a>
                                                         </td>
                                                         <%
                                                             }

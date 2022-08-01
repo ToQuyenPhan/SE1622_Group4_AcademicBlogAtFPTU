@@ -91,7 +91,7 @@
 
                     <div class="profile text-gray col-sm-3">
                         <div class="row">         
-                            <a><h6><%= loginUser.getFullName()%></h6></a>
+                            <a href="MainController?action=ViewProfile"><h6><%= loginUser.getFullName()%></h6></a>
                             <img onclick="menuToggle();" src="<%= image%>">
                         </div>
                     </div>
@@ -255,7 +255,7 @@
                                 <div style="top: 5rem;" class="menu">
                                     <ul>
                                         <li>
-                                            <a href="MainController?action=ViewProfile">My profile</a>
+                                            <a style="text-align: center;" href="MainController?action=ViewProfile">My profile</a>
                                         </li>
                                         <li>
                                             <a style="text-align: center;" href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>

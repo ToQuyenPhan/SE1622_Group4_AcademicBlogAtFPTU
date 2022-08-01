@@ -58,16 +58,17 @@ public class RegistrationController extends HttpServlet {
             }
             if(i != 0){
                 validate = false;
-                request.setAttribute("DOUBLE_REGISTRATRION", "Registration is already");
+                request.setAttribute("DOUBLE_REGISTRATRION", "Registration is already!");
             }
             if(certificate.trim().length() == 0){
                 validate= false;
-                request.setAttribute("CERTIFICATE_ERROR","Certificate is invalid");
+                request.setAttribute("CERTIFICATE_ERROR","Certificate is invalid!");
             }            
             if(validate){
             boolean check = RegistrationDAO.createRegistration(userID, subjectID, certificate, date);
             if (check) {
-                response.sendRedirect("MainController?action=GetList&notiRegis=success");
+                request.setAttribute("REGIS_SUCCESS","You registered successfully! Please waif for admin to approve!");
+                request.getRequestDispatcher("mentorregister.jsp").forward(request, response);
             }
         }else{
                 request.getRequestDispatcher("mentorregister.jsp").forward(request, response);

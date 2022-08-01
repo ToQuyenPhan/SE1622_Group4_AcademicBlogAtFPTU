@@ -96,27 +96,28 @@
                 <div class="menu">
                     <ul>
                         <li>
-                            <a href="MainController?action=ViewProfile">My profile</a>
+                            <a style="text-align: center;" href="MainController?action=ViewProfile">My profile</a>
                         </li>
                         <li>
-                            <a href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
+                            <a style="text-align: center;" href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
                         </li>
                         <%
                             if (loginUser.getRoleID() == 3) {
                         %>
                         <li>
-                            <a href="MainController?action=GetApproveList">Approve List</a>
+                            <a style="text-align: center;" href="MainController?action=GetApproveList">Approve List</a>
                         </li>
                         <%
                             }
                         %>
                         <li>
-                            <a href="MainController?action=Logout">Logout</a>
+                            <a style="text-align: center;" href="MainController?action=Logout">Logout</a>
                         </li>
                     </ul>
                 </div>
                 <hr class="tm-hr-primary tm-mb-45">
-                <form action="MainController" method="POST" name="f">
+                <div style="color: green"><%= (request.getAttribute("REGIS_SUCCESS") == null) ? "" : request.getAttribute("REGIS_SUCCESS")%> </div>
+                <form style="margin-top: 1rem;" action="MainController" method="POST" name="f">
                     <input type="hidden" name="userID" value="<%=loginUser.getUserID()%>" readonly="">                      
                     <div class="mb-4">                   
                         Subject <select class="form-control" name="subjectID" required="">
@@ -146,20 +147,12 @@
             </div>
         </div>
 
-        <footer class="footer">
+        <footer style="margin-top: 3rem; padding: 1rem 0rem;" class="footer">
             <div class="container">
                 <div class="about-us" data-aos="fade-right" data-aos-delay="200">
                     <h2>About us</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quia atque nemo ad modi officiis
-                        iure, autem nulla tenetur repellendus.</p>
+                    <p>ABF is a website for all students of FPT University, this is a place for students to learn, gather knowledge and share experiences about their major, especially their subject.</p>
                 </div>
-                <!--                        <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
-                                            <h2>Newsletter</h2>
-                                            <p>Stay update with our latest</p>
-                                            <div class="form-element">
-                                                <input type="text" placeholder="Email"><span><i class="fas fa-chevron-right"></i></span>
-                                            </div>
-                                        </div>-->
                 <div class="instagram" data-aos="fade-left" data-aos-delay="200">
                     <h2>Instagram</h2>
                     <div class="flex-row">
@@ -183,13 +176,11 @@
                         <i class="fab fa-youtube"></i>
                     </div>
                 </div>
-            </div>
-            <div class="rights flex-row">
-                <h4 class="text-gray">
-                    Copyright ©2019 All rights reserved | made by
-                    <a href="www.youtube.com/c/dailytuition" target="_black">Daily Tuition <i class="fab fa-youtube"></i>
-                        Channel</a>
-                </h4>
+                <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
+                    <h4 class="text-gray">
+                        Copyright ©2022 Team 4
+                    </h4>
+                </div>
             </div>
             <div class="move-up">
                 <span><a href="#header"><i class="fas fa-arrow-circle-up fa-2x"></i></a></span>
@@ -200,19 +191,19 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/templatemo-script.js"></script>
     <script>
-                                        function menuToggle() {
-                                            const toggleMenu = document.querySelector(".menu");
-                                            toggleMenu.classList.toggle("active2");
-                                        }
+                            function menuToggle() {
+                                const toggleMenu = document.querySelector(".menu");
+                                toggleMenu.classList.toggle("active2");
+                            }
 
-                                        function openNav() {
-                                            if (document.getElementById('header').style.height === '15rem') {
-                                                document.getElementById('header').style.height = '4rem'
-                                            } else {
-                                                document.getElementById('header').style.height = '15rem'
-                                            }
+                            function openNav() {
+                                if (document.getElementById('header').style.height === '15rem') {
+                                    document.getElementById('header').style.height = '4rem'
+                                } else {
+                                    document.getElementById('header').style.height = '15rem'
+                                }
 
-                                        }
+                            }
 
     </script>
 </body>

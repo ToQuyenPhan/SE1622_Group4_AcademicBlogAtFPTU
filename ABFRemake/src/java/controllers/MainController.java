@@ -80,6 +80,7 @@ public class MainController extends HttpServlet {
     private static final String APPROVE_REGISTRATION = "ApproveRegis";
     private static final String REJECT_REGISTRATION = "RejectRegis";
     private static final String VIEW_PROFILE = "ViewProfile";
+    private static final String SEARCH_APPROVE_BLOG_BY_SUBJECT = "SearchApproveBlogBySubject";
 
     private static final String LOGIN_WITH_GOOGLE_CONTROLLER = "LoginWithGoogleController";
     private static final String LOGIN_CONTROLLER = "LoginController";
@@ -134,6 +135,7 @@ public class MainController extends HttpServlet {
     private static final String APPROVE_REGISTRATION_CONTROLLER = "ApproveRegistrationController";
     private static final String REJECT_REGISTRATION_CONTROLLER = "RejectRegistrationController";
     private static final String PROFILE_PAGE = "profile.jsp";
+    private static final String SEARCH_APPROVE_BLOG_CONTROLLER = "SearchApproveBlogController";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -374,6 +376,11 @@ public class MainController extends HttpServlet {
                     response.sendRedirect("MainController?action=GoToWelcomePage");   
                 }
                 url = PROFILE_PAGE;
+            }else if (SEARCH_APPROVE_BLOG_BY_SUBJECT.equals(action)) {
+                if (loginUser == null) {
+                    response.sendRedirect("MainController?action=GoToWelcomePage");   
+                }
+                url = SEARCH_APPROVE_BLOG_CONTROLLER;
             }else{
                 request.setAttribute("ERROR_MESSAGE", "Function is not available!");
             }

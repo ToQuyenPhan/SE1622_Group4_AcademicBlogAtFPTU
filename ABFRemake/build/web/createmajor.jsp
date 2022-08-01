@@ -110,6 +110,8 @@
                             <div class="mb-4">
                                 <label for="Title"></label> Major Name </label>
                                 <input class="form-control" name="majorName" type="text">
+                                <div style="color: red"><%= (request.getAttribute("MAJOR_INVALID") == null) ? "" : request.getAttribute("MAJOR_INVALID")%> </div>
+                                <div style="color: red"><%= (request.getAttribute("DOUBLE_MAJOR") == null) ? "" : request.getAttribute("DOUBLE_MAJOR")%> </div>
                             </div>
                             <input type="submit" name="action" value="CreateMajor"
                                    <button class="tm-btn tm-btn-primary tm-btn-small"></button> 

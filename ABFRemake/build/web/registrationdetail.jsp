@@ -97,14 +97,15 @@
                     RegistrationDTO regis = (RegistrationDTO) request.getAttribute("REGIS_DETAIL");
                     if (regis != null) {
                 %>
-                <input type="hidden" name="feedbackID" value="<%= regis.getRegistrationID()%>">
-                <h2><%= regis.getEmail()%></h2>
-                <p><%= regis.getSubjectID()%></p> 
-
-                <p><%= regis.getCertificate()%></p>
                 <p><%= regis.getDate()%></p>
-                <a href="MainController?action=ApproveRegis&registrationID=<%=regis.getUserID()%>&userID=<%=regis.getUserID()%>">Approve</a>
-                <a href="MainController?action=RejectRegis&registrationID=<%=regis.getUserID()%>">Reject</a>
+                <input type="hidden" name="feedbackID" value="<%= regis.getRegistrationID()%>">
+                <h4 style="display: inline-block">Email: </h4> <h3 style="display: inline-block"><%= regis.getEmail()%></h3><br>
+                <h4 style="display: inline-block">Subject: </h4> <h3 style="display: inline-block"><%= regis.getSubjectName()%></h3><br>
+                
+                <p><a href="<%= regis.getCertificate() %>">Certificate Link</a></p>
+                
+                <a class="regis-approve" href="MainController?action=ApproveRegis&registrationID=<%=regis.getRegistrationID() %>&userID=<%=regis.getUserID()%>">Approve</a>
+                <a class="regis-approve" href="MainController?action=RejectRegis&registrationID=<%=regis.getRegistrationID()%>">Reject</a>
                 <% }%>
             </main>
         </div>

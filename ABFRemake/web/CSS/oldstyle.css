@@ -1586,3 +1586,21 @@ a:hover figcaption { color: #056767; }
         width: 60%;
     }
 }
+
+.table tbody tr td a:hover{
+    text-decoration: underline;
+}
+
+.regis-approve{
+    background-color: #00cccc;
+    color: white;
+    border: 1px solid #00cccc;
+    padding: 0.5rem; 
+}
+
+.regis-approve:hover{
+    text-decoration: none;
+    color: white;
+    background-color: #009999;
+}
+

@@ -43,7 +43,7 @@ public class ApproveRegistrationController extends HttpServlet {
             boolean check = false;
             check = RegistrationDAO.approveRegistration(registrationID,userID);
             if (check) {
-                request.getRequestDispatcher("MainController?action=ManageRegistration&notiRegis=success").forward(request, response);
+                request.getRequestDispatcher("MainController?action=ManageRegistration").forward(request, response);
             } else {
                 request.getRequestDispatcher("MainController?action=ManageRegistration").forward(request, response);
             }

@@ -27,7 +27,12 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <!--
+        
             
         TemplateMo 553 Xtra Blog
         
@@ -60,18 +65,18 @@
             }
             String position = request.getParameter("position");
         %>
-        <nav class="nav" id="header">
+        <nav class="nav approve-page" id="header">
             <form action="MainController" method="POST">
                 <div class="nav-menu row">
-                    <div class="nav-brand">
+                    <div class="nav-brand col-sm-2">
                         <a href="MainController?action=GetList" class="text-gray">Academic Blog</a>
                     </div>
-                    <div onclick="openNav();" class="toggle-collapse">
+                    <div class="approve-page toggle-collapse">
                         <div class="toggle-icons">
-                            <i class="fas fa-bars"></i>
+                            <i onclick="openNav();" class="fas fa-bars"></i>
                         </div>
                     </div>
-                    <div class="">
+                    <div class="nav-link-items col-sm-3">
                         <ul class="nav-items">
                             <li class="nav-link">
                                 <a href="MainController?action=GetList">Home</a>
@@ -79,22 +84,22 @@
                             <li class="nav-link">
                                 <a href="MainController?action=GetFeedbackTypeList">Feedback</a>
                             </li>
-                            <li class="nav-link non-display">
-                                <a href="MainController?action=GoToPostBlogPage&position=homepage.jsp">New Blog</a>
-                            </li>
+                            <li class="nav-link"><a href="MainController?action=MentorRegisterPage&userID=<%=loginUser.getUserID()%>" class="tm-nav-link">
+                                    Registration
+                                </a></li>  
                         </ul>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="search-div col-sm-3">
                         <div class="search-form-search">
                             <input type="text" placeholder="Search..." name="search" type="text">
                             <div class="search-search"><button type="submit" name="action" value="Search"><i class="fas fa-search"></i></button></div>
                         </div>
                     </div>
-                    <div class="new col-sm-1"><a href="MainController?action=GoToPostBlogPage"><i class="fas fa-pen"></i></a></div>
+                    <div class="new col-sm-1"><a href="MainController?action=GoToPostBlogPage&position=homepage.jsp"><i class="fas fa-pen"></i></a></div>
 
                     <div class="profile text-gray col-sm-3">
                         <div class="row">         
-                            <a><h6><%= loginUser.getFullName()%></h6></a>
+                            <a style="color: black;" href="MainController?action=ViewProfile"><h6><%= loginUser.getFullName()%></h6></a>
                             <img onclick="menuToggle();" src="<%= image%>">
                         </div>
                     </div>
@@ -120,47 +125,12 @@
                         majorName = major.getMajorName();
                     }
                 }
-                String content = blogDetail.getContent();
-                if (content.length() > 111 && content.length() <= 222) {
-                    content = blogDetail.getContent().substring(0, 111) + "<br>"
-                            + blogDetail.getContent().substring(111, blogDetail.getContent().length());
 
-                } else if (content.length() > 222 && content.length() <= 333) {
-                    content = blogDetail.getContent().substring(0, 111) + "<br>"
-                            + blogDetail.getContent().substring(111, 222) + "<br>"
-                            + blogDetail.getContent().substring(222, blogDetail.getContent().length());
-                }else if (content.length() > 333 && content.length() <= 444) {
-                    content = blogDetail.getContent().substring(0, 111) + "<br>"
-                            + blogDetail.getContent().substring(111, 222) + "<br>"
-                            + blogDetail.getContent().substring(222, 333) + "<br>"
-                            + blogDetail.getContent().substring(333, blogDetail.getContent().length());
-                }else if (content.length() > 444 && content.length() <= 555) {
-                    content = blogDetail.getContent().substring(0, 111) + "<br>"
-                            + blogDetail.getContent().substring(111, 222) + "<br>"
-                            + blogDetail.getContent().substring(222, 333) + "<br>"
-                            + blogDetail.getContent().substring(333, 444) + "<br>"
-                            + blogDetail.getContent().substring(444, blogDetail.getContent().length());
-                }else if (content.length() > 555 && content.length() <= 666) {
-                    content = blogDetail.getContent().substring(0, 111) + "<br>"
-                            + blogDetail.getContent().substring(111, 222) + "<br>"
-                            + blogDetail.getContent().substring(222, 333) + "<br>"
-                            + blogDetail.getContent().substring(333, 444) + "<br>"
-                            + blogDetail.getContent().substring(444, 555) + "<br>"
-                            + blogDetail.getContent().substring(555, blogDetail.getContent().length());
-                }else if (content.length() > 666 && content.length() <= 777) {
-                    content = blogDetail.getContent().substring(0, 111) + "<br>"
-                            + blogDetail.getContent().substring(111, 222) + "<br>"
-                            + blogDetail.getContent().substring(222, 333) + "<br>"
-                            + blogDetail.getContent().substring(333, 444) + "<br>"
-                            + blogDetail.getContent().substring(444, 555) + "<br>"
-                            + blogDetail.getContent().substring(555, 666) + "<br>"
-                            + blogDetail.getContent().substring(666, blogDetail.getContent().length());
-                }
         %>
         <section class="py-5">
             <div class="container py-4">
                 <div class="row text-center">
-                    <div class="col-lg-8 mx-auto"><a style="background-color: #104f55; color: white; padding: 0.5rem;"  class="category-link mb-3 d-inline-block" href="MainController?action=SearchMajor&majorID=<%= majorID %>&majorName=<%= majorName %>"><%= majorName%></a>
+                    <div class="col-lg-8 mx-auto"><a style="background-color: #104f55; color: white; padding: 0.5rem;"  class="category-link mb-3 d-inline-block" href="MainController?action=SearchMajor&majorID=<%= majorID%>&majorName=<%= majorName%>"><%= majorName%></a>
                         <h1><%= blogDetail.getTitle()%></h1>
                         <ul class="list-inline mb-5">
                             <li class="list-inline-item mx-2 text-uppercase text-muted reset-anchor">BY <%= blogDetail.getFullName()%></li>
@@ -170,7 +140,7 @@
                 </div><img class="w-100 mb-5" src="<%= blogDetail.getImage()%>" alt="...">
                 <div class="row gy-5">
                     <div class="col-lg-12">
-                        <p class="lead drop-caps mb-5"><%= content%></p>
+                        <p class="lead drop-caps mb-5"><%= blogDetail.getContent()%></p>
 
                         <!--<h2>Heading level two</h2>
                         <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -207,7 +177,7 @@
                                 }
                             %>
                             <ul class="list-inline mb-0 ms-0 ms-sm-3">
-                                <li class="list-inline-item my-1 me-2"><a class="sidebar-tag-link" href="MainController?action=SearchSubject&subjectID=<%= blogDetail.getSubjectID() %>&subjectName=<%= subjectName %>"><%= subjectName%></a></li>
+                                <li class="list-inline-item my-1 me-2"><a class="sidebar-tag-link" href="MainController?action=SearchSubject&subjectID=<%= blogDetail.getSubjectID()%>&subjectName=<%= subjectName%>"><%= subjectName%></a></li>
                             </ul>
                         </div>
                         <%
@@ -327,15 +297,54 @@
                             %>
                         </ul>
                     </div>
-                        <div class="approve-form">
-                            <form action="MainController" method="POST">
-                                <input type="hidden" name="blogID" value="<%= blogDetail.getBlogID() %>"/>
-                                <input type="hidden" name="position" value="<%= position%>"/>
-                                <input type="submit" name="action" value="Cancel"/>
-                                <input type="submit" name="action" value="Approve"/>
-                                <input type="submit" name="action" value="Reject"/>
-                            </form> 
+                    <div class="approve-form">
+                        <form action="MainController" method="POST">
+                            <input type="hidden" name="blogID" value="<%= blogDetail.getBlogID()%>"/>
+                            <input type="hidden" name="position" value="<%= position%>"/>
+                            <input type="submit" name="action" value="Cancel"/>
+                            <input type="button" name="action" value="Approve"  data-toggle="modal" data-target="#exampleModalCenterr"/>
+                            <input type="button" name="action" value="Reject"  data-toggle="modal" data-target="#exampleModalCenter"/>
+                        </form> 
+                    </div>
+                    <div class="modal fade" id="exampleModalCenterr" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalCenterTitle">Approve</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure you want to approve?</p>                                   
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <a href="MainController?action=Approve&blogID=<%= blogDetail.getBlogID()%>" type="button" class="btn btn-success">Approve</a>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalCenterTitle">Reject</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure you want to reject?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <a href="MainController?action=Reject&blogID=<%= blogDetail.getBlogID()%>" type="button" class="btn btn-danger">Reject</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div style="top: 5rem;" class="menu">
                         <ul>
                             <li>
@@ -434,8 +443,7 @@
                             <div class="container">
                                 <div class="about-us" data-aos="fade-right" data-aos-delay="200">
                                     <h2>About us</h2>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quia atque nemo ad modi officiis
-                                        iure, autem nulla tenetur repellendus.</p>
+                                    <p>ABF is a website for all students of FPT University, this is a place for students to learn, gather knowledge and share experiences about their major, especially their subject.</p>
                                 </div>
                                 <div class="instagram" data-aos="fade-left" data-aos-delay="200">
                                     <h2>Instagram</h2>
@@ -460,13 +468,11 @@
                                         <i class="fab fa-youtube"></i>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="rights flex-row">
-                                <h4 class="text-gray">
-                                    Copyright ©2019 All rights reserved | made by
-                                    <a href="www.youtube.com/c/dailytuition" target="_black">Daily Tuition <i class="fab fa-youtube"></i>
-                                        Channel</a>
-                                </h4>
+                                <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
+                                    <h4 class="text-gray">
+                                        Copyright ©2022 Team 4
+                                    </h4>
+                                </div>
                             </div>
                             <div class="move-up">
                                 <span><a href="#header"><i class="fas fa-arrow-circle-up fa-2x"></i></a></span>

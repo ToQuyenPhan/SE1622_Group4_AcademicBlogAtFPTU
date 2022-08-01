@@ -16,17 +16,6 @@
 <%@page import="dto.UserDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%
-    //check co parameter warning=thanhcong nhan dc tu trang addtocart
-    String msq = request.getParameter("notiRegis");
-    if (msq != null) {
-%>
-<script>
-    alert("Registration has been send");
-</script>
-<%
-    }
-%>  
 <html lang="en">
 
     <head>
@@ -109,7 +98,7 @@
 
                     <div class="profile text-gray col-sm-3">
                         <div class="row">         
-                            <a><h6><%= loginUser.getFullName()%></h6></a>
+                            <a href="MainController?action=ViewProfile"><h6><%= loginUser.getFullName()%></h6></a>
                             <img onclick="menuToggle();" src="<%= image%>">
                         </div>
                     </div>

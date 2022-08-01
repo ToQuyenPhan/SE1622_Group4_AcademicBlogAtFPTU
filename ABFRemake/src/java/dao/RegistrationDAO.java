@@ -127,7 +127,7 @@ public class RegistrationDAO {
                     int status = rs.getInt("status");
                     String email = rs.getString("email");
                     String subjectName = rs.getString("subjectName");
-                    list.add(new RegistrationDTO(registrationID, userId, subjectID, certificate, date, status, email, subjectName));
+                    list.add(new RegistrationDTO(registrationID, userId, subjectID, date, certificate, status, email, subjectName));
                 }
             }
         } catch (Exception e) {
@@ -165,7 +165,7 @@ public class RegistrationDAO {
                     int status = rs.getInt("status");
                     String email = rs.getString("email");
                     String subjectName = rs.getString("subjectName");
-                    regis = new RegistrationDTO(registrationid, userID, subjectID, certificate, date, status, email, subjectName);
+                    regis = new RegistrationDTO(registrationid, userID, subjectID, date, certificate, status, email, subjectName);
                 }
             }
         } catch (Exception e) {

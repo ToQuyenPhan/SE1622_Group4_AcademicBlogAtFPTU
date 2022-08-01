@@ -89,7 +89,7 @@
 
                     <div class="profile text-gray col-sm-3">
                         <div class="row">         
-                            <a><h6><%= loginUser.getFullName()%></h6></a>
+                            <a href="MainController?action=ViewProfile"><h6><%= loginUser.getFullName()%></h6></a>
                             <img onclick="menuToggle();" src="<%= image%>">
                         </div>
                     </div>
@@ -104,22 +104,22 @@
                         <div class="menu">
                             <ul>
                                 <li>
-                                    <a href="MainController?action=ViewProfile">My profile</a>
+                                    <a style="text-align: center;" href="MainController?action=ViewProfile">My profile</a>
                                 </li>
                                 <li>
-                                    <a href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
+                                    <a style="text-align: center;" href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
                                 </li>
                                 <%
                                     if (loginUser.getRoleID() == 3) {
                                 %>
                                 <li>
-                                    <a href="MainController?action=GetApproveList">Approve List</a>
+                                    <a style="text-align: center;" href="MainController?action=GetApproveList">Approve List</a>
                                 </li>
                                 <%
                                     }
                                 %>
                                 <li>
-                                    <a href="MainController?action=Logout">Logout</a>
+                                    <a style="text-align: center;" href="MainController?action=Logout">Logout</a>
                                 </li>
                             </ul>
                         </div>

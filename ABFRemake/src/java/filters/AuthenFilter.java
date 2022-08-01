@@ -57,6 +57,7 @@ public class AuthenFilter implements Filter {
     private static final String VOTE_RATINGS_PAGE = "voteratings.jsp";
     private static final String CREATE_MAJOR_PAGE = "createmajor.jsp";
     private static final String CREATE_SUBJECT_PAGE = "createsubject.jsp";
+    private static final String MENTOR_REGISTER_PAGE = "mentorregister.jsp";
 
     private static final boolean debug = true;
 
@@ -84,6 +85,7 @@ public class AuthenFilter implements Filter {
         STUDENT_RESOURCES.add(POST_BLOG_PAGE);
         STUDENT_RESOURCES.add(BLOG_DETAIL_PAGE);
         STUDENT_RESOURCES.add(ACTIVITY_PAGE);
+        STUDENT_RESOURCES.add(MENTOR_REGISTER_PAGE);
         STUDENT_RESOURCES.add("SearchController");
         STUDENT_RESOURCES.add("PostBlogController");
 
@@ -98,6 +100,7 @@ public class AuthenFilter implements Filter {
         MENTOR_RESOURCES.add(APPROVE_BLOG_DETAIL_PAGE);
         MENTOR_RESOURCES.add(ACTIVITY_PAGE);
         MENTOR_RESOURCES.add(VOTE_RATINGS_PAGE);
+        MENTOR_RESOURCES.add(MENTOR_REGISTER_PAGE);
         MENTOR_RESOURCES.add("SearchController");
         MENTOR_RESOURCES.add("PostBlogController");
 
@@ -111,6 +114,7 @@ public class AuthenFilter implements Filter {
         NON_AUTHEN_RESOURCES.add(".gif");
         NON_AUTHEN_RESOURCES.add(".png");
         NON_AUTHEN_RESOURCES.add(".jpeg");
+        NON_AUTHEN_RESOURCES.add(".js");
 
     }
 

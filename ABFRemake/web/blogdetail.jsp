@@ -98,7 +98,7 @@
 
                     <div class="profile text-gray col-sm-3">
                         <div class="row">         
-                            <a><h6><%= loginUser.getFullName()%></h6></a>
+                            <a style="color: black;" href="MainController?action=ViewProfile"><h6><%= loginUser.getFullName()%></h6></a>
                             <img onclick="menuToggle();" src="<%= image%>">
                         </div>
                     </div>
@@ -127,12 +127,12 @@
                 }
                 String content = blogDetail.getContent();
                 if (content.length() > 125 && content.length() <= 250) {
-                    content = blogDetail.getContent().substring(0, 125) + "<br>"
-                            + blogDetail.getContent().substring(125, blogDetail.getContent().length());
+                    content = blogDetail.getContent().substring(0, 150) + "<br>"
+                            + blogDetail.getContent().substring(150, blogDetail.getContent().length());
 
                 } else if (content.length() > 250 && content.length() <= 375) {
-                    content = blogDetail.getContent().substring(0, 125) + "<br>"
-                            + blogDetail.getContent().substring(125, 250) + "<br>"
+                    content = blogDetail.getContent().substring(0, 150) + "<br>"
+                            + blogDetail.getContent().substring(150, 250) + "<br>"
                             + blogDetail.getContent().substring(250, blogDetail.getContent().length());
                 }
         %>
@@ -352,7 +352,7 @@
                     <div style="top: 5rem;" class="menu">
                         <ul>
                             <li>
-                                <a href="MainController?action=ViewProfile">My profile</a>
+                                <a style="text-align: center;" href="MainController?action=ViewProfile">My profile</a>
                             </li>
                             <li>
                                 <a style="text-align: center;" href="MainController?action=ViewPersonalPage&userID=<%= loginUser.getUserID()%>">Blog List</a>
@@ -466,8 +466,7 @@
                             <div class="container">
                                 <div class="about-us" data-aos="fade-right" data-aos-delay="200">
                                     <h2>About us</h2>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quia atque nemo ad modi officiis
-                                        iure, autem nulla tenetur repellendus.</p>
+                                    <p>ABF is a website for all students of FPT University, this is a place for students to learn, gather knowledge and share experiences about their major, especially their subject.</p>
                                 </div>
                                 <div class="instagram" data-aos="fade-left" data-aos-delay="200">
                                     <h2>Instagram</h2>
@@ -492,13 +491,11 @@
                                         <i class="fab fa-youtube"></i>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="rights flex-row">
-                                <h4 class="text-gray">
-                                    Copyright ©2019 All rights reserved | made by
-                                    <a href="www.youtube.com/c/dailytuition" target="_black">Daily Tuition <i class="fab fa-youtube"></i>
-                                        Channel</a>
-                                </h4>
+                                <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
+                                    <h4 class="text-gray">
+                                        Copyright ©2022 Team 4
+                                    </h4>
+                                </div>
                             </div>
                             <div class="move-up">
                                 <span><a href="#header"><i class="fas fa-arrow-circle-up fa-2x"></i></a></span>

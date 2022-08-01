@@ -259,3 +259,10 @@ update [User] set roleID = 2 where userID = 2
 SELECT historyActivityID, date, activity FROM HistoryActivity 
 JOIN ActivityType ON  = ActivityType.activityTypeID 
 WHERE userID = 2
+
+UPDATE [Registration]
+            SET status = 3
+            WHERE registrationID = 4
+            UPDATE [User]
+             SET roleID = 2
+             WHERE userID = 2
